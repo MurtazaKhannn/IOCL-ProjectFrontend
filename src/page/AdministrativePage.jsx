@@ -21,9 +21,16 @@ const AdministrativePage = () => {
   });
 
   const handleChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+    if (e.target.name === 'date') {
+      // Extract only the date part (yyyy-mm-dd) from the input value
+      const dateValue = e.target.value.split('T')[0]; // split to remove timestamp
+      setInputs({ ...inputs, [e.target.name]: dateValue });
+    } else {
+      setInputs({ ...inputs, [e.target.name]: e.target.value });
+    }
   };
-
+  
+  
   const handleSave = async () => {
     try {
       const res = await fetch("/api/forms/administrativepage" , {
