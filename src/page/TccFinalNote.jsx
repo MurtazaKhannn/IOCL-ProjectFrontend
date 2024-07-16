@@ -1,10 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
 
 const BudgetaryEstimate = () => {
+
+  const [inputs, setInputs] = useState({
+    section: "Information System",
+    department: "Information Technology",
+    location: "Uttar Pradesh",
+    date: "",
+    subject: "",
+    recommendation: "",   
+    doaApplicable: "No", 
+    confidential: "Yes"
+  });
+
+  const handleChange = (e) => {
+    if (e.target.name === "date") {
+      // Extract only the date part (yyyy-mm-dd) from the input value
+      const dateValue = e.target.value.split("T")[0]; // split to remove timestamp
+      setInputs({ ...inputs, [e.target.name]: dateValue });
+    } else {
+      setInputs({ ...inputs, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch("/api/forms/tccfinalnote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
+
+      const data = await res.json();
+      console.log("Response data:", data); // Debugging line
+
+      if (data.error) {
+        alert("Error: " + data.error);
+        return;
+      }
+    } catch (error) {
+      alert("Error: " + error);
+      console.log("Error:", error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSave();
+  };
+
+
     const navigate = useNavigate();
     const generatePDF = async () => {
         // Hide the Save button
@@ -57,6 +108,7 @@ const BudgetaryEstimate = () => {
             <form
               className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-3xl"
               action=""
+              onSubmit={handleSubmit}
             >
               <div className="flex flex-col gap-4">
                 <label htmlFor="dialogue1">Ref No:</label>
@@ -70,39 +122,41 @@ const BudgetaryEstimate = () => {
               </div>
 
               <div className="flex flex-col gap-4">
-                <label htmlFor="dialogue2">Section:</label>
-                <textarea
+                <label htmlFor="section">Section:</label>
+                <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
-                  id="dialogue2"
-                  name="dialogue2"
+                  id="section"
+                  name="section"
+                  value={inputs.section}
+                  onChange={handleChange}
                   readOnly
-                >
-                  Information Systems
-                </textarea>
+                />
+                
               </div>
 
               <div className="flex flex-col gap-4">
-                <label htmlFor="dialogue3">Department:</label>
-                <textarea
+                <label htmlFor="department">Department:</label>
+                <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
-                  id="dialogue3"
-                  name="dialogue3"
+                  id="department"
+                  name="department"
+                  value={inputs.department}
+                  onChange={handleChange}
                   readOnly
-                >
-                  Information Technology
-                </textarea>
+                />
               </div>
 
               <div className="flex flex-col gap-4">
-                <label htmlFor="dialogue4">Location:</label>
-                <textarea
+                <label htmlFor="location">Location:</label>
+                <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
-                  id="dialogue4"
-                  name="dialogue4"
+                  id="location"
+                  name="location"
+                  value={inputs.location}
+                  onChange={handleChange}
                   readOnly
-                >
-                  Uttar Pradesh
-                </textarea>
+                />
+
               </div>
 
               <div className="flex flex-col gap-4">
@@ -112,26 +166,32 @@ const BudgetaryEstimate = () => {
                   type="date"
                   id="date"
                   name="date"
+                  value={inputs.date}
+                  onChange={handleChange}
                 />
               </div>
 
               <div className="flex flex-col gap-4">
-                <label htmlFor="dialogue5">Subject:</label>
+                <label htmlFor="subject">Subject:</label>
                 <textarea
                   className="bg-zinc-100 rounded-md p-2 w-full"
-                  id="dialogue5"
-                  name="dialogue5"
+                  id="subject"
+                  name="subject"
+                  value={inputs.subject}
+                  onChange={handleChange}
                 >
                   Default message 5
                 </textarea>
               </div>
 
               <div className="flex flex-col gap-4">
-                <label htmlFor="dialogue6">Recommendation:</label>
+                <label htmlFor="recommendation">Recommendation:</label>
                 <textarea
-                  id="dialogue6"
+                  id="recommendation"
                   className="bg-zinc-100 rounded-md p-2 w-full"
-                  name="dialogue6"
+                  name="recommendation"
+                  value={inputs.recommendation}
+                  onChange={handleChange}
                 >
                   Default message 6
                 </textarea>
@@ -143,14 +203,15 @@ const BudgetaryEstimate = () => {
                   <label>
                     <input
                       type="radio"
-                      name="confidential"
+                      name="doaApplicable"
                       value="Yes"
-                      checked
+                      checked={inputs.doaApplicable === "Yes"}  
+                      onChange={handleChange}
                     />{" "}
                     Yes
                   </label>
                   <label>
-                    <input type="radio" name="confidential" value="No" /> No
+                    <input type="radio" name="doaApplicable" value="No" checked={inputs.doaApplicable === "No"} onChange={handleChange} /> No
                   </label>
                 </div>
               </div>
@@ -167,12 +228,13 @@ const BudgetaryEstimate = () => {
                       type="radio"
                       name="confidential"
                       value="Yes"
-                      checked
+                      checked={inputs.confidential === "Yes"}
+                      onChange={handleChange}
                     />{" "}
                     Yes
                   </label>
                   <label>
-                    <input type="radio" name="confidential" value="No" /> No
+                    <input type="radio" name="confidential" value="No" checked={inputs.confidential === "No"} onChange={handleChange} /> No
                   </label>
                 </div>
               </div>
@@ -186,6 +248,14 @@ const BudgetaryEstimate = () => {
                 >
                   Save as PDF
                 </button>
+
+                <button
+                  type="submit"
+                  className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
+                >
+                  Save
+                </button>
+                
                 <button id="dropbtn" onClick={() => {navigate("/createnew")}} className="bg-blue-500 rounded-md w-full max-w-xs text-white">Back to DROP-DOWN</button>
               </div>
               <p id="saveMessage" className="flex justify-center hidden">
