@@ -17,6 +17,13 @@ const BudgetaryEstimate = () => {
     confidential: "Yes"
   });
 
+  useEffect(() => {
+    const storedInputs = JSON.parse(localStorage.getItem("tccfn-form"));
+    if (storedInputs) {
+      setInputs(storedInputs);
+    }
+  } , [setInputs]);
+
   const handleChange = (e) => {
     if (e.target.name === "date") {
       // Extract only the date part (yyyy-mm-dd) from the input value
@@ -25,6 +32,10 @@ const BudgetaryEstimate = () => {
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
+
+    const newInputs = { ...inputs, [e.target.name]: e.target.value };
+    setInputs(newInputs);
+    localStorage.setItem("tccfn-form", JSON.stringify(newInputs));
   };
 
   const handleSave = async () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -18,6 +18,13 @@ const BudgetaryEstimate = () => {
     confidential: 'Yes'
   });
 
+  useEffect(() => {
+    const storedInputs = JSON.parse(localStorage.getItem("ipa-form"));
+    if (storedInputs) {
+      setInputs(storedInputs);
+    }
+  } , [setInputs]);
+
   const handleChange = (e) => {
     if (e.target.name === 'date') {
       // Extract only the date part (yyyy-mm-dd) from the input value
@@ -26,6 +33,10 @@ const BudgetaryEstimate = () => {
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
+
+    const newInputs = { ...inputs, [e.target.name]: e.target.value };
+    setInputs(newInputs);
+    localStorage.setItem("ipa-form", JSON.stringify(newInputs));
   };
   
   

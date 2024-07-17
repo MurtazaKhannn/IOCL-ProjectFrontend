@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -6,34 +6,47 @@ import { useNavigate } from "react-router-dom";
 
 const AdministrativePage = () => {
   const [inputs, setInputs] = useState({
-    section: 'Information System',
-    department: 'Information Technology',
-    location: 'Uttar Pradesh',
-    date: '',
-    subject: '',
-    background: '',
-    proposal: '',
-    budgetAndFinancialImplication: '',
-    doaApplicable: 'No',
-    effectiveAuthority: '',
-    conclusion: '',
-    confidential: 'Yes'
+    section: "Information System",
+    department: "Information Technology",
+    location: "Uttar Pradesh",
+    date: "",
+    subject: "",
+    background: "",
+    proposal: "",
+    budgetAndFinancialImplication: "",
+    doaApplicable: "No",
+    effectiveAuthority: "",
+    conclusion: "",
+    confidential: "Yes",
   });
 
+  useEffect(() => {
+    const storedInputs = JSON.parse(localStorage.getItem("ap-form"));
+    if (storedInputs) {
+      setInputs(storedInputs);
+    }
+  } , [setInputs]);
+
+  
+
   const handleChange = (e) => {
-    if (e.target.name === 'date') {
+    if (e.target.name === "date") {
       // Extract only the date part (yyyy-mm-dd) from the input value
-      const dateValue = e.target.value.split('T')[0]; // split to remove timestamp
+      const dateValue = e.target.value.split("T")[0]; // split to remove timestamp
       setInputs({ ...inputs, [e.target.name]: dateValue });
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
+
+    const newInputs = { ...inputs, [e.target.name]: e.target.value };
+    setInputs(newInputs);
+    localStorage.setItem("ap-form", JSON.stringify(newInputs));
   };
-  
-  
+
+
   const handleSave = async () => {
     try {
-      const res = await fetch("/api/forms/administrativepage" , {
+      const res = await fetch("/api/forms/administrativepage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +56,7 @@ const AdministrativePage = () => {
 
       const data = await res.json();
       console.log("Response data:", data); // Debugging line
-    
+
       if (data.error) {
         alert("Error: " + data.error);
         return;
