@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IOL from "../assets/logo.webp";
 import { useSetRecoilState } from 'recoil';
 import userAtom from '../atoms/userAtom.js';
@@ -12,6 +12,14 @@ const Login = () => {
     email: '',
     password: ''
   });
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user-tender'));
+    if (user) {
+      setUser(user);
+      navigate('/draft', { replace: true });
+    }
+  }, [navigate, setUser]);
 
   const handleChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -41,7 +49,7 @@ const Login = () => {
       setUser(data);
 
       console.log("Navigating to /draft"); // Debugging line
-      navigate("/draft");
+      navigate("/draft", { replace: true });
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error); // Debugging line
