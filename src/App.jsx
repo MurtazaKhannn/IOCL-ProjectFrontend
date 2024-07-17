@@ -23,7 +23,7 @@ const App = () => {
   return (
     <>
             
-      <div className="w-full h-screen">
+      <div className="w-full min-h-screen bg-zinc-100">
         {user ? <div><Navbar /></div> : ""}
         <Routes>
           <Route path='/' element={user ? <DraftPage /> : <Navigate to="/auth" />}   />

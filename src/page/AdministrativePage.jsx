@@ -275,7 +275,7 @@ const AdministrativePage = () => {
 
             <div className="flex gap-5 items-center justify-center">
               <button
-                className="bg-orange-500 rounded-md w-1/3 sm:w-1/4 lg:w-1/6 text-white"
+                className="bg-orange-500 rounded-md w-full max-w-xs text-white"
                 type="button"
                 id="saveBtn"
                 onClick={generatePDF}
@@ -285,7 +285,7 @@ const AdministrativePage = () => {
 
               <button
                 type="submit"
-                className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
+                className="bg-zinc-100 text-black rounded-md w-full max-w-xs"
               >
                 Save
               </button>
@@ -293,7 +293,7 @@ const AdministrativePage = () => {
               <button
                 id="dropbtn"
                 onClick={() => navigate("/createnew")}
-                className="bg-blue-500 rounded-md w-full max-w-xs text-white py-3"
+                className="bg-blue-500 rounded-md w-full max-w-xs text-white"
               >
                 Back to DROP-DOWN
               </button>

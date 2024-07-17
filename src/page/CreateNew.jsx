@@ -18,7 +18,7 @@ const CreateNew = () => {
   };
 
   return (
-    <div className="w-full min-h-[88.9vh] bg-zinc-100 font-teko">
+    <div className="w-full mt-20 bg-zinc-100 font-teko ">
       <div className="w-full h-full flex flex-col pt-20 gap-10 items-center justify-center">
         <h1 className="text-4xl sm:text-5xl font-semibold">CREATE NEW</h1>
         <div className="w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3 h-auto p-6 flex flex-col gap-3 items-center justify-center bg-white rounded-md shadow-md">
