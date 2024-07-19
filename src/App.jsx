@@ -13,7 +13,16 @@ import CreateNew from "./page/CreateNew";
 import { useRecoilValue } from "recoil";
 import userAtom from "./atoms/userAtom";
 import DraftPage from "./page/DraftPage";
+import SavedDraft from "./page/SavedDraft";
 import SignUp from "./components/SignUp";
+import Sadap from "./page/Sadap";
+import Sadbe from "./page/Sadbe";
+import Sadtcci from "./page/Sadtcci";
+import Sadtccfn from "./page/Sadtccfn";
+import Sadipa from "./page/Sadipa";
+import SDone from "./page/SDone";
+
+
 
 const App = () => {
 
@@ -31,6 +40,13 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/draft" element={<DraftPage />} />
+          <Route path="/savedraft" element={<SavedDraft />} />
+          <Route path="/savedraft/:draftId" element={<SDone />} />
+          <Route path="/savedraftap/:draftId" element={<Sadap />} />
+          <Route path="/savedraftbe/:draftId" element={<Sadbe />} />
+          <Route path="/savedrafttcci/:draftId" element={<Sadtcci />} />
+          <Route path="/savedrafttccfn/:draftId" element={<Sadtccfn />} />
+          <Route path="/savedraftipa/:draftId" element={<Sadipa />} />
           <Route path="/administrativepage" element={<AdministrativePage />} />
           <Route path="/budgetaryestimate" element={<BudgetaryEstimate />}  />
           <Route path="/inprincipleapproval" element={<InprincipleApproval />} />

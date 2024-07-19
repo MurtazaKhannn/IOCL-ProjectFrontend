@@ -19,7 +19,7 @@ const DraftCard = () => {
         <div className='w-full md:w-[55vw] h-[35%] pt-5 flex flex-col items-center justify-center rounded-md bg-orange-500 p-4'>
           <div className='flex flex-col items-center justify-center gap-3'>
             <p className='p-2 text-[1.2rem] md:text-[1.8rem] w-full text-center'>View and manage your tenders, edit drafts, and finalize them for submission.</p>
-            <button  className='text-[0.8rem] md:text-[1rem] mb-4 flex justify-center items-center w-full md:w-[15vw] p-2 font-semibold rounded-md bg-white text-black'>Saved Draft</button>
+            <button onClick={() => {navigate("/savedraft")}}  className='text-[0.8rem] md:text-[1rem] mb-4 flex justify-center items-center w-full md:w-[15vw] p-2 font-semibold rounded-md bg-white text-black'>Saved Draft</button>
           </div>
         </div>
         

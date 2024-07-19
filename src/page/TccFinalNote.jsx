@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -23,7 +23,7 @@ const BudgetaryEstimate = () => {
       setInputs(storedInputs);
     }
   } , [setInputs]);
-
+    
   const handleChange = (e) => {
     if (e.target.name === "date") {
       // Extract only the date part (yyyy-mm-dd) from the input value
