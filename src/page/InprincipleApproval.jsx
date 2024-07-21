@@ -4,9 +4,8 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
 
-const BudgetaryEstimate = () => {
-
-  const [inputs, setInputs] = useState({
+const InprincipleApproval = () => {
+  const predefinedValues = {
     section: 'Information System',
     department: 'Information Technology',
     location: 'Uttar Pradesh',
@@ -15,20 +14,21 @@ const BudgetaryEstimate = () => {
     perspective: '',
     proposal: '',
     conclusion: '',
-    confidential: 'Yes'
-  });
+    confidential: 'Yes',
+  };
+
+  const [inputs, setInputs] = useState(predefinedValues);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("ipa-form"));
     if (storedInputs) {
       setInputs(storedInputs);
     }
-  } , [setInputs]);
+  }, [setInputs]);
 
   const handleChange = (e) => {
     if (e.target.name === 'date') {
-      // Extract only the date part (yyyy-mm-dd) from the input value
-      const dateValue = e.target.value.split('T')[0]; // split to remove timestamp
+      const dateValue = e.target.value.split('T')[0];
       setInputs({ ...inputs, [e.target.name]: dateValue });
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -38,11 +38,10 @@ const BudgetaryEstimate = () => {
     setInputs(newInputs);
     localStorage.setItem("ipa-form", JSON.stringify(newInputs));
   };
-  
-  
+
   const handleSave = async () => {
     try {
-      const res = await fetch("/api/forms/inprincipleapproval" , {
+      const res = await fetch("/api/forms/inprincipleapproval", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,12 +50,16 @@ const BudgetaryEstimate = () => {
       });
 
       const data = await res.json();
-      console.log("Response data:", data); // Debugging line
-    
+      console.log("Response data:", data);
+
       if (data.error) {
         alert("Error: " + data.error);
         return;
       }
+
+      // Reset form fields to null or empty after successful save
+      setInputs(predefinedValues);
+      localStorage.removeItem("ipa-form");
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error);
@@ -68,45 +71,37 @@ const BudgetaryEstimate = () => {
     handleSave();
   };
 
-
   const navigate = useNavigate();
 
-    const generatePDF = async () => {
+  const generatePDF = async () => {
+    const saveButton = document.getElementById("saveBtn");
+    const dropbtn = document.getElementById("dropbtn");
+    dropbtn.style.display = "none";
+    saveButton.style.display = "none";
 
-        // Hide the Save button
-        const saveButton = document.getElementById("saveBtn");
-        const dropbtn = document.getElementById("dropbtn");
-        dropbtn.style.display = "none";
-        saveButton.style.display = "none";
-    
-        const input = document.getElementById("formContainer");
-        const canvas = await html2canvas(input);
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-    
-        // Get the dimensions of the canvas
-        const imgWidth = 210; // A4 width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-        // Scale the image to fit within the page
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
-        const scaledWidth = imgWidth * scaleFactor;
-        const scaledHeight = imgHeight * scaleFactor;
-    
-        // Calculate the x and y coordinates to center the image
-        const xOffset = (pdfWidth - scaledWidth) / 2;
-        const yOffset = (pdfHeight - scaledHeight) / 2;
-    
-        pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
-        pdf.save("inprincipleapproval.pdf");
-    
-        // Show the Save button again
-        saveButton.style.display = "block";
-        dropbtn.style.display = "block";
-      };
+    const input = document.getElementById("formContainer");
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
 
+    const imgWidth = 210;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
+    const scaledWidth = imgWidth * scaleFactor;
+    const scaledHeight = imgHeight * scaleFactor;
+
+    const xOffset = (pdfWidth - scaledWidth) / 2;
+    const yOffset = (pdfHeight - scaledHeight) / 2;
+
+    pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
+    pdf.save("inprincipleapproval.pdf");
+
+    saveButton.style.display = "block";
+    dropbtn.style.display = "block";
+  };
 
   return (
     <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-teko">
@@ -145,7 +140,6 @@ const BudgetaryEstimate = () => {
                   value={inputs.section}
                   readOnly
                 />
-
               </div>
 
               <div className="flex flex-col gap-4">
@@ -155,10 +149,8 @@ const BudgetaryEstimate = () => {
                   id="department"
                   name="department"
                   value={inputs.department}
-                  onChange={handleChange}
                   readOnly
                 />
-
               </div>
 
               <div className="flex flex-col gap-4">
@@ -168,7 +160,6 @@ const BudgetaryEstimate = () => {
                   id="location"
                   name="location"
                   value={inputs.location}
-                  onChange={handleChange}
                   readOnly
                 />
               </div>
@@ -193,9 +184,7 @@ const BudgetaryEstimate = () => {
                   name="subject"
                   value={inputs.subject}
                   onChange={handleChange}
-                >
-                  Default message 5
-                </textarea>
+                />
               </div>
 
               <div className="flex flex-col gap-4">
@@ -206,9 +195,7 @@ const BudgetaryEstimate = () => {
                   name="perspective"
                   value={inputs.perspective}
                   onChange={handleChange}
-                >
-                  Default message 6
-                </textarea>
+                />
               </div>
 
               <div className="flex flex-col gap-4">
@@ -219,11 +206,8 @@ const BudgetaryEstimate = () => {
                   name="proposal"
                   value={inputs.proposal}
                   onChange={handleChange}
-                >
-                  Default message 7
-                </textarea>
+                />
               </div>
-
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="conclusion">Conclusion:</label>
@@ -233,9 +217,7 @@ const BudgetaryEstimate = () => {
                   name="conclusion"
                   value={inputs.conclusion}
                   onChange={handleChange}
-                >
-                  Default message 10
-                </textarea>
+                />
               </div>
 
               <div className="flex gap-5">
@@ -252,7 +234,14 @@ const BudgetaryEstimate = () => {
                     Yes
                   </label>
                   <label>
-                    <input type="radio" name="confidential" value="No" checked={inputs.confidential === "No"} onChange={handleChange} /> No
+                    <input
+                      type="radio"
+                      name="confidential"
+                      value="No"
+                      checked={inputs.confidential === "No"}
+                      onChange={handleChange}
+                    />{" "}
+                    No
                   </label>
                 </div>
               </div>
@@ -274,9 +263,15 @@ const BudgetaryEstimate = () => {
                   Save
                 </button>
 
-
-                <button id="dropbtn" onClick={() => {navigate("/createnew")}} className="bg-blue-500 rounded-md w-full max-w-xs text-white">Back to DROP-DOWN</button>
-
+                <button
+                  id="dropbtn"
+                  onClick={() => {
+                    navigate("/createnew");
+                  }}
+                  className="bg-blue-500 rounded-md w-full max-w-xs text-white"
+                >
+                  Back to DROP-DOWN
+                </button>
               </div>
               <p id="saveMessage" className="flex justify-center hidden">
                 Information saved
@@ -289,4 +284,4 @@ const BudgetaryEstimate = () => {
   );
 };
 
-export default BudgetaryEstimate;
+export default InprincipleApproval;

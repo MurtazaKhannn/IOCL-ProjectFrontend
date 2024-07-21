@@ -6,16 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 const BudgetaryEstimate = () => {
 
-  const [inputs, setInputs] = useState({
+  const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
     location: "Uttar Pradesh",
     date: "",
     subject: "",
-    recommendation: "",   
-    doaApplicable: "No", 
-    confidential: "Yes"
-  });
+    recommendation: "",
+    doaApplicable: "No",
+    confidential: "Yes",
+  };
+
+  const [inputs, setInputs] = useState(predefinedValues);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("tccfn-form"));
@@ -55,6 +57,9 @@ const BudgetaryEstimate = () => {
         alert("Error: " + data.error);
         return;
       }
+
+      setInputs(predefinedValues);
+      localStorage.removeItem("tccfn-form");
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error);

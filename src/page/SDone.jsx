@@ -40,7 +40,7 @@ const SDone = () => {
 
   return (
     <div className='w-full min-h-[88.9vh] gap-5 flex flex-col font-teko justify-center items-center'>
-      <h1 className='text-4xl font-semibold '>Administrative Page</h1>
+      <h1 className='text-4xl font-semibold '>SELECT FORM</h1>
       <div className='flex w-full h-full items-center justify-center'>
         <select onChange={handleFormSelect} className="p-2 w-[20vw] rounded-md bg-white">
           <option value="">Select Form</option>

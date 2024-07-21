@@ -7,15 +7,33 @@ const CreateNew = () => {
   const navigate = useNavigate();
 
   const handleDraft = async () => {
-    navigate("/sad" , {state : { triggerAction: true }})
-  }
+    try {
+      const res = await fetch('/api/forms/savedraft', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Draft saved successfully', data);
+        // navigate("/sad", { state: { triggerAction: true } });
+      } else {
+        console.log('Failed to save draft');
+      }
+    } catch (error) {
+      console.log('Error saving draft', error);
+    }
+  };
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     setSelectedOption(selectedValue);
 
     // Find the corresponding option object from the options array
-    const selectedOptionObj = options.find(option => option.label === selectedValue);
+    const selectedOptionObj = options.find((option) => option.label === selectedValue);
     if (selectedOptionObj) {
       navigate(`${selectedOptionObj.value}`);
     }
@@ -35,23 +53,23 @@ const CreateNew = () => {
             onChange={handleChange}
             className="w-full cursor-pointer sm:w-[75%] md:w-[60%] lg:w-[50%] text-base sm:text-lg md:text-xl flex items-center justify-center border-2 rounded-md border-black p-2"
           >
-            <option value="" className="text-base crusor-pointer sm:text-lg md:text-xl">Select an option</option>
+            <option value="" className="text-base crusor-pointer sm:text-lg md:text-xl">
+              Select an option
+            </option>
             {options.map((option) => (
               <option key={option.value} value={option.label} className="text-base cursor-pointer sm:text-lg md:text-xl">
                 {option.label}
               </option>
             ))}
           </select>
-          {/* <p className="text-lg sm:text-xl md:text-2xl">Selected option: {selectedOption}</p> */}
           <div className="flex gap-10">
-          <button className="bg-orange-500 text-white rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
-            Submit
-          </button>
-          <button onClick={handleDraft} className="bg-zinc-200 text-black rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
-            Save as draft
-          </button>
+            <button className="bg-orange-500 text-white rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
+              Submit
+            </button>
+            <button onClick={handleDraft} className="bg-zinc-200 text-black rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
+              Save as draft
+            </button>
           </div>
-          
         </div>
       </div>
     </div>

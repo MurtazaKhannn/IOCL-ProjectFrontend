@@ -6,17 +6,19 @@ import { useNavigate } from "react-router-dom";
 
 const BudgetaryEstimate = () => {
 
-  const [inputs, setInputs] = useState({
-    section: 'Information System',
-    department: 'Information Technology',
-    location: 'Uttar Pradesh',
-    date: '',
-    subject: '',
-    background: '',
-    proposal: '',
-    conclusion: '',
-    confidential: 'Yes'
-  });
+  const predefinedValues = {
+    section: "Information System",
+    department: "Information Technology",
+    location: "Uttar Pradesh",
+    date: "",
+    subject: "",
+    background: "",
+    proposal: "",
+    conclusion: "",
+    confidential: "Yes",
+  };
+
+  const [inputs, setInputs] = useState(predefinedValues);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("be-form"));
@@ -58,6 +60,9 @@ const BudgetaryEstimate = () => {
         alert("Error: " + data.error);
         return;
       }
+
+      setInputs(predefinedValues);
+      localStorage.removeItem("be-form");
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error);
