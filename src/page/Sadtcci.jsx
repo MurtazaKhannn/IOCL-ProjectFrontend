@@ -8,7 +8,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`/api/forms/savedraftap/${draftId}`, {
+        const res = await fetch(`/api/forms/TCC%20Intermediate/${draftId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -37,36 +37,35 @@ const SAD = () => {
       <h1 className='text-4xl font-semibold '>TCC Intermediate</h1>
       <div className='flex w-full h-full items-center justify-center'>
         {/* <h2>AP Data</h2> */}
-        {draft.tcciData.map((item, index) => (
-          <div className='flex flex-col items-center w-full justify-center gap-5 p-2' key={index}>
+          <div className='flex flex-col items-center w-full justify-center gap-5 p-2'>
             <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
               <label htmlFor="section">Section</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.section} readOnly />
+              <input type="text" className='rounded-md  p-2 w-full' value={draft.section} readOnly />
             </div>
 
             <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
               <label htmlFor="department">Department</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.department} readOnly />
+              <input type="text" className='rounded-md  p-2 w-full' value={draft.department} readOnly />
             </div>
 
             <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
               <label htmlFor="location">Location</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.location} readOnly />
+              <input type="text" className='rounded-md  p-2 w-full' value={draft.location} readOnly />
             </div>
 
             <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
               <label htmlFor="date">Date</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.date.split('T')[0]} readOnly />
+              <input type="text" className='rounded-md  p-2 w-full' value={draft.date.split('T')[0]} readOnly />
             </div>
 
             <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
               <label htmlFor="subject">Subject</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.subject} readOnly />
+              <input type="text" className='rounded-md  p-2 w-full' value={draft.subject} readOnly />
             </div>
 
             <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
               <label htmlFor="confidential">Confidential</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.confidential} readOnly />
+              <input type="text" className='rounded-md  p-2 w-full' value={draft.confidential} readOnly />
             </div>
 
             <div className='flex w-2/3 items-center justify-center gap-64 text-xl'>
@@ -76,7 +75,6 @@ const SAD = () => {
             
 
           </div>
-        ))}
       </div>
     </div>
   );

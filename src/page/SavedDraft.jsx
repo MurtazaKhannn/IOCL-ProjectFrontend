@@ -65,13 +65,13 @@ const SavedDraft = () => {
     }
   };
 
-  const handleDraftClick = (draftId) => {
+  const handleDraftClick = (draftId , draftType) => {
     setLoadingView((prev) => ({ ...prev, [draftId]: true }));
     console.log(loadingView);
     
     setTimeout(() => {
       setLoadingView((prev) => ({ ...prev, [draftId]: false }));
-      navigate(`/savedraftap/${draftId}`);
+      navigate(`/${draftType}/${draftId}`);
     }, 500); // Simulate a delay of 2 seconds
   };
 
@@ -98,7 +98,7 @@ const SavedDraft = () => {
               </button>
 
               <button
-                onClick={() => handleDraftClick(draft._id)}
+                onClick={() => handleDraftClick(draft._id , draft.formName)}
                 className="text-white text-xl bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded-md"
               >
                 {loadingView[draft._id] ? <ClipLoader  size={20} color={"#fff"} /> : "Edit"}

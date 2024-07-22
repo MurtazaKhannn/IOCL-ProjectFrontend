@@ -42,11 +42,11 @@ const App = () => {
           <Route path="/draft" element={<DraftPage />} />
           <Route path="/savedrafts/:userId" element={<SavedDraft />} />
           <Route path="/savedraft/:draftId" element={<SDone />} />
-          <Route path="/savedraftap/:draftId" element={<Sadap />} />
-          <Route path="/savedraftbe/:draftId" element={<Sadbe />} />
-          <Route path="/savedrafttcci/:draftId" element={<Sadtcci />} />
-          <Route path="/savedrafttccfn/:draftId" element={<Sadtccfn />} />
-          <Route path="/savedraftipa/:draftId" element={<Sadipa />} />
+          <Route path="/Administrative Page/:draftId" element={<Sadap />} />
+          <Route path="/Budgetary Estimate/:draftId" element={<Sadbe />} />
+          <Route path="/TCC Intermediate/:draftId" element={<Sadtcci />} />
+          <Route path="/TCC FinalNote/:draftId" element={<Sadtccfn />} />
+          <Route path="/Inprinciple Approval/:draftId" element={<Sadipa />} />
           <Route path="/administrativepage" element={<AdministrativePage />} />
           <Route path="/budgetaryestimate" element={<BudgetaryEstimate />}  />
           <Route path="/inprincipleapproval" element={<InprincipleApproval />} />

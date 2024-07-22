@@ -8,16 +8,19 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`/api/forms/savedraftap/${draftId}`, {
+        const url = `/api/forms/Administrative%20Page/${draftId}`;
+        console.log('Fetching URL:', url); // Add this line for debugging
+        const res = await fetch(url, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
           credentials: 'include',
         });
-
+    
         if (res.ok) {
           const data = await res.json();
+          console.log(data);
           setDraft(data);
         } else {
           console.log('Failed to fetch Draft Details');
@@ -26,6 +29,8 @@ const SAD = () => {
         console.log('Error in fetching draft details', error);
       }
     };
+    
+    
 
     fetchDraft();
   }, [draftId]);
