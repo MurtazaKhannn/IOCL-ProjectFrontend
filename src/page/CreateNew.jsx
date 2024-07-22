@@ -67,9 +67,9 @@ const CreateNew = () => {
             <button className="bg-orange-500 text-white rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
               Submit
             </button>
-            <button onClick={handleDraft} className="bg-zinc-200 text-black rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
+            {/* <button onClick={handleDraft} className="bg-zinc-200 text-black rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
               Save as draft
-            </button>
+            </button> */}
             <button onClick={() => {navigate("/")}} className="bg-violet-500 text-white rounded-md px-4 py-2">
               Main Menu
             </button>

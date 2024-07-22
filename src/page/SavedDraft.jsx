@@ -13,7 +13,7 @@ const SavedDraft = () => {
   useEffect(() => {
     const fetchDrafts = async () => {
       try {
-        const res = await fetch(`/api/forms/savedrafts/${userId}`, {
+        const res = await fetch(`/api/forms/apdraft/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +83,8 @@ const SavedDraft = () => {
             className="p-5 flex flex-col w-3/4 gap-5 ml-5 bg-white rounded-md shadow-md mb-4"
           >
             <div>
-              <h2 className="text-2xl font-bold">{draft._id}</h2>
+              <h2 className="text-2xl font-bold">{draft.formName}</h2>
+              <p>{draft._id}</p>
               <p>CreatedAt: {draft.createdAt ? draft.createdAt.split('T')[0] : 'Date not available'}</p>
               <p>UpdatedAt: {draft.updatedAt ? draft.updatedAt.split('T')[0] : 'Date not available'}</p>
             </div>
