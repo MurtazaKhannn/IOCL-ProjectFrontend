@@ -30,83 +30,83 @@ const SAD = () => {
     fetchDraft();
   }, [draftId]);
 
-  if (!draft) return <><p>Loading ... </p></> ;
+  if (!draft) return <><p>Loading ... </p></>;
 
   return (
     <div className='w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center'>
       <h1 className='text-4xl font-semibold '>Administrative Page</h1>
       <div className='flex w-full h-full items-center justify-center'>
-        {/* <h2>AP Data</h2> */}
-        {draft.apData.map((item, index) => (
-          <div className='flex flex-col items-center w-full justify-center gap-5 p-2' key={index}>
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="section">Section</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.section} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="department">Department</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.department} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="location">Location</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.location} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="date">Date</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.date.split('T')[0]} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="subject">Subject</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.subject} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="background">Background</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.background} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="proposal">Proposal</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.proposal} readOnly />
-            </div>
-            
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="budgetAndFinancialImplication">Budget & Financial Implications</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.budgetAndFinancialImplication} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="doaApplicable">DOA Applicable</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.doaApplicable} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="effectiveAuthority">Effective Authority</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.effectiveAuthority} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="conclusion">Conclusion</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.conclusion} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="confidential">Confidential</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={item.confidential} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-64 text-xl'>
-              <button className='bg-yellow-500 px-6 py-1 rounded-md text-white text-lg'>Edit</button>
-              <button className='bg-orange-500 px-6 py-1 rounded-md text-white text-lg'>Save</button>
-            </div>
-            
-
+        <div className='flex flex-col items-center w-full justify-center gap-5 p-2'>
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="referenceNumber">Ref&nbsp;No</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.referenceNumber} readOnly />
           </div>
-        ))}
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="section">Section</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.section} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="department">Department</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.department} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="location">Location</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.location} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="date">Date</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.date ? draft.date.split('T')[0] : ''} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="subject">Subject</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.subject} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="background">Background</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.background} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="proposal">Proposal</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.proposal} readOnly />
+          </div>
+          
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="budgetAndFinancialImplication">Budget & Financial Implications</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.budgetAndFinancialImplication} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="doaApplicable">DOA Applicable</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.doaApplicable} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="effectiveAuthority">Effective Authority</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.effectiveAuthority} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="conclusion">Conclusion</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.conclusion} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+            <label htmlFor="confidential">Confidential</label>
+            <input type="text" className='rounded-md p-2 w-full' value={draft.confidential} readOnly />
+          </div>
+
+          <div className='flex w-2/3 items-center justify-center gap-64 text-xl'>
+            <button className='bg-yellow-500 px-6 py-1 rounded-md text-white text-lg'>Edit</button>
+            <button className='bg-orange-500 px-6 py-1 rounded-md text-white text-lg'>Save</button>
+          </div>
+        </div>
       </div>
     </div>
   );
