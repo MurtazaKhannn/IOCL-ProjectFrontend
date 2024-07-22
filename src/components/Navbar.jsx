@@ -33,7 +33,7 @@ const Navbar = () => {
     <div className="w-full h-20 font-teko bg-white shadow-md">
       <div className="w-full h-full flex items-center justify-between px-4 md:px-8">
         <div className="flex items-center justify-center">
-          <img className="w-20 h-auto md:w-28" src={IOL} alt="Logo" />
+          <img className="w-20 h-auto md:w-28 cursor-pointer" onClick={() => {navigate("/")}} src={IOL} alt="Logo" />
         </div>
         <div className="flex-1 text-center">
           <h1 className="text-xl md:text-2xl lg:text-[2.5rem] font-bold">

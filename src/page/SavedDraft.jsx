@@ -13,7 +13,7 @@ const SavedDraft = () => {
   useEffect(() => {
     const fetchDrafts = async () => {
       try {
-        const res = await fetch(`/api/forms/apdraft/${userId}`, {
+        const res = await fetch(`/api/forms/alldrafts/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,13 +37,14 @@ const SavedDraft = () => {
     }
   }, [userId]);
 
-  const handleDelete = async (draftId) => {
+  const handleDelete = async (draftId , draftType) => {
+    
     const isConfirmed = window.confirm("Do you really want to delete this draft?");
 
     if (isConfirmed) {
       try {
         setLoadingDelete(true);
-        const res = await fetch(`/api/forms/delete/${draftId}`, {
+        const res = await fetch(`/api/forms/delete/${draftId}/${draftType}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -70,7 +71,7 @@ const SavedDraft = () => {
     
     setTimeout(() => {
       setLoadingView((prev) => ({ ...prev, [draftId]: false }));
-      navigate(`/savedraft/${draftId}`);
+      navigate(`/savedraftap/${draftId}`);
     }, 500); // Simulate a delay of 2 seconds
   };
 
@@ -90,7 +91,7 @@ const SavedDraft = () => {
             </div>
             <div className="flex justify-between">
               <button
-                onClick={() => handleDelete(draft._id)}
+                onClick={() => handleDelete(draft._id , draft.formName)}
                 className="text-white text-xl bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
               >
                 {loadingDelete ? <ClipLoader size={20} color={"#fff"} /> : "Delete"}
