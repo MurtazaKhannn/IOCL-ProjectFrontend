@@ -18,6 +18,7 @@ const CreateNew = () => {
 
       if (res.ok) {
         const data = await res.json();
+        alert('Draft saved successfully')
         console.log('Draft saved successfully', data);
         // navigate("/sad", { state: { triggerAction: true } });
       } else {
@@ -68,6 +69,9 @@ const CreateNew = () => {
             </button>
             <button onClick={handleDraft} className="bg-zinc-200 text-black rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
               Save as draft
+            </button>
+            <button onClick={() => {navigate("/")}} className="bg-violet-500 text-white rounded-md px-4 py-2">
+              Main Menu
             </button>
           </div>
         </div>
