@@ -3,10 +3,13 @@ import IOL from "../assets/logo.webp";
 import { useSetRecoilState } from 'recoil';
 import userAtom from '../atoms/userAtom.js';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../page/Spinner.jsx';
+import { ClipLoader } from 'react-spinners';
 
 const Login = () => {
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userAtom);
+  const [loading, setLoading] = useState(false);
 
   const [inputs, setInputs] = useState({
     email: '',
@@ -28,6 +31,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,6 +57,8 @@ const Login = () => {
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error); // Debugging line
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -73,7 +79,7 @@ const Login = () => {
             <input className='bg-zinc-100 rounded-md p-3 outline-none font-teko text-xl ' placeholder='Enter your password ' type="password" name='password' value={inputs.password} onChange={handleChange} />
           </div>
           <p className='font-teko text-xl'>didn't have an account? <i className='cursor-pointer' onClick={() => { navigate("/signup") }}>signUp</i></p>
-          <button className='border-3 border-zinc-500 px-5 py-1 rounded-md hover:bg-orange-500 hover:text-white hover:border-none font-teko text-2xl' type='submit'>Login</button>
+          <button className='border-3 border-zinc-500 px-5 py-1 rounded-md hover:bg-orange-500 hover:text-white hover:border-none font-teko text-2xl' type='submit'>{loading ? <ClipLoader size={20} color={"#000"} /> : "Login"}</button>
         </form>
       </div>
     </div>

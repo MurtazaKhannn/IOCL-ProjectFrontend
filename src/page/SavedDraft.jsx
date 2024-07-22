@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"; // For getting URL parameters
+import { useNavigate, useParams } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const SavedDraft = () => {
   const { userId } = useParams(); // Get userId from URL params
   const [drafts, setDrafts] = useState([]);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingView, setLoadingView] = useState({});
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,11 +38,11 @@ const SavedDraft = () => {
   }, [userId]);
 
   const handleDelete = async (draftId) => {
-    // Show confirmation dialog
     const isConfirmed = window.confirm("Do you really want to delete this draft?");
 
     if (isConfirmed) {
       try {
+        setLoadingDelete(true);
         const res = await fetch(`/api/forms/delete/${draftId}`, {
           method: "DELETE",
           headers: {
@@ -48,19 +52,26 @@ const SavedDraft = () => {
         });
 
         if (res.ok) {
-          // Remove the draft from the state only if deletion was successful
           setDrafts(drafts.filter((draft) => draft._id !== draftId));
         } else {
           console.log("Failed to delete draft");
         }
       } catch (error) {
         console.log("Error deleting draft", error);
+      } finally {
+        setLoadingDelete(false);
       }
     }
   };
 
   const handleDraftClick = (draftId) => {
-    navigate(`/savedraft/${draftId}`);
+    setLoadingView((prev) => ({ ...prev, [draftId]: true }));
+    console.log(loadingView);
+    
+    setTimeout(() => {
+      setLoadingView((prev) => ({ ...prev, [draftId]: false }));
+      navigate(`/savedraft/${draftId}`);
+    }, 500); // Simulate a delay of 2 seconds
   };
 
   return (
@@ -76,26 +87,25 @@ const SavedDraft = () => {
               <p>CreatedAt: {draft.createdAt ? draft.createdAt.split('T')[0] : 'Date not available'}</p>
               <p>UpdatedAt: {draft.updatedAt ? draft.updatedAt.split('T')[0] : 'Date not available'}</p>
             </div>
-            {/* Add more draft details here */}
             <div className="flex justify-between">
               <button
                 onClick={() => handleDelete(draft._id)}
                 className="text-white text-xl bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
               >
-                Delete
+                {loadingDelete ? <ClipLoader size={20} color={"#fff"} /> : "Delete"}
               </button>
 
               <button
                 onClick={() => handleDraftClick(draft._id)}
                 className="text-white text-xl bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded-md"
               >
-                View
+                {loadingView[draft._id] ? <ClipLoader  size={20} color={"#fff"} /> : "Edit"}
               </button>
             </div>
           </div>
         ))
       ) : (
-        <p>No drafts available</p>
+        <p className="flex items-center justify-center w-full h-[88.9vh] text-5xl">No drafts available</p>
       )}
     </div>
   );
