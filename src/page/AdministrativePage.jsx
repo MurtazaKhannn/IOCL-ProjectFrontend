@@ -3,6 +3,7 @@ import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const AdministrativePage = () => {
   const predefinedValues = {
@@ -22,6 +23,7 @@ const AdministrativePage = () => {
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
+  const [loading , setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("ap-form"));
@@ -46,6 +48,7 @@ const AdministrativePage = () => {
 
   const handleSave = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/forms/administrativepage", {
         method: "POST",
         headers: {
@@ -66,7 +69,11 @@ const AdministrativePage = () => {
       localStorage.removeItem("ap-form");
     } catch (error) {
       alert("Error: " + error);
+      setLoading(false);
       console.log("Error:", error);
+      return ;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -314,7 +321,7 @@ const AdministrativePage = () => {
                 type="submit"
                 className="bg-zinc-100 py-2 text-black rounded-md w-full max-w-xs"
               >
-                Save
+                {loading ? <ClipLoader size={16} color="000" /> : "Save"}
               </button>
 
               <button

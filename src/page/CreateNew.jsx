@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import options from "../assets/options";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const CreateNew = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const navigate = useNavigate();
+  const [loading , setLoading] = useState(false);
 
   const handleDraft = async () => {
     try {
@@ -40,6 +42,18 @@ const CreateNew = () => {
     }
   };
 
+  const handleMainMenu = async () => {
+    setLoading(true);
+    try {
+      // Simulate a delay for loading
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      navigate("/");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <div className="w-full mt-20 bg-zinc-100 font-teko ">
       <div className="w-full h-full flex flex-col pt-20 gap-10 items-center justify-center">
@@ -70,8 +84,8 @@ const CreateNew = () => {
             {/* <button onClick={handleDraft} className="bg-zinc-200 text-black rounded-md px-4 py-2 text-base sm:text-lg md:text-xl">
               Save as draft
             </button> */}
-            <button onClick={() => {navigate("/")}} className="bg-violet-500 text-white rounded-md px-4 py-2">
-              Main Menu
+            <button onClick={handleMainMenu} className="bg-violet-500 text-white rounded-md px-4 py-2">
+              {loading ? <ClipLoader size={16} color="fff" /> : "Main Menu"}
             </button>
           </div>
         </div>

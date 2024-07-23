@@ -85,7 +85,7 @@ const SavedDraft = () => {
           >
             <div>
               <h2 className="text-2xl font-bold">{draft.formName}</h2>
-              <p>{draft._id}</p>
+              <p className="font-semibold">Ref No &nbsp; : &nbsp; {draft.referenceNumber}</p>
               <p>CreatedAt: {draft.createdAt ? draft.createdAt.split('T')[0] : 'Date not available'}</p>
               <p>UpdatedAt: {draft.updatedAt ? draft.updatedAt.split('T')[0] : 'Date not available'}</p>
             </div>
