@@ -4,6 +4,8 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import { saveAs } from "file-saver";
 
 const AdministrativePage = () => {
   const predefinedValues = {
@@ -23,7 +25,7 @@ const AdministrativePage = () => {
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("ap-form"));
@@ -58,6 +60,7 @@ const AdministrativePage = () => {
       });
 
       const data = await res.json();
+      
       console.log("Response data:", data); // Debugging line
 
       if (data.error) {
@@ -65,13 +68,21 @@ const AdministrativePage = () => {
         return;
       }
 
+      alert("Form saved successfully!")
+
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        referenceNumber: data.referenceNumber, // Update state with reference number
+      }));
+  
+
       setInputs(predefinedValues);
       localStorage.removeItem("ap-form");
     } catch (error) {
       alert("Error: " + error);
       setLoading(false);
       console.log("Error:", error);
-      return ;
+      return;
     } finally {
       setLoading(false);
     }
@@ -83,38 +94,8 @@ const AdministrativePage = () => {
   };
 
   const navigate = useNavigate();
+  
 
-  const generatePDF = async () => {
-    // Hide the Save button during PDF generation
-    const saveButton = document.getElementById("saveBtn");
-    const dropbtn = document.getElementById("dropbtn");
-    saveButton.style.display = "none";
-    dropbtn.style.display = "none";
-
-    const input = document.getElementById("formContainer");
-    const canvas = await html2canvas(input);
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    // Calculate dimensions and scaling for the PDF
-    const imgWidth = 210; // A4 width in mm
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
-    const scaledWidth = imgWidth * scaleFactor;
-    const scaledHeight = imgHeight * scaleFactor;
-    const xOffset = (pdfWidth - scaledWidth) / 2;
-    const yOffset = (pdfHeight - scaledHeight) / 2;
-
-    // Add image to PDF and save
-    pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
-    pdf.save("administrative_approval.pdf");
-
-    // Show the Save button again after PDF generation
-    saveButton.style.display = "block";
-    dropbtn.style.display = "block";
-  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-zinc-100 font-teko">
@@ -125,20 +106,21 @@ const AdministrativePage = () => {
             ADMINISTRATIVE APPROVAL
           </h1>
           <form
+            id="formContainer"
             className="flex flex-col gap-5 w-full max-w-3xl"
             onSubmit={handleSubmit}
           >
-            {/* <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               <label htmlFor="section">Ref No :</label>
-              <input
+              {/* <input
                 className="bg-zinc-100 rounded-md p-2 w-full"
                 id="section"
                 name="section"
                 value={inputs.referenceNumber}
                 onChange={handleChange}
                 readOnly
-              />
-            </div> */}
+              /> */}
+            </div>
             <div className="flex flex-col gap-4">
               <label htmlFor="section">Section:</label>
               <input
@@ -308,14 +290,14 @@ const AdministrativePage = () => {
             </div>
 
             <div className="flex gap-5 items-center justify-center">
-              <button
+              {/* <button
                 className="bg-orange-500 py-2 rounded-md w-full max-w-xs text-white"
                 type="button"
                 id="saveBtn"
                 onClick={generatePDF}
               >
                 Download as PDF
-              </button>
+              </button> */}
 
               <button
                 type="submit"
@@ -323,6 +305,14 @@ const AdministrativePage = () => {
               >
                 {loading ? <ClipLoader size={16} color="000" /> : "Save"}
               </button>
+
+              {/* <button
+                className="bg-green-500 py-2 rounded-md w-full max-w-xs text-white"
+                type="button"
+                onClick={generateDOCX}
+              >
+                Save as DOC
+              </button> */}
 
               <button
                 id="dropbtn"

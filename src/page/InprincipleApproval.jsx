@@ -3,6 +3,7 @@ import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const InprincipleApproval = () => {
   const predefinedValues = {
@@ -18,6 +19,7 @@ const InprincipleApproval = () => {
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
+  const [loading , setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("ipa-form"));
@@ -41,6 +43,7 @@ const InprincipleApproval = () => {
 
   const handleSave = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/forms/inprincipleapproval", {
         method: "POST",
         headers: {
@@ -57,12 +60,18 @@ const InprincipleApproval = () => {
         return;
       }
 
+      alert("Form saved successfully!");
+
       // Reset form fields to null or empty after successful save
       setInputs(predefinedValues);
       localStorage.removeItem("ipa-form");
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error);
+      setLoading(false);
+      return ;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -112,7 +121,7 @@ const InprincipleApproval = () => {
         <div className="w-full min-h-full flex flex-col gap-5 items-center justify-center">
           <img src={IOL} alt="Logo" className="w-3/4 sm:w-1/2 lg:w-1/4" />
           <h1 className="font-semibold text-2xl sm:text-3xl lg:text-4xl">
-            BUDGETARY ESTIMATE
+            INPRINCIPLE APPROVAL
           </h1>
           <div className="w-full flex items-center justify-center gap-10">
             <form
@@ -120,7 +129,7 @@ const InprincipleApproval = () => {
               action=""
               onSubmit={handleSubmit}
             >
-              <div className="flex flex-col gap-4">
+              {/* <div className="flex flex-col gap-4">
                 <label htmlFor="dialogue1">Ref No:</label>
                 <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
@@ -129,7 +138,7 @@ const InprincipleApproval = () => {
                   name="dialogue1"
                   readOnly
                 />
-              </div>
+              </div> */}
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="section">Section:</label>
@@ -247,20 +256,20 @@ const InprincipleApproval = () => {
               </div>
 
               <div className="flex gap-20 items-center justify-center">
-                <button
+                {/* <button
                   className="bg-orange-500 rounded-md w-full max-w-xs text-white"
                   type="button"
                   id="saveBtn"
                   onClick={generatePDF}
                 >
                   Save as PDF
-                </button>
+                </button> */}
 
                 <button
                   type="submit"
                   className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
                 >
-                  Save
+                  {loading ? <ClipLoader size={24} /> : "Save"}
                 </button>
 
                 <button

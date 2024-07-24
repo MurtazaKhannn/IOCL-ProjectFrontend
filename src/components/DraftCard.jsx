@@ -64,7 +64,7 @@ const DraftCard = () => {
               className='text-[0.8rem] md:text-[1rem] mb-4 flex justify-center items-center w-full md:w-[15vw] p-2 font-semibold rounded-md bg-white text-black'
               disabled={loadingDrafts}
             >
-              {loadingDrafts ? <ClipLoader size={20} color={"#000"} /> : "Saved Drafts"}
+              {loadingDrafts ? <ClipLoader size={20} color={"#000"} /> : "Saved"}
             </button>
           </div>
         </div>

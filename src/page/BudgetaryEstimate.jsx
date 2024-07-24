@@ -3,6 +3,7 @@ import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
+import { ClimbingBoxLoader, ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
 
@@ -19,6 +20,7 @@ const BudgetaryEstimate = () => {
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
+  const [loading , setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("be-form"));
@@ -45,6 +47,7 @@ const BudgetaryEstimate = () => {
   
   const handleSave = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/forms/budgetaryestimate" , {
         method: "POST",
         headers: {
@@ -61,11 +64,17 @@ const BudgetaryEstimate = () => {
         return;
       }
 
+      alert("Form saved successfully!");
+
       setInputs(predefinedValues);
       localStorage.removeItem("be-form");
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error);
+      setLoading(false);
+      return ;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,7 +137,7 @@ const BudgetaryEstimate = () => {
               action=""
               onSubmit={handleSubmit}
             >
-              <div className="flex flex-col gap-4">
+              {/* <div className="flex flex-col gap-4">
                 <label htmlFor="dialogue1">Ref No:</label>
                 <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
@@ -137,7 +146,7 @@ const BudgetaryEstimate = () => {
                   name="dialogue1"
                   readOnly
                 />
-              </div>
+              </div> */}
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="section">Section:</label>
@@ -259,20 +268,20 @@ const BudgetaryEstimate = () => {
               </div>
 
               <div className="flex gap-20 items-center justify-center">
-                <button
+                {/* <button
                   className="bg-orange-500 rounded-md w-full max-w-xs text-white"
                   type="button"
                   id="saveBtn"
                   onClick={generatePDF}
                 >
                   Save as PDF
-                </button>
+                </button> */}
 
                 <button
                   type="submit"
                   className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
                 >
-                  Save
+                  {loading ? <ClipLoader size={24} /> : "Save"}
                 </button>
 
 
