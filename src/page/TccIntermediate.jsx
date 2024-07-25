@@ -4,8 +4,9 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import TCCIDetails from "../components/TCCIDetails";
 
-const BudgetaryEstimate = () => {
+const TCCIntermediate = () => {
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -16,14 +17,14 @@ const BudgetaryEstimate = () => {
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("tcci-form"));
     if (storedInputs) {
       setInputs(storedInputs);
     }
-  } , [setInputs]);
+  }, [setInputs]);
 
   const handleChange = (e) => {
     if (e.target.name === "date") {
@@ -37,7 +38,6 @@ const BudgetaryEstimate = () => {
     const newInputs = { ...inputs, [e.target.name]: e.target.value };
     setInputs(newInputs);
     localStorage.setItem("tcci-form", JSON.stringify(newInputs));
-
   };
 
   const handleSave = async () => {
@@ -67,7 +67,7 @@ const BudgetaryEstimate = () => {
       alert("Error: " + error);
       console.log("Error:", error);
       setLoading(false);
-      return ;
+      return;
     } finally {
       setLoading(false);
     }
@@ -80,40 +80,6 @@ const BudgetaryEstimate = () => {
 
   const navigate = useNavigate();
 
-  const generatePDF = async () => {
-    // Hide the Save button
-    const saveButton = document.getElementById("saveBtn");
-    const dropbtn = document.getElementById("dropbtn");
-    dropbtn.style.display = "none";
-    saveButton.style.display = "none";
-
-    const input = document.getElementById("formContainer");
-    const canvas = await html2canvas(input);
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    // Get the dimensions of the canvas
-    const imgWidth = 210; // A4 width in mm
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    // Scale the image to fit within the page
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
-    const scaledWidth = imgWidth * scaleFactor;
-    const scaledHeight = imgHeight * scaleFactor;
-
-    // Calculate the x and y coordinates to center the image
-    const xOffset = (pdfWidth - scaledWidth) / 2;
-    const yOffset = (pdfHeight - scaledHeight) / 2;
-
-    pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
-    pdf.save("tccintermediate.pdf");
-
-    // Show the Save button again
-    saveButton.style.display = "block";
-    dropbtn.style.display = "block";
-  };
 
   return (
     <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-teko">
@@ -200,7 +166,15 @@ const BudgetaryEstimate = () => {
                   value={inputs.subject}
                   onChange={handleChange}
                 />
+
+                {/* <textarea
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name=""
+                  id=""
+                ><TCCIDetails /></textarea> */}
               </div>
+
+              <TCCIDetails />
 
               <div className="flex gap-5">
                 <label>Confidential:</label>
@@ -230,14 +204,6 @@ const BudgetaryEstimate = () => {
               </div>
 
               <div className="flex gap-20 items-center justify-center">
-                {/* <button
-                  className="bg-orange-500 rounded-md w-full max-w-xs text-white"
-                  type="button"
-                  id="saveBtn"
-                  onClick={generatePDF}
-                >
-                  Save as PDF
-                </button> */}
 
                 <button
                   type="submit"
@@ -267,4 +233,4 @@ const BudgetaryEstimate = () => {
   );
 };
 
-export default BudgetaryEstimate;
+export default TCCIntermediate;
