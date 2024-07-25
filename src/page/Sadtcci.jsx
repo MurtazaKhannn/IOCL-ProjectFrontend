@@ -1,51 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import IOL from "../assets/logo.webp";
-import { Document, Packer, Paragraph, ImageRun } from 'docx';
-
+import { Document, ImageRun, Packer, Paragraph } from "docx";
 
 const SAD = () => {
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({});
 
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`/api/forms/TCC%20Intermediate/${draftId}`, {
-          method: 'GET',
+        const url = `/api/forms/TCC%20Intermediate/${draftId}`;
+        const res = await fetch(url, {
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          credentials: 'include',
+          credentials: "include",
         });
 
         if (res.ok) {
           const data = await res.json();
           setDraft(data);
+          setFormData(data);
         } else {
-          console.log('Failed to fetch Draft Details');
+          console.log("Failed to fetch Draft Details");
         }
       } catch (error) {
-        console.log('Error in fetching draft details', error);
+        console.log("Error in fetching draft details", error);
       }
     };
 
     fetchDraft();
   }, [draftId]);
 
+  if (!draft) return <p>Loading ... </p>;
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setFormData(draft); // Reset form data
+  };
+
+  const handleSave = async () => {
+    try {
+      const url = `/api/forms/edittcci/${draftId}`;
+      const res = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        const updatedDraft = await res.json();
+        setDraft(updatedDraft);
+        setIsEditing(false);
+        alert("updated");
+      } else {
+        console.log("Failed to update draft");
+      }
+    } catch (error) {
+      console.log("Error in updating draft", error);
+    }
+  };
+
   const generatePDF = async () => {
     const saveButton = document.getElementById("saveasPdfBtn");
-    const dropbtn = document.getElementById("dropBtn");
+    const dropbtn = document.getElementById("editBtn");
     const savebtn = document.getElementById("saveBtn");
-  
+
     if (saveButton) saveButton.style.display = "none";
     if (dropbtn) dropbtn.style.display = "none";
     if (savebtn) savebtn.style.display = "none";
-  
+
     const input = document.getElementById("formContainer");
-  
+
     if (!input) {
       console.error("Element with ID 'formContainer' not found");
       if (saveButton) saveButton.style.display = "block";
@@ -53,26 +98,25 @@ const SAD = () => {
       if (savebtn) savebtn.style.display = "block";
       return;
     }
-  
+
     try {
       const canvas = await html2canvas(input, { scale: 2 });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-  
+
       const imgWidth = 210; // A4 width in mm
       const pageHeight = 297; // A4 height in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
-      // Scale and position calculations
-      const margin = 10; // Margin around the content
-      const scale = Math.min((pageHeight - 2 * margin) / imgHeight, 1);
-      const scaledImgWidth = imgWidth * scale;
-      const scaledImgHeight = imgHeight * scale;
-  
-      // Add image to the PDF
-      pdf.addImage(imgData, "PNG", margin, margin, scaledImgWidth, scaledImgHeight);
-  
-      // Save the PDF
+
+      let position = 0;
+
+      if (imgHeight > pageHeight) {
+        const scale = pageHeight / imgHeight;
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth * scale, pageHeight);
+      } else {
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      }
+
       pdf.save("tcc_intermediate.pdf");
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -102,121 +146,159 @@ const SAD = () => {
               ],
               spacing: { after: 200 },
             }),
-            new Paragraph({
-              text: `Section: ${draft.section}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Department: ${draft.department}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Location: ${draft.location}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Date: ${draft.date}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Subject: ${draft.subject}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Background: ${draft.background}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Proposal: ${draft.proposal}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Budget & Financial Implication: ${draft.budgetAndFinancialImplication}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `DOA Applicable: ${draft.doaApplicable}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Effective Authority: ${draft.effectiveAuthority}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Conclusion: ${draft.conclusion}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Confidential: ${draft.confidential}`,
-              spacing: { after: 200 },
-            }),
+            new Paragraph({ text: `Section: ${draft.section}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Department: ${draft.department}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Location: ${draft.location}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Date: ${draft.date}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Subject: ${draft.subject}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Confidential: ${draft.confidential}`, spacing: { after: 200 } }),
           ],
         },
       ],
     });
-  
+
     Packer.toBlob(doc).then((blob) => {
-      saveAs(blob, "tcc_intermediate.docx");
+      saveAs(blob, "administrative_approval.docx");
     });
   };
-  
-
-  if (!draft) return <><p>Loading ... </p></> ;
 
   return (
-    <div id='formContainer' className='w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center'>
-      <h1 className='text-4xl font-semibold '>TCC Intermediate</h1>
-      <img className='w-32' src={IOL} alt="" />
-      <div className='flex w-full h-full items-center justify-center'>
-        {/* <h2>AP Data</h2> */}
-          <div className='flex flex-col items-center w-full justify-center gap-5 p-2'>
+    <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center">
+      <div className="flex w-full h-full items-center justify-center">
+        <div
+          id="formContainer"
+          className="flex flex-col items-center w-[794px] h-[800px] rounded-md justify-center gap-5 p-2 bg-white border"
+        >
+          <h1 className="text-4xl font-semibold">TCC Intermediate</h1>
+          <img src={IOL} className="w-64" alt="" />
+
           <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
-            <label htmlFor="referenceNumber">Ref&nbsp;No</label>
+            <label htmlFor="referenceNumber">Ref&nbsp;&nbsp;No</label>
             <input
               type="text"
+              name="referenceNumber"
+              value={formData.referenceNumber}
+              onChange={handleChange}
+              disabled={!isEditing}
               className="rounded-md p-2 w-full"
-              value={draft.referenceNumber}
-              readOnly
             />
           </div>
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="section">Section</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={draft.section} readOnly />
-            </div>
 
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="department">Department</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={draft.department} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="location">Location</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={draft.location} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="date">Date</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={draft.date.split('T')[0]} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="subject">Subject</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={draft.subject} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-              <label htmlFor="confidential">Confidential</label>
-              <input type="text" className='rounded-md  p-2 w-full' value={draft.confidential} readOnly />
-            </div>
-
-            <div className='flex w-2/3 items-center justify-center gap-64 text-xl'>
-              <button id='saveBtn' className='bg-yellow-500 px-6 py-1 rounded-md text-white text-lg'>Edit</button>
-              <button id='saveasPdfBtn' onClick={generatePDF} className='bg-blue-500 px-6 py-1 rounded-md text-white text-lg'>Save&nbsp;as&nbsp;pdf</button>
-              <button onClick={generateDOCX} id='dropBtn' className='bg-orange-500 px-6 py-1 rounded-md text-white text-lg'>Save&nbsp;as&nbsp;doc</button>
-            </div>
-            
-
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="section">Section</label>
+            <input
+              type="text"
+              name="section"
+              value={formData.section}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="department">Department</label>
+            <input
+              type="text"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="location">Location</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="date">Date</label>
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="subject">Subject</label>
+            <input
+              type="text"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="confidential">Confidential</label>
+            <input
+              name="confidential"
+              value={formData.confidential}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-3 mt-4">
+        {isEditing ? (
+          <>
+            <button
+              onClick={handleCancel}
+              className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-700"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-700"
+            >
+              Save
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+            id="editBtn"
+              onClick={handleEdit}
+              className="bg-yellow-400 text-white w-[7vw] p-2 rounded-lg hover:bg-yellow-500"
+            >
+              Edit
+            </button>
+            <button
+              onClick={generatePDF}
+              id="saveasPdfBtn"
+              className="bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-700"
+            >
+              Save as PDF
+            </button>
+            <button
+              onClick={generateDOCX}
+              id="saveBtn"
+              className="bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-700"
+            >
+              Save as DOCX
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

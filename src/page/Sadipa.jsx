@@ -80,7 +80,7 @@ const SAD = () => {
 
   const generatePDF = async () => {
     const saveButton = document.getElementById("saveasPdfBtn");
-    const dropbtn = document.getElementById("dropBtn");
+    const dropbtn = document.getElementById("editBtn");
     const savebtn = document.getElementById("saveBtn");
 
     if (saveButton) saveButton.style.display = "none";
@@ -206,7 +206,7 @@ const SAD = () => {
       <div className='flex w-full h-full items-center justify-center'>
         <div className='flex flex-col items-center w-full justify-center gap-5 p-2'>
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-            <label htmlFor="referenceNumber">Ref No</label>
+            <label htmlFor="referenceNumber">Ref&nbsp;No</label>
             <input type="text" name='referenceNumber' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.referenceNumber || ''} disabled={!isEditing} />
           </div>
 

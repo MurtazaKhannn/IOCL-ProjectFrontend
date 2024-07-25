@@ -277,7 +277,7 @@ const InprincipleApproval = () => {
                   onClick={() => {
                     navigate("/createnew");
                   }}
-                  className="bg-blue-500 rounded-md w-full max-w-xs text-white"
+                  className="bg-blue-500 rounded-md py-3 w-full max-w-xs text-white"
                 >
                   Back to DROP-DOWN
                 </button>

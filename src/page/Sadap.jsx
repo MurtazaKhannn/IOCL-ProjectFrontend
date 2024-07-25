@@ -170,12 +170,13 @@ const SAD = () => {
 
   return (
     <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center">
-      <h1 className="text-4xl font-semibold">Administrative Page</h1>
       <div className="flex w-full h-full items-center justify-center">
         <div
           id="formContainer"
           className="flex flex-col items-center w-[794px] h-[1123px] justify-center gap-5 p-2 bg-white border"
         >
+          <h1 className="text-4xl font-semibold">Administrative Page</h1>
+
           <img src={IOL} className="w-32" alt="" />
 
           <div className="flex w-2/3 items-center justify-center gap-3 text-xl">

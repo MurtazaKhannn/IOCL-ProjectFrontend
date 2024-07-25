@@ -205,7 +205,7 @@ const BudgetaryEstimate = () => {
                   value={inputs.subject}
                   onChange={handleChange}
                 >
-                  Default message 5
+                  
                 </textarea>
               </div>
 
@@ -218,7 +218,7 @@ const BudgetaryEstimate = () => {
                   value={inputs.background}
                   onChange={handleChange}
                 >
-                  Default message 6
+                  
                 </textarea>
               </div>
 
@@ -231,7 +231,7 @@ const BudgetaryEstimate = () => {
                   value={inputs.proposal}
                   onChange={handleChange}
                 >
-                  Default message 7
+                  
                 </textarea>
               </div>
 
@@ -245,7 +245,7 @@ const BudgetaryEstimate = () => {
                   value={inputs.conclusion}
                   onChange={handleChange}
                 >
-                  Default message 10
+                  
                 </textarea>
               </div>
 
@@ -285,7 +285,7 @@ const BudgetaryEstimate = () => {
                 </button>
 
 
-                <button id="dropbtn" onClick={() => {navigate("/createnew")}} className="bg-blue-500 rounded-md w-full max-w-xs text-white">Back to DROP-DOWN</button>
+                <button id="dropbtn" onClick={() => {navigate("/createnew")}} className="bg-blue-500 rounded-md w-full max-w-xs py-3 text-white">Back to DROP-DOWN</button>
               </div>
               <p id="saveMessage" className="flex justify-center hidden">
                 Information saved

@@ -80,7 +80,7 @@ const SAD = () => {
 
   const generatePDF = async () => {
     const saveButton = document.getElementById("saveasPdfBtn");
-    const dropbtn = document.getElementById("dropBtn");
+    const dropbtn = document.getElementById("editBtn");
     const savebtn = document.getElementById("saveBtn");
 
     if (saveButton) saveButton.style.display = "none";
@@ -180,18 +180,6 @@ const SAD = () => {
               spacing: { after: 200 },
             }),
             new Paragraph({
-              text: `Budget & Financial Implication: ${draft.budgetAndFinancialImplication}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `DOA Applicable: ${draft.doaApplicable}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Effective Authority: ${draft.effectiveAuthority}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
               text: `Conclusion: ${draft.conclusion}`,
               spacing: { after: 200 },
             }),
@@ -212,104 +200,175 @@ const SAD = () => {
   if (!draft) return <><p>Loading ... </p></> ;
 
   return (
-    <div id='formContainer' className='w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center'>
-      <h1 className='text-4xl font-semibold '>Budgetary Estimate</h1>
-      <img src={IOL} className='w-32' alt="" />
-      <div className='flex w-full h-full items-center justify-center'>
-        <div className='flex flex-col items-center w-full justify-center gap-5 p-2'>
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
-            <label htmlFor="referenceNumber">Ref No</label>
-            <input type="text" name='referenceNumber' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.referenceNumber || ''} disabled={!isEditing} />
+    <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center">
+      <div className="flex w-full h-full items-center justify-center">
+        <div
+          id="formContainer"
+          className="flex flex-col items-center w-[794px] h-[900px] rounded-md justify-center gap-5 p-2 bg-white border"
+        >
+          <h1 className="text-4xl font-semibold">Budgetary Estimate</h1>
+
+          <img src={IOL} className="w-64" alt="" />
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="referenceNumber">Ref&nbsp;&nbsp;No</label>
+            <input
+              type="text"
+              name="referenceNumber"
+              value={formData.referenceNumber}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="section">Section</label>
-            <input type="text" name='section' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.section || ''} disabled={!isEditing} />
+            <input
+              type="text"
+              name="section"
+              value={formData.section}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="department">Department</label>
-            <input type="text" name='department' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.department || ''} disabled={!isEditing} />
+            <input
+              type="text"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="location">Location</label>
-            <input type="text" name='location' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.location || ''} disabled={!isEditing} />
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="date">Date</label>
-            <input type="text" name='date' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.date?.split('T')[0] || ''} disabled={!isEditing} />
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="subject">Subject</label>
-            <input type="text" name='subject' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.subject || ''} disabled={!isEditing} />
+            <input
+              type="text"
+              name="subject"
+              value={formData.subject}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="background">Background</label>
-            <input type="text" name='background' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.background || ''} disabled={!isEditing} />
+            <input
+              name="background"
+              value={formData.background}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="proposal">Proposal</label>
-            <input type="text" name='proposal' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.proposal || ''} disabled={!isEditing} />
+            <input
+              name="proposal"
+              value={formData.proposal}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="conclusion">Conclusion</label>
-            <input type="text" name='conclusion' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.conclusion || ''} disabled={!isEditing} />
+            <input
+              name="conclusion"
+              value={formData.conclusion}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
 
-          <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="confidential">Confidential</label>
-            <input type="text" name='confidential' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.confidential || ''} disabled={!isEditing} />
-          </div>
-
-          <div className="flex gap-3 mt-4">
-            {isEditing ? (
-              <>
-                <button
-                  onClick={handleCancel}
-                  className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSave}
-                  className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-700"
-                >
-                  Save
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  id="editBtn"
-                  onClick={handleEdit}
-                  className="bg-yellow-400 text-white w-[7vw] p-2 rounded-lg hover:bg-yellow-500"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={generatePDF}
-                  id="saveasPdfBtn"
-                  className="bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-700"
-                >
-                  Save as PDF
-                </button>
-                <button
-                  onClick={generateDOCX}
-                  id="saveBtn"
-                  className="bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-700"
-                >
-                  Save as DOCX
-                </button>
-              </>
-            )}
+            <input
+              name="confidential"
+              value={formData.confidential}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
           </div>
         </div>
+      </div>
+
+      <div className="flex gap-3 mt-4">
+        {isEditing ? (
+          <>
+            <button
+              onClick={handleCancel}
+              className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-700"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-700"
+            >
+              Save
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+            id="editBtn"
+              onClick={handleEdit}
+              className="bg-yellow-400 text-white w-[7vw] p-2 rounded-lg hover:bg-yellow-500"
+            >
+              Edit
+            </button>
+            <button
+              onClick={generatePDF}
+              id="saveasPdfBtn"
+              className="bg-purple-500 text-white p-2 rounded-lg hover:bg-purple-700"
+            >
+              Save as PDF
+            </button>
+            <button
+              onClick={generateDOCX}
+              id="saveBtn"
+              className="bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-700"
+            >
+              Save as DOCX
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
