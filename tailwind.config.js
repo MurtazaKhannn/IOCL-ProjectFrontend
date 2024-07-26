@@ -11,7 +11,9 @@ export default {
         danfo: ['Danfo', 'sans-serif'] ,
         bebas: ['"Bebas Neue"', 'cursive'],
         poiret: ['Poiret One', 'sans-serif'],
-        teko: ['Teko', 'sans-serif']
+        teko: ['Teko', 'sans-serif'] ,
+        sans: ['Open Sans' , 'sans-serif'],
+        roman: ['Gideon Roman' , 'sans-serif']
       },
     },
     

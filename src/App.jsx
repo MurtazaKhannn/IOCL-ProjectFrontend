@@ -32,7 +32,7 @@ const App = () => {
   return (
     <>
             
-      <div className="w-full min-h-screen bg-zinc-100">
+      <div className="w-full min-h-screen bg-zinc-100 font-sans">
         {user ? <div><Navbar /></div> : ""}
         <Routes>
           <Route path='/' element={user ? <DraftPage /> : <Navigate to="/auth" />}   />

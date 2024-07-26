@@ -25,7 +25,7 @@ const DraftCard = () => {
   };
 
   return (
-    <div className='w-full min-h-[88.9vh] flex items-center justify-center bg-zinc-100 font-teko text-white p-4'>
+    <div className='w-full min-h-[88.9vh] flex items-center justify-center bg-zinc-100 font-sans text-white p-4'>
       <div className='flex flex-col gap-8 items-center justify-center w-full md:w-[80vw] h-[70vh] bg-white rounded-md p-4'>
         <h1 className='text-3xl md:text-5xl font-semibold text-black text-center'>Workflow Options</h1>
         

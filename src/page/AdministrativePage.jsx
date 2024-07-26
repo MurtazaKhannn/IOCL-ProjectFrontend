@@ -98,7 +98,7 @@ const AdministrativePage = () => {
 
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-zinc-100 font-teko">
+    <div className="flex items-center justify-center min-h-screen bg-zinc-100 font-sans">
       <div className="w-full max-w-7xl min-h-[80vh] bg-white flex flex-col items-center justify-center p-5">
         <div className="w-full flex flex-col gap-5 items-center justify-center">
           <img src={IOL} alt="Logo" className="w-3/4 sm:w-1/2 lg:w-1/4" />

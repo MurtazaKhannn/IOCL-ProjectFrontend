@@ -82,9 +82,9 @@ const TCCIntermediate = () => {
 
 
   return (
-    <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-teko">
+    <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-sans">
       <div
-        className="w-full max-w-7xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
+        className="w-full max-w-8xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
         id="formContainer"
       >
         <div className="w-full min-h-full flex flex-col gap-5 items-center justify-center">
@@ -174,7 +174,11 @@ const TCCIntermediate = () => {
                 ><TCCIDetails /></textarea> */}
               </div>
 
-              <TCCIDetails />
+              <div className="">
+                <TCCIDetails />
+              </div>
+
+
 
               <div className="flex gap-5">
                 <label>Confidential:</label>
