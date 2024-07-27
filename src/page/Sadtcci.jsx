@@ -225,7 +225,7 @@ const SAD = () => {
             <input
               type="date"
               name="date"
-              value={formData.date}
+              value={formData.date?.split("T")[0] || ""}
               onChange={handleChange}
               disabled={!isEditing}
               className="rounded-md p-2 w-full"

@@ -14,6 +14,7 @@ const TCCIntermediate = () => {
     date: "",
     subject: "",
     confidential: "Yes",
+    financialYears: [],
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
@@ -22,9 +23,26 @@ const TCCIntermediate = () => {
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("tcci-form"));
     if (storedInputs) {
-      setInputs(storedInputs);
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        financialYears: getPastThreeFinancialYears(),
+      }));
+    } else {
+      setInputs((prevInputs) => ({
+        ...prevInputs,
+        financialYears: getPastThreeFinancialYears(),
+      }));
     }
-  }, [setInputs]);
+  }, []);
+
+  const getPastThreeFinancialYears = () => {
+    const currentYear = new Date().getFullYear();
+    const financialYears = [];
+    for (let i = 0; i < 3; i++) {
+      financialYears.push(`${currentYear - i - 1}/${currentYear - i}`);
+    }
+    return financialYears;
+  };
 
   const handleChange = (e) => {
     if (e.target.name === "date") {
@@ -80,6 +98,10 @@ const TCCIntermediate = () => {
 
   const navigate = useNavigate();
 
+  const calculateTurnover = (value, isMSE) => {
+    const percentage = isMSE ? 0.51 : 0.60;
+    return value * percentage;
+  };
 
   return (
     <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-sans">
@@ -175,10 +197,11 @@ const TCCIntermediate = () => {
               </div>
 
               <div className="">
-                <TCCIDetails />
+                <TCCIDetails
+                  financialYears={inputs.financialYears}
+                  calculateTurnover={calculateTurnover}
+                />
               </div>
-
-
 
               <div className="flex gap-5">
                 <label>Confidential:</label>
@@ -208,7 +231,6 @@ const TCCIntermediate = () => {
               </div>
 
               <div className="flex gap-20 items-center justify-center">
-
                 <button
                   type="submit"
                   className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
