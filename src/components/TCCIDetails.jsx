@@ -1,10 +1,83 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const TCCIDetails = ({ financialYears }) => {
+  const predefinedValues = {
+    videref1: "heyhey",
+    videref2: "heyhey",
+    videref3: "heyhey",
+    videref4: "heyhey",
+    videref5: "heyhey",
+    videref6: "heyhey",
+    amount: "",
+    date1: "",
+    date2: "",
+    date3: "",
+    date4: "",
+    date5: "",
+    date6: "",
+    date7: "",
+    date8: "",
+    date9: "",
+    date10: "",
+    grantedBy1: "heyhey",
+    grantedBy2: "heyhey",
+    grantedBy3: "heyhey",
+    grantedBy4: "heyhey",
+    grantedBy5: "heyhey",
+    grantedBy6: "heyhey",
+    grantedBy7: "heyhey",
+    grantedBy8: "heyhey",
+    grantedBy9: "heyhey",
+    grantedBy10: "heyhey",
+    grantedBy11: "heyhey",
+    annexure1: "ANNEXURE1",
+    annexure2: "ANNEXURE1",
+    annexure3: "ANNEXURE1",
+    annexure4: "ANNEXURE1",
+    annexure5: "ANNEXURE1",
+    annexure6: "ANNEXURE1",
+    annexure7: "ANNEXURE1",
+    annexure8: "ANNEXURE1",
+    annexure9: "ANNEXURE1",
+    annexure10: "ANNEXURE1",
+    annexure11: "ANNEXURE1",
+    itemDetails1: "hey",
+    itemDetails2: "hey",
+    itemDetails3: "hey",
+    itemDetails4: "hey",
+    itemDetails5: "hey",
+    itemDetails6: "hey",
+    refNo1: "1324657398",
+    refNo2: "1324657398",
+    refNo3: "1324657398",
+    refNo4: "1324657398",
+    refNo5: "1324657398",
+    refNo6: "1324657398",
+    address: "UPSO2",
+    twoB: "twoB",
+    three: "three",
+    threeA: "threeA",
+    threeB: "threeB",
+    four: "four",
+    corrigendum: "NA",
+  };
+
+  const [formData, setFormData] = useState(predefinedValues);
+
   const [number, setNumber] = useState(0);
 
-  const handleNumberChange = (e) => {
-    setNumber(e.target.value);
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    if (e.target.name === "date") {
+      // Extract only the date part (yyyy-mm-dd) from the input value
+      const dateValue = e.target.value.split("T")[0]; // split to remove timestamp
+      setFormData({ ...formData, [e.target.name]: dateValue });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const PercentageDisplay = ({ number, percentage }) => {
@@ -42,18 +115,34 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               Vide note ref:{" "}
               <textarea
+                name="videref1"
+                value={formData.videref1}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
                 type="text"
               />{" "}
-              dated <input className="font-bold p-1" type="date" />, approval is
-              granted by{" "}
+              dated{" "}
               <input
+                className="font-bold p-1"
+                name="date1"
+                value={formData.date1}
+                onChange={handleChange}
+                type="date"
+              />
+              , approval is granted by{" "}
+              <input
+                name="grantedBy1"
+                value={formData.grantedBy1}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
                 type="text"
                 placeholder=""
               />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure1"
+                  value={formData.annexure1}
+                  onChange={handleChange}
                   className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                   placeholder="Annexure"
                   type="text"
@@ -61,18 +150,34 @@ const TCCIDetails = ({ financialYears }) => {
               </p>
               <br className="" />
               Approval for technical specifications vide ref:{" "}
-              <input
+              <textarea
+                name="videref2"
+                value={formData.videref2}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
                 type="text"
               />{" "}
-              dated <input className=" p-1 mt-1" type="date" /> &nbsp; is
-              approved by{" "}
+              dated{" "}
               <input
+                className=" p-1 mt-1"
+                type="date"
+                name="date2"
+                value={formData.date2}
+                onChange={handleChange}
+              />{" "}
+              &nbsp; is approved by{" "}
+              <input
+                name="grantedBy2"
+                value={formData.grantedBy2}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure2"
+                  value={formData.annexure2}
+                  onChange={handleChange}
                   className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                   placeholder="Annexure"
                   type="text"
@@ -81,24 +186,42 @@ const TCCIDetails = ({ financialYears }) => {
               <br className="mt-2" />
               Vide note ref:{" "}
               <textarea
+                name="videref3"
+                value={formData.videref3}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
                 type="text"
               />{" "}
-              dated <input type="date" name="" id="" />, estimate for Rs.{" "}
+              dated{" "}
               <input
+                type="date"
+                name="date3"
+                value={formData.date3}
+                onChange={handleChange}
+                id=""
+              />
+              , estimate for Rs.{" "}
+              <input
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
                 type="number"
-                value={number}
-                onChange={handleNumberChange}
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                 placeholder="Amount"
               />{" "}
               including GST is approved by{" "}
               <input
+                name="grantedBy3"
+                value={formData.grantedBy3}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure3"
+                  value={formData.annexure3}
+                  onChange={handleChange}
                   className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                   placeholder="Annexure"
                   type="text"
@@ -107,28 +230,49 @@ const TCCIDetails = ({ financialYears }) => {
               <br className="mt-2" />
               Admin approval for procurement of{" "}
               <textarea
+                name="itemDetails1"
+                value={formData.itemDetails1}
+                onChange={handleChange}
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                 type="text"
               />{" "}
               at{" "}
               <input
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               is granted by{" "}
               <input
+                name="grantedBy4"
+                value={formData.grantedBy4}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               vide note ref:{" "}
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none"
-                name=""
+                name="videref4"
+                value={formData.videref4}
+                onChange={handleChange}
                 id=""
               ></textarea>{" "}
-              dated <input className="rounded-md p-1" type="date" />{" "}
+              dated{" "}
+              <input
+                className="rounded-md p-1"
+                name="date4"
+                value={formData.date4}
+                onChange={handleChange}
+                type="date"
+              />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure4"
+                  value={formData.annexure4}
+                  onChange={handleChange}
                   className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                   placeholder="Annexure"
                   type="text"
@@ -139,17 +283,32 @@ const TCCIDetails = ({ financialYears }) => {
               Conditions, Tender Document, Draft Bid Document is provided vide
               note ref:{" "}
               <textarea
+                name="videref5"
+                value={formData.videref5}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
-                name=""
                 id=""
               ></textarea>{" "}
-              dated <input type="date" /> duly approved by{" "}
+              dated{" "}
               <input
+                name="date5"
+                value={formData.date5}
+                onChange={handleChange}
+                type="date"
+              />{" "}
+              duly approved by{" "}
+              <input
+                name="grantedBy5"
+                value={formData.grantedBy5}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure5"
+                  value={formData.annexure5}
+                  onChange={handleChange}
                   className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                   placeholder="Annexure"
                   type="text"
@@ -158,13 +317,32 @@ const TCCIDetails = ({ financialYears }) => {
               <br className="mt-2" />
               E-Tender -{" "}
               <input
+                name="refNo1"
+                value={formData.refNo1}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
-              dated <input type="date" /> was published on GeM portal on{" "}
-              <input type="date" name="" id="" />{" "}
+              dated{" "}
+              <input
+                name="date6"
+                value={formData.date6}
+                onChange={handleChange}
+                type="date"
+              />{" "}
+              was published on GeM portal on{" "}
+              <input
+                type="date"
+                name="date7"
+                value={formData.date7}
+                onChange={handleChange}
+                id=""
+              />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure6"
+                  value={formData.annexure6}
+                  onChange={handleChange}
                   className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                   placeholder="Annexure"
                   type="text"
@@ -181,11 +359,17 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               Procurement of{" "}
               <textarea
+                name="itemDetails2"
+                value={formData.itemDetails2}
+                onChange={handleChange}
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                 type="text"
               />{" "}
               at{" "}
               <input
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
                 type="text"
               />
@@ -199,11 +383,17 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="refNo2"
+                value={formData.refNo2}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               />{" "}
               dated{" "}
               <input
+                name="date8"
+                value={formData.date8}
+                onChange={handleChange}
                 className="p-1 border-b-2 focus:border-blue-500 outline-none"
                 type="date"
               />
@@ -218,6 +408,9 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               Rs.{" "}
               <input
+                name="amount"
+                value={formData.amount}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
@@ -232,6 +425,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="grantedBy6"
+                value={formData.grantedBy6}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               />
@@ -247,6 +443,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="twoB"
+                value={formData.twoB}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -264,6 +463,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="three"
+                value={formData.three}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -279,6 +481,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="threeA"
+                value={formData.threeA}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -294,6 +499,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="threeB"
+                value={formData.threeB}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -309,6 +517,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="four"
+                value={formData.four}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -323,32 +534,46 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               Admin approval for procurement of{" "}
               <textarea
+                name="itemDetails3"
+                value={formData.itemDetails3}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               at{" "}
               <input
-                type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              type="text"
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               />{" "}
               is granted by{" "}
               <input
+              name="grantedBy7"
+              value={formData.grantedBy7}
+              onChange={handleChange}
                 type="text"
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               />{" "}
               vide note ref:{" "}
               <textarea
+              name="videref6"
+              value={formData.videref6}
+              onChange={handleChange}
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-                name=""
+
                 id=""
               ></textarea>{" "}
-              dated <input type="date" name="" id="" />{" "}
+              dated <input type="date" name="date9" value={formData.date9} onChange={handleChange} id="" />{" "}
               <p className="font-bold">
                 <input
                   type="text"
                   className="border-2 rounded-md p-1 focus:border-blue-500 font-bold mt-2"
                   placeholder="ANNEXURE"
-                  name=""
+                  name="annexure7"
+                  value={formData.annexure7}
+                  onChange={handleChange}
                   id=""
                 />
               </p>
@@ -362,6 +587,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+              name="corrigendum"
+              value={formData.corrigendum}
+              onChange={handleChange}
                 className="border-b-2 outline-none focus:border-blue-500"
                 type="text"
               />
@@ -584,13 +812,13 @@ const TCCIDetails = ({ financialYears }) => {
               <div>NON-MSE BIDDER:</div>
               <div>
                 <span>1. Bidder Turnover - Rs </span>
-                <PercentageDisplay number={number} percentage={60} />
+                <PercentageDisplay number={formData.amount} percentage={60} />
                 <span> (60%)</span>
               </div>
               <div style={{ marginTop: "1rem" }}>MSE BIDDER:</div>
               <div>
                 <span>1. Bidder Turnover – Rs </span>
-                <PercentageDisplay number={number} percentage={51} />
+                <PercentageDisplay number={formData.amount} percentage={51} />
                 <span> (51%)</span>
               </div>
             </td>
@@ -606,13 +834,25 @@ const TCCIDetails = ({ financialYears }) => {
               NON MSE BIDDER:
               <br />
               1. Three works – Rs{" "}
-              <PercentageDisplay number={number} percentage={30} /> each
+              <PercentageDisplay
+                number={formData.amount}
+                percentage={30}
+              />{" "}
+              each
               <br />
               2. Two works – Rs{" "}
-              <PercentageDisplay number={number} percentage={40} /> each
+              <PercentageDisplay
+                number={formData.amount}
+                percentage={40}
+              />{" "}
+              each
               <br />
               3. One work – Rs{" "}
-              <PercentageDisplay number={number} percentage={25.5} /> each
+              <PercentageDisplay
+                number={formData.amount}
+                percentage={25.5}
+              />{" "}
+              each
               <br />
               <br />
               MSE BIDDER:
@@ -638,7 +878,11 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               {/* NIL – EMD is waivered off. All the bidders have to submit the bid
               security declaration */}
-              <textarea className="border-b-2 focus:border-blue-500 outline-none" name="" id=""></textarea>
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none"
+                name=""
+                id=""
+              ></textarea>
             </td>
           </tr>
 
@@ -651,10 +895,36 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               Technical clarifications were raised on GeM Portal dated
-              <input type="date" name="" id="" />, <input type="date" name="" id="" /> and <input type="date" name="" id="" /> <br /> (&nbsp; <input type="text" placeholder="ANNEXURE" className="font-bold p-1 rounded-md border-2 mt-2" /> , <input placeholder="ANNEXURE" className="font-bold p-1 rounded-md border-2 mt-2" type="text" /> and <input placeholder="ANNEXURE" type="text" className="font-bold p-1 w-52 mt-2 rounded-md border-2" name="" id="" />
+              <input type="date" name="" id="" />,{" "}
+              <input type="date" name="" id="" /> and{" "}
+              <input type="date" name="" id="" /> <br /> (&nbsp;{" "}
+              <input
+                type="text"
+                placeholder="ANNEXURE"
+                className="font-bold p-1 rounded-md border-2 mt-2"
+              />{" "}
+              ,{" "}
+              <input
+                placeholder="ANNEXURE"
+                className="font-bold p-1 rounded-md border-2 mt-2"
+                type="text"
+              />{" "}
+              and{" "}
+              <input
+                placeholder="ANNEXURE"
+                type="text"
+                className="font-bold p-1 w-52 mt-2 rounded-md border-2"
+                name=""
+                id=""
+              />
               &nbsp;&nbsp;)
               <br />
-              All clarifications are raised to all the <input className="border-b-2 focus:border-blue-500 w-28 outline-none" type="text" /> vendors.
+              All clarifications are raised to all the{" "}
+              <input
+                className="border-b-2 focus:border-blue-500 w-28 outline-none"
+                type="text"
+              />{" "}
+              vendors.
             </td>
           </tr>
           <tr className="border-b border-gray-300">
@@ -664,9 +934,18 @@ const TCCIDetails = ({ financialYears }) => {
               No of Offers rejected technically
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
-              <input placeholder="number" className="border-b-2 focus:border-blue-500 outline-none mb-5" type="text" />
+              <input
+                placeholder="number"
+                className="border-b-2 focus:border-blue-500 outline-none mb-5"
+                type="text"
+              />
               <br />
-              <textarea placeholder="vendorname with reason " className="border-b-2 w-72 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea>
+              <textarea
+                placeholder="vendorname with reason "
+                className="border-b-2 w-72 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
               <br />
             </td>
           </tr>
@@ -678,10 +957,17 @@ const TCCIDetails = ({ financialYears }) => {
               thereof (in case of two bid)
             </td>
             <td className="px-6 py-4 border-r  border-gray-300">
-              <input className="border-b-2 focus:border-blue-500 outline-none mb-2" type="text" />
+              <input
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                type="text"
+              />
               <br />
               <br />
-              <textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea>
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
             </td>
           </tr>
           <tr className="border-b border-gray-300">
@@ -691,8 +977,16 @@ const TCCIDetails = ({ financialYears }) => {
               Reference of Technical bid TCC minutes
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
-              <textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea>
-              <input className="border-2 p-1 rounded-md outline-none mb-2 font-bold" placeholder="ANNEXURE" type="text" />
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
+              <input
+                className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
+                placeholder="ANNEXURE"
+                type="text"
+              />
             </td>
           </tr>
           <tr className="border-b border-gray-300">
@@ -702,7 +996,13 @@ const TCCIDetails = ({ financialYears }) => {
               Whether any pre-Price bid meeting held? If yes on which date &
               reference of Pre-bid minutes
             </td>
-            <td className="px-6 py-4 border-r border-gray-300"><textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea></td>
+            <td className="px-6 py-4 border-r border-gray-300">
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
+            </td>
           </tr>
           <tr className="border-b border-gray-300">
             <td className="px-6 py-4 border-r border-l border-gray-300">23</td>
@@ -710,7 +1010,13 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 font-bold border-r border-gray-300">
               Details of deviation accepted by TCC, if any
             </td>
-            <td className="px-6 py-4 border-r border-gray-300"><textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea></td>
+            <td className="px-6 py-4 border-r border-gray-300">
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
+            </td>
           </tr>
           <tr className="border-b border-gray-300">
             <td className="px-6 py-4 border-r border-l border-gray-300">24</td>
@@ -718,7 +1024,13 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 font-bold border-r border-gray-300">
               Name of parties if any who do not agree to above deviations
             </td>
-            <td className="px-6 py-4 border-r border-gray-300"><textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea></td>
+            <td className="px-6 py-4 border-r border-gray-300">
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
+            </td>
           </tr>
           <tr className="border-b border-gray-300">
             <td className="px-6 py-4 border-r border-l border-gray-300">25</td>
@@ -726,7 +1038,13 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 font-bold border-r border-gray-300">
               Any revised price bid obtained with reasons
             </td>
-            <td className="px-6 py-4 border-r border-gray-300"><textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea></td>
+            <td className="px-6 py-4 border-r border-gray-300">
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
+            </td>
           </tr>
           <tr className="border-b border-gray-300">
             <td className="px-6 py-4 border-r border-l border-gray-300">26</td>
@@ -736,11 +1054,19 @@ const TCCIDetails = ({ financialYears }) => {
               TCC recommendations
             </td>
             <td className="px-6 py-4 border-r border-l border-gray-300">
-              TCC recommends opening of Price bids of following <input className="border-b-2 w-36 mr-2 focus:border-blue-500 outline-none mb-2" type="text" />
+              TCC recommends opening of Price bids of following{" "}
+              <input
+                className="border-b-2 w-36 mr-2 focus:border-blue-500 outline-none mb-2"
+                type="text"
+              />
               bidders who have been qualified as per PQ criteria and submission
               of relevant other mandatory document criteria.
               <br />
-              <textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea>
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
             </td>
           </tr>
           <tr className="border-b border-gray-300">
@@ -750,7 +1076,11 @@ const TCCIDetails = ({ financialYears }) => {
               Validity of Offer
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
-              <textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea>
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
             </td>
           </tr>
           <tr className="border-b border-gray-300">
@@ -759,7 +1089,12 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 font-bold border-r border-gray-300">
               Weather CVC guidelines have been complied with.
             </td>
-            <td className="px-6 py-4 border-r border-gray-300"><input className="border-b-2 focus:border-blue-500 outline-none mb-2" type="text" /></td>
+            <td className="px-6 py-4 border-r border-gray-300">
+              <input
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                type="text"
+              />
+            </td>
           </tr>
           <tr className="border-b border-gray-300">
             <td className="px-6 py-4 border-r border-l border-gray-300">29</td>
@@ -767,7 +1102,13 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 font-bold border-r border-gray-300">
               Any other relevant information.
             </td>
-            <td className="px-6 py-4 border-r border-gray-300"><textarea className="border-b-2 focus:border-blue-500 outline-none mb-2" name="" id=""></textarea></td>
+            <td className="px-6 py-4 border-r border-gray-300">
+              <textarea
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                name=""
+                id=""
+              ></textarea>
+            </td>
           </tr>
           <tr className="border-b border-gray-300">
             <td className="px-6 py-4 border-r border-b border-l border-gray-300">
@@ -778,11 +1119,22 @@ const TCCIDetails = ({ financialYears }) => {
               DOA/Approving Authority.
             </td>
             <td className="px-6 py-4 border-r border-b border-gray-300">
-              <input className="border-b-2 focus:border-blue-500 outline-none mb-2" type="text" /> is requested to accord approval for opening of
-              Price Bid of the <input className="border-b-2 w-40 focus:border-blue-500 outline-none mb-2" type="text" /> technically qualified bidder as
-              recommended above.
+              <input
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                type="text"
+              />{" "}
+              is requested to accord approval for opening of Price Bid of the{" "}
+              <input
+                className="border-b-2 w-40 focus:border-blue-500 outline-none mb-2"
+                type="text"
+              />{" "}
+              technically qualified bidder as recommended above.
               <br />
-              Approval sought under <input className="border-b-2 focus:border-blue-500 outline-none mb-2" type="text" />
+              Approval sought under{" "}
+              <input
+                className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                type="text"
+              />
             </td>
           </tr>
         </tbody>
