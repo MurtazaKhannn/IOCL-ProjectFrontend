@@ -4,7 +4,6 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import TCCIDetails from "../components/TCCIDetails";
 
 const TCCIntermediate = () => {
   const predefinedValues = {
@@ -15,13 +14,13 @@ const TCCIntermediate = () => {
     subject: "",
     confidential: "Yes",
     financialYears: [],
-    videref1: "heyhey",
-    videref2: "heyhey",
-    videref3: "heyhey",
-    videref4: "heyhey",
-    videref5: "heyhey",
-    videref6: "heyhey",
-    videref7: "heyhey",
+    videref1: "",
+    videref2: "",
+    videref3: "",
+    videref4: "",
+    videref5: "",
+    videref6: "",
+    videref7: "",
     amount: "",
     date1: "",
     date2: "",
@@ -38,72 +37,73 @@ const TCCIntermediate = () => {
     date13: "",
     date14: "",
     date15: "",
-    grantedBy1: "heyhey",
-    grantedBy2: "heyhey",
-    grantedBy3: "heyhey",
-    grantedBy4: "heyhey",
-    grantedBy5: "heyhey",
-    grantedBy6: "heyhey",
-    grantedBy7: "heyhey",
-    annexure1: "ANNEXURE1",
-    annexure2: "ANNEXURE1",
-    annexure3: "ANNEXURE1",
-    annexure4: "ANNEXURE1",
-    annexure5: "ANNEXURE1",
-    annexure6: "ANNEXURE1",
-    annexure7: "ANNEXURE1",
-    annexure8: "ANNEXURE1",
-    annexure9: "ANNEXURE1",
-    annexure10: "ANNEXURE1",
-    annexure11: "ANNEXURE1",
-    annexure12: "ANNEXURE1",
-    annexure13: "ANNEXURE1",
-    annexure14: "ANNEXURE1",
-    annexure15: "ANNEXURE1",
-    annexure16: "ANNEXURE1",
-    itemDetails1: "hey",
-    itemDetails2: "hey",
-    itemDetails3: "hey",
-    refNo1: "1324657398",
-    refNo2: "1324657398",
-    address: "UPSO2",
-    twoB: "twoB",
-    three: "three",
-    threeA: "threeA",
-    threeB: "threeB",
-    four: "four",
-    corrigendum: "NA",
-    tccmembers: "heyheyhey",
-    modeoftendering: "NONE",
-    typeoftendering: "None",
-    tenderissued: "NONE",
-    timeallowed: "NONE",
-    prebidmeetings: "NONE",
-    noofoffersreceived: "NONE",
-    nooflatetenders: "NONE",
-    prequalificationcriteria: "NONE",
-    emd: "NONE",
-    clarificationtovendors: "NONE",
-    noofoffersrejectedtechnically: "NONE",
-    rejectedvendorsnames: "NONE",
-    noofoffersrejectedonthegrounds: "NONE",
-    noofoffersrejectedonthegroundsreason: "NONE",
-    referenceoftechnicalbidtcc: "NONE",
-    anyprepricebidmeetingheld: "NONE",
-    detailsofdeviationacceptedbytcc: "NONE",
-    partieswhodonotagreeonabovedeviations: "NONE",
-    anyrevisedpricebid: "NONE",
-    noofpartieswhoqualifyforopeningofpricebids: "NONE",
-    partieswhoqualifyforopeningofpricebids: "NONE",
-    validityofoffers: "NONE",
-    weathercvcguidelineshavebeencompiledwith: "NONE",
-    anyotherrelevantinfo: "NONE",
-    doaapprovingauthorityone: "NONE",
-    doaapprovingauthoritytwo: "NONE",
-    doaapprovingauthoritythree: "NONE",
+    grantedBy1: "",
+    grantedBy2: "",
+    grantedBy3: "",
+    grantedBy4: "",
+    grantedBy5: "",
+    grantedBy6: "",
+    grantedBy7: "",
+    annexure1: "",
+    annexure2: "",
+    annexure3: "",
+    annexure4: "",
+    annexure5: "",
+    annexure6: "",
+    annexure7: "",
+    annexure8: "",
+    annexure9: "",
+    annexure10: "",
+    annexure11: "",
+    annexure12: "",
+    annexure13: "",
+    annexure14: "",
+    annexure15: "",
+    annexure16: "",
+    annexure17: "",
+    itemDetails1: "",
+    itemDetails2: "",
+    itemDetails3: "",
+    refNo1: "",
+    refNo2: "",
+    address: "",
+    twoB: "",
+    three: "",
+    threeA: "",
+    threeB: "",
+    four: "",
+    corrigendum: "",
+    tccmembers: "",
+    modeoftendering: "",
+    typeoftendering: "",
+    tenderissued: "",
+    timeallowed: "",
+    prebidmeetings: "",
+    noofoffersreceived: "",
+    nooflatetenders: "",
+    prequalificationcriteria: "",
+    emd: "",
+    clarificationtovendors: "",
+    noofoffersrejectedtechnically: "",
+    rejectedvendorsnames: "",
+    noofoffersrejectedonthegrounds: "",
+    noofoffersrejectedonthegroundsreason: "",
+    referenceoftechnicalbidtcc: "",
+    anyprepricebidmeetingheld: "",
+    detailsofdeviationacceptedbytcc: "",
+    partieswhodonotagreeonabovedeviations: "",
+    anyrevisedpricebid: "",
+    noofpartieswhoqualifyforopeningofpricebids: "",
+    partieswhoqualifyforopeningofpricebids: "",
+    validityofoffers: "",
+    weathercvcguidelineshavebeencompiledwith: "",
+    anyotherrelevantinfo: "",
+    doaapprovingauthorityone: "",
+    doaapprovingauthoritytwo: "",
+    doaapprovingauthoritythree: "",
   };
 
-  const [formData, setformData] = useState(predefinedValues);
+  const [inputs, setinputs] = useState(predefinedValues);
   const [loading, setLoading] = useState(false);
 
   const getPastThreeFinancialYears = () => {
@@ -118,17 +118,16 @@ const TCCIntermediate = () => {
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("tcci-form"));
     if (storedInputs) {
-      setformData((prevInputs) => ({
-        ...prevInputs,
+      setinputs({
+        ...storedInputs,
         financialYears: getPastThreeFinancialYears(),
-      }));
+      });
     } else {
-      setformData((prevInputs) => ({
+      setinputs((prevInputs) => ({
         ...prevInputs,
         financialYears: getPastThreeFinancialYears(),
       }));
     }
-    console.log(formData);
   }, []);
 
   
@@ -145,13 +144,13 @@ const TCCIntermediate = () => {
     if (e.target.name === "date") {
       // Extract only the date part (yyyy-mm-dd) from the input value
       const dateValue = e.target.value.split("T")[0]; // split to remove timestamp
-      setformData({ ...formData, [e.target.name]: dateValue });
+      setinputs({ ...inputs, [e.target.name]: dateValue });
     } else {
-      setformData({ ...formData, [e.target.name]: e.target.value });
+      setinputs({ ...inputs, [e.target.name]: e.target.value });
     }
 
-    const newInputs = { ...formData, [e.target.name]: e.target.value };
-    setformData(newInputs);
+    const newInputs = { ...inputs, [e.target.name]: e.target.value };
+    setinputs(newInputs);
     localStorage.setItem("tcci-form", JSON.stringify(newInputs));
   };
 
@@ -163,7 +162,7 @@ const TCCIntermediate = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(inputs),
       });
 
       const data = await res.json();
@@ -176,7 +175,7 @@ const TCCIntermediate = () => {
 
       alert("Form saved successfully!");
 
-      setformData(predefinedValues);
+      setinputs(predefinedValues);
       localStorage.removeItem("tcci-form");
     } catch (error) {
       alert("Error: " + error);
@@ -229,7 +228,7 @@ const TCCIntermediate = () => {
                   className="bg-zinc-100 rounded-md p-2 w-full"
                   id="section"
                   name="section"
-                  value={formData.section}
+                  value={inputs.section}
                   onChange={handleChange}
                   readOnly
                 />
@@ -241,7 +240,7 @@ const TCCIntermediate = () => {
                   className="bg-zinc-100 rounded-md p-2 w-full"
                   id="department"
                   name="department"
-                  value={formData.department}
+                  value={inputs.department}
                   onChange={handleChange}
                   readOnly
                 />
@@ -253,7 +252,7 @@ const TCCIntermediate = () => {
                   className="bg-zinc-100 rounded-md p-2 w-full"
                   id="location"
                   name="location"
-                  value={formData.location}
+                  value={inputs.location}
                   onChange={handleChange}
                   readOnly
                 />
@@ -266,7 +265,7 @@ const TCCIntermediate = () => {
                   type="date"
                   id="date"
                   name="date"
-                  value={formData.date}
+                  value={inputs.date}
                   onChange={handleChange}
                 />
               </div>
@@ -277,7 +276,7 @@ const TCCIntermediate = () => {
                   className="bg-zinc-100 rounded-md p-2 w-full"
                   id="subject"
                   name="subject"
-                  value={formData.subject}
+                  value={inputs.subject}
                   onChange={handleChange}
                 />
 
@@ -319,7 +318,7 @@ const TCCIntermediate = () => {
                         Vide note ref:{" "}
                         <textarea
                           name="videref1"
-                          value={formData.videref1}
+                          value={inputs.videref1}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
@@ -328,14 +327,14 @@ const TCCIntermediate = () => {
                         <input
                           className="font-bold p-1"
                           name="date1"
-                          value={formData.date1}
+                          value={inputs.date1}
                           onChange={handleChange}
                           type="date"
                         />
                         , approval is granted by{" "}
                         <input
                           name="grantedBy1"
-                          value={formData.grantedBy1}
+                          value={inputs.grantedBy1}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
@@ -344,7 +343,7 @@ const TCCIntermediate = () => {
                         <p className="font-bold">
                           <input
                             name="annexure1"
-                            value={formData.annexure1}
+                            value={inputs.annexure1}
                             onChange={handleChange}
                             className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                             placeholder="Annexure"
@@ -355,7 +354,7 @@ const TCCIntermediate = () => {
                         Approval for technical specifications vide ref:{" "}
                         <textarea
                           name="videref2"
-                          value={formData.videref2}
+                          value={inputs.videref2}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
@@ -365,13 +364,13 @@ const TCCIntermediate = () => {
                           className=" p-1 mt-1"
                           type="date"
                           name="date2"
-                          value={formData.date2}
+                          value={inputs.date2}
                           onChange={handleChange}
                         />{" "}
                         &nbsp; is approved by{" "}
                         <input
                           name="grantedBy2"
-                          value={formData.grantedBy2}
+                          value={inputs.grantedBy2}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -379,7 +378,7 @@ const TCCIntermediate = () => {
                         <p className="font-bold">
                           <input
                             name="annexure2"
-                            value={formData.annexure2}
+                            value={inputs.annexure2}
                             onChange={handleChange}
                             className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                             placeholder="Annexure"
@@ -390,7 +389,7 @@ const TCCIntermediate = () => {
                         Vide note ref:{" "}
                         <textarea
                           name="videref3"
-                          value={formData.videref3}
+                          value={inputs.videref3}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
@@ -399,14 +398,14 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date3"
-                          value={formData.date3}
+                          value={inputs.date3}
                           onChange={handleChange}
                           id=""
                         />
                         , estimate for Rs.{" "}
                         <input
                           name="amount"
-                          value={formData.amount}
+                          value={inputs.amount}
                           onChange={handleChange}
                           type="number"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
@@ -415,7 +414,7 @@ const TCCIntermediate = () => {
                         including GST is approved by{" "}
                         <input
                           name="grantedBy3"
-                          value={formData.grantedBy3}
+                          value={inputs.grantedBy3}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -423,7 +422,7 @@ const TCCIntermediate = () => {
                         <p className="font-bold">
                           <input
                             name="annexure3"
-                            value={formData.annexure3}
+                            value={inputs.annexure3}
                             onChange={handleChange}
                             className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                             placeholder="Annexure"
@@ -434,7 +433,7 @@ const TCCIntermediate = () => {
                         Admin approval for procurement of{" "}
                         <textarea
                           name="itemDetails1"
-                          value={formData.itemDetails1}
+                          value={inputs.itemDetails1}
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           type="text"
@@ -442,7 +441,7 @@ const TCCIntermediate = () => {
                         at{" "}
                         <input
                           name="amount"
-                          value={formData.amount}
+                          value={inputs.amount}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -450,7 +449,7 @@ const TCCIntermediate = () => {
                         is granted by{" "}
                         <input
                           name="grantedBy4"
-                          value={formData.grantedBy4}
+                          value={inputs.grantedBy4}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -459,7 +458,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none"
                           name="videref4"
-                          value={formData.videref4}
+                          value={inputs.videref4}
                           onChange={handleChange}
                           id=""
                         ></textarea>{" "}
@@ -467,14 +466,14 @@ const TCCIntermediate = () => {
                         <input
                           className="rounded-md p-1"
                           name="date4"
-                          value={formData.date4}
+                          value={inputs.date4}
                           onChange={handleChange}
                           type="date"
                         />{" "}
                         <p className="font-bold">
                           <input
                             name="annexure4"
-                            value={formData.annexure4}
+                            value={inputs.annexure4}
                             onChange={handleChange}
                             className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                             placeholder="Annexure"
@@ -487,7 +486,7 @@ const TCCIntermediate = () => {
                         provided vide note ref:{" "}
                         <textarea
                           name="videref5"
-                          value={formData.videref5}
+                          value={inputs.videref5}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           id=""
@@ -495,14 +494,14 @@ const TCCIntermediate = () => {
                         dated{" "}
                         <input
                           name="date5"
-                          value={formData.date5}
+                          value={inputs.date5}
                           onChange={handleChange}
                           type="date"
                         />{" "}
                         duly approved by{" "}
                         <input
                           name="grantedBy5"
-                          value={formData.grantedBy5}
+                          value={inputs.grantedBy5}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -510,7 +509,7 @@ const TCCIntermediate = () => {
                         <p className="font-bold">
                           <input
                             name="annexure5"
-                            value={formData.annexure5}
+                            value={inputs.annexure5}
                             onChange={handleChange}
                             className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                             placeholder="Annexure"
@@ -521,7 +520,7 @@ const TCCIntermediate = () => {
                         E-Tender -{" "}
                         <input
                           name="refNo1"
-                          value={formData.refNo1}
+                          value={inputs.refNo1}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -529,7 +528,7 @@ const TCCIntermediate = () => {
                         dated{" "}
                         <input
                           name="date6"
-                          value={formData.date6}
+                          value={inputs.date6}
                           onChange={handleChange}
                           type="date"
                         />{" "}
@@ -537,14 +536,14 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date7"
-                          value={formData.date7}
+                          value={inputs.date7}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <p className="font-bold">
                           <input
                             name="annexure6"
-                            value={formData.annexure6}
+                            value={inputs.annexure6}
                             onChange={handleChange}
                             className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
                             placeholder="Annexure"
@@ -565,7 +564,7 @@ const TCCIntermediate = () => {
                         Procurement of{" "}
                         <textarea
                           name="itemDetails2"
-                          value={formData.itemDetails2}
+                          value={inputs.itemDetails2}
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           type="text"
@@ -573,7 +572,7 @@ const TCCIntermediate = () => {
                         at{" "}
                         <input
                           name="address"
-                          value={formData.address}
+                          value={inputs.address}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
@@ -591,7 +590,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="refNo2"
-                          value={formData.refNo2}
+                          value={inputs.refNo2}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
@@ -599,7 +598,7 @@ const TCCIntermediate = () => {
                         dated{" "}
                         <input
                           name="date8"
-                          value={formData.date8}
+                          value={inputs.date8}
                           onChange={handleChange}
                           className="p-1 border-b-2 focus:border-blue-500 outline-none"
                           type="date"
@@ -618,7 +617,7 @@ const TCCIntermediate = () => {
                         Rs.{" "}
                         <input
                           name="amount"
-                          value={formData.amount}
+                          value={inputs.amount}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -637,7 +636,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="grantedBy6"
-                          value={formData.grantedBy6}
+                          value={inputs.grantedBy6}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
@@ -657,7 +656,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="twoB"
-                          value={formData.twoB}
+                          value={inputs.twoB}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -679,7 +678,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="three"
-                          value={formData.three}
+                          value={inputs.three}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -699,7 +698,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="threeA"
-                          value={formData.threeA}
+                          value={inputs.threeA}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -719,7 +718,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="threeB"
-                          value={formData.threeB}
+                          value={inputs.threeB}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -739,7 +738,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="four"
-                          value={formData.four}
+                          value={inputs.four}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -758,7 +757,7 @@ const TCCIntermediate = () => {
                         Admin approval for procurement of{" "}
                         <textarea
                           name="itemDetails3"
-                          value={formData.itemDetails3}
+                          value={inputs.itemDetails3}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -766,7 +765,7 @@ const TCCIntermediate = () => {
                         at{" "}
                         <input
                           name="address"
-                          value={formData.address}
+                          value={inputs.address}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
@@ -774,7 +773,7 @@ const TCCIntermediate = () => {
                         is granted by{" "}
                         <input
                           name="grantedBy7"
-                          value={formData.grantedBy7}
+                          value={inputs.grantedBy7}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
@@ -782,7 +781,7 @@ const TCCIntermediate = () => {
                         vide note ref:{" "}
                         <textarea
                           name="videref6"
-                          value={formData.videref6}
+                          value={inputs.videref6}
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           id=""
@@ -791,7 +790,7 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date9"
-                          value={formData.date9}
+                          value={inputs.date9}
                           onChange={handleChange}
                           id=""
                         />{" "}
@@ -801,7 +800,7 @@ const TCCIntermediate = () => {
                             className="border-2 rounded-md p-1 focus:border-blue-500 font-bold mt-2"
                             placeholder="ANNEXURE"
                             name="annexure7"
-                            value={formData.annexure7}
+                            value={inputs.annexure7}
                             onChange={handleChange}
                             id=""
                           />
@@ -819,7 +818,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="corrigendum"
-                          value={formData.corrigendum}
+                          value={inputs.corrigendum}
                           onChange={handleChange}
                           className="border-b-2 outline-none focus:border-blue-500"
                           type="text"
@@ -838,7 +837,7 @@ const TCCIntermediate = () => {
                         Following are the TCC members vide office order:{" "}
                         <textarea
                           name="videref7"
-                          value={formData.videref7}
+                          value={inputs.videref7}
                           onChange={handleChange}
                           id=""
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
@@ -847,7 +846,7 @@ const TCCIntermediate = () => {
                         <input
                           className=""
                           name="date9"
-                          value={formData.date9}
+                          value={inputs.date9}
                           onChange={handleChange}
                           type="date"
                         />{" "}
@@ -855,7 +854,7 @@ const TCCIntermediate = () => {
                         <p className="font-bold">
                           <input
                             name="annexure8"
-                            value={formData.annexure8}
+                            value={inputs.annexure8}
                             onChange={handleChange}
                             type="text"
                             className="border-2 rounded-md p-1 mt-2"
@@ -868,7 +867,7 @@ const TCCIntermediate = () => {
                           className="border-b-2 focus:border-blue-500 outline-none"
                           placeholder="Name of TCC Members"
                           name="tccmembers"
-                          value={formData.tccmembers}
+                          value={inputs.tccmembers}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -884,8 +883,8 @@ const TCCIntermediate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
-                          name="modeoftempering"
-                          value={formData.modeoftendering}
+                          name="modeoftendering"
+                          value={inputs.modeoftendering}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -903,7 +902,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="typeoftendering"
-                          value={formData.typeoftendering}
+                          value={inputs.typeoftendering}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -911,7 +910,7 @@ const TCCIntermediate = () => {
                         <p>
                           <input
                             name="annexure9"
-                            value={formData.annexure9}
+                            value={inputs.annexure9}
                             onChange={handleChange}
                             type="text"
                             className="border-2 focus:border-blue-500 rounded-md p-1 font-bold mt-2"
@@ -931,7 +930,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="tenderissued"
-                          value={formData.tenderissued}
+                          value={inputs.tenderissued}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -950,7 +949,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="timeallowed"
-                          value={formData.timeallowed}
+                          value={inputs.timeallowed}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none mt-2"
@@ -959,7 +958,7 @@ const TCCIntermediate = () => {
                         <p>
                           <input
                             name="annexure10"
-                            value={formData.annexure10}
+                            value={inputs.annexure10}
                             onChange={handleChange}
                             type="text"
                             className="border-2 p-1 rounded-md focus:border-blue-500 outline-none mt-2 font-bold"
@@ -979,7 +978,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300 ">
                         <input
                           name="prebidmeetings"
-                          value={formData.prebidmeetings}
+                          value={inputs.prebidmeetings}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -998,14 +997,14 @@ const TCCIntermediate = () => {
                         <input
                           type="datetime-local"
                           name="date10"
-                          value={formData.date10}
+                          value={inputs.date10}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <p>
                           <input
                             name="annexure11"
-                            value={formData.annexure11}
+                            value={inputs.annexure11}
                             onChange={handleChange}
                             type="text"
                             placeholder="ANNEXURE"
@@ -1026,14 +1025,14 @@ const TCCIntermediate = () => {
                         <input
                           type="datetime-local"
                           name="date11"
-                          value={formData.date11}
+                          value={inputs.date11}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <p>
                           <input
                             name="annexure12"
-                            value={formData.annexure12}
+                            value={inputs.annexure12}
                             onChange={handleChange}
                             type="text"
                             placeholder="ANNEXURE"
@@ -1056,7 +1055,7 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date12"
-                          value={formData.date12}
+                          value={inputs.date12}
                           onChange={handleChange}
                           id=""
                         />
@@ -1065,7 +1064,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none"
                           name="noofoffersreceived"
-                          value={formData.noofoffersreceived}
+                          value={inputs.noofoffersreceived}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1082,7 +1081,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="nooflatetenders"
-                          value={formData.nooflatetenders}
+                          value={inputs.nooflatetenders}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
@@ -1099,8 +1098,8 @@ const TCCIntermediate = () => {
                       </td>
                       <td className="px-6 py-4 font-bold border-r rounded-md border-gray-300">
                         <input
-                          name="annexure12"
-                          value={formData.annexure12}
+                          name="annexure13"
+                          value={inputs.annexure13}
                           onChange={handleChange}
                           type="text"
                           className="border-2 rounded-md p-1 "
@@ -1116,8 +1115,8 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">A</td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
                         Annual Turnover{" "}
-                        {formData.financialYears &&
-                          formData.financialYears.map((year, index) => (
+                        {inputs.financialYears &&
+                          inputs.financialYears.map((year, index) => (
                             <div key={index} className="mb-2">
                               <div>{year}</div>
                             </div>
@@ -1128,7 +1127,7 @@ const TCCIntermediate = () => {
                         <div>
                           <span>1. Bidder Turnover - Rs </span>
                           <PercentageDisplay
-                            number={formData.amount}
+                            number={inputs.amount}
                             percentage={60}
                           />
                           <span> (60%)</span>
@@ -1137,7 +1136,7 @@ const TCCIntermediate = () => {
                         <div>
                           <span>1. Bidder Turnover – Rs </span>
                           <PercentageDisplay
-                            number={formData.amount}
+                            number={inputs.amount}
                             percentage={51}
                           />
                           <span> (51%)</span>
@@ -1158,21 +1157,21 @@ const TCCIntermediate = () => {
                         <br />
                         1. Three works – Rs{" "}
                         <PercentageDisplay
-                          number={formData.amount}
+                          number={inputs.amount}
                           percentage={30}
                         />{" "}
                         each
                         <br />
                         2. Two works – Rs{" "}
                         <PercentageDisplay
-                          number={formData.amount}
+                          number={inputs.amount}
                           percentage={40}
                         />{" "}
                         each
                         <br />
                         3. One work – Rs{" "}
                         <PercentageDisplay
-                          number={formData.amount}
+                          number={inputs.amount}
                           percentage={25.5}
                         />{" "}
                         each
@@ -1182,21 +1181,21 @@ const TCCIntermediate = () => {
                         <br />
                         1. Three works – Rs{" "}
                         <PercentageDisplay
-                          number={formData.amount}
+                          number={inputs.amount}
                           percentage={25.5}
                         />{" "}
                         each
                         <br />
                         2. Two works – Rs{" "}
                         <PercentageDisplay
-                          number={formData.amount}
+                          number={inputs.amount}
                           percentage={34}
                         />{" "}
                         each
                         <br />
                         3. One work – Rs{" "}
                         <PercentageDisplay
-                          number={formData.amount}
+                          number={inputs.amount}
                           percentage={42.5}
                         />{" "}
                         each
@@ -1218,7 +1217,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none"
                           name="emd"
-                          value={formData.emd}
+                          value={inputs.emd}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1239,7 +1238,7 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date13"
-                          value={formData.date13}
+                          value={inputs.date13}
                           onChange={handleChange}
                           id=""
                         />
@@ -1247,7 +1246,7 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date14"
-                          value={formData.date14}
+                          value={inputs.date14}
                           onChange={handleChange}
                           id=""
                         />{" "}
@@ -1255,14 +1254,14 @@ const TCCIntermediate = () => {
                         <input
                           type="date"
                           name="date15"
-                          value={formData.date15}
+                          value={inputs.date15}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <br /> (&nbsp;{" "}
                         <input
-                          name="annexure13"
-                          value={formData.annexure13}
+                          name="annexure14"
+                          value={inputs.annexure14}
                           onChange={handleChange}
                           type="text"
                           placeholder="ANNEXURE"
@@ -1270,8 +1269,8 @@ const TCCIntermediate = () => {
                         />{" "}
                         ,{" "}
                         <input
-                          name="annexure14"
-                          value={formData.annexure14}
+                          name="annexure15"
+                          value={inputs.annexure15}
                           onChange={handleChange}
                           placeholder="ANNEXURE"
                           className="font-bold p-1 rounded-md border-2 mt-2"
@@ -1279,8 +1278,8 @@ const TCCIntermediate = () => {
                         />{" "}
                         and{" "}
                         <input
-                          name="annexure15"
-                          value={formData.annexure15}
+                          name="annexure16"
+                          value={inputs.annexure16}
                           onChange={handleChange}
                           placeholder="ANNEXURE"
                           type="text"
@@ -1292,7 +1291,7 @@ const TCCIntermediate = () => {
                         All clarifications are raised to all the{" "}
                         <input
                           name="clarificationtovendors"
-                          value={formData.clarificationtovendors}
+                          value={inputs.clarificationtovendors}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 w-28 outline-none"
                           type="text"
@@ -1311,7 +1310,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           name="noofoffersrejectedtechnically"
-                          value={formData.noofoffersrejectedtechnically}
+                          value={inputs.noofoffersrejectedtechnically}
                           onChange={handleChange}
                           placeholder="number"
                           className="border-b-2 focus:border-blue-500 outline-none mb-5"
@@ -1321,8 +1320,8 @@ const TCCIntermediate = () => {
                         <textarea
                           placeholder="vendorname with reason "
                           className="border-b-2 w-72 focus:border-blue-500 outline-none mb-2"
-                          name="rejectedvendorsname"
-                          value={formData.rejectedvendorsnames}
+                          name="rejectedvendorsnames"
+                          value={inputs.rejectedvendorsnames}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1341,7 +1340,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r  border-gray-300">
                         <input
                           name="noofoffersrejectedonthegrounds"
-                          value={formData.noofoffersrejectedonthegrounds}
+                          value={inputs.noofoffersrejectedonthegrounds}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
@@ -1351,7 +1350,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="noofoffersrejectedonthegroundsreason"
-                          value={formData.noofoffersrejectedonthegroundsreason}
+                          value={inputs.noofoffersrejectedonthegroundsreason}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1369,13 +1368,13 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="referenceoftechnicalbidtcc"
-                          value={formData.referenceoftechnicalbidtcc}
+                          value={inputs.referenceoftechnicalbidtcc}
                           onChange={handleChange}
                           id=""
                         ></textarea>
                         <input
-                          name="annexure16"
-                          value={formData.annexure16}
+                          name="annexure17"
+                          value={inputs.annexure17}
                           onChange={handleChange}
                           className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
                           placeholder="ANNEXURE"
@@ -1396,7 +1395,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="anyprepricebidmeetingheld"
-                          value={formData.anyprepricebidmeetingheld}
+                          value={inputs.anyprepricebidmeetingheld}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1414,7 +1413,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="detailsofdeviationacceptedbytcc"
-                          value={formData.detailsofdeviationacceptedbytcc}
+                          value={inputs.detailsofdeviationacceptedbytcc}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1433,7 +1432,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="partieswhodonotagreeonabovedeviations"
-                          value={formData.partieswhodonotagreeonabovedeviations}
+                          value={inputs.partieswhodonotagreeonabovedeviations}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1451,7 +1450,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="anyrevisedpricebid"
-                          value={formData.anyrevisedpricebid}
+                          value={inputs.anyrevisedpricebid}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1473,7 +1472,7 @@ const TCCIntermediate = () => {
                           type="text"
                           name="noofpartieswhoqualifyforopeningofpricebids"
                           value={
-                            formData.noofpartieswhoqualifyforopeningofpricebids
+                            inputs.noofpartieswhoqualifyforopeningofpricebids
                           }
                           onChange={handleChange}
                         />
@@ -1485,7 +1484,7 @@ const TCCIntermediate = () => {
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="partieswhoqualifyforopeningofpricebids"
                           value={
-                            formData.partieswhoqualifyforopeningofpricebids
+                            inputs.partieswhoqualifyforopeningofpricebids
                           }
                           onChange={handleChange}
                           id=""
@@ -1504,7 +1503,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="validityofoffers"
-                          value={formData.validityofoffers}
+                          value={inputs.validityofoffers}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1522,7 +1521,7 @@ const TCCIntermediate = () => {
                         <textarea
                           name="weathercvcguidelineshavebeencompiledwith"
                           value={
-                            formData.weathercvcguidelineshavebeencompiledwith
+                            inputs.weathercvcguidelineshavebeencompiledwith
                           }
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
@@ -1542,7 +1541,7 @@ const TCCIntermediate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="anyotherrelevantinfo"
-                          value={formData.anyotherrelevantinfo}
+                          value={inputs.anyotherrelevantinfo}
                           onChange={handleChange}
                           id=""
                         ></textarea>
@@ -1559,7 +1558,7 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-b border-gray-300">
                         <input
                           name="doaapprovingauthorityone"
-                          value={formData.doaapprovingauthorityone}
+                          value={inputs.doaapprovingauthorityone}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
@@ -1568,7 +1567,7 @@ const TCCIntermediate = () => {
                         of the{" "}
                         <input
                           name="doaapprovingauthoritytwo"
-                          value={formData.doaapprovingauthoritytwo}
+                          value={inputs.doaapprovingauthoritytwo}
                           onChange={handleChange}
                           className="border-b-2 w-40 focus:border-blue-500 outline-none mb-2"
                           type="text"
@@ -1578,7 +1577,7 @@ const TCCIntermediate = () => {
                         Approval sought under{" "}
                         <input
                           name="doaapprovingauthoritythree"
-                          value={formData.doaapprovingauthoritythree}
+                          value={inputs.doaapprovingauthoritythree}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
@@ -1597,7 +1596,7 @@ const TCCIntermediate = () => {
                       type="radio"
                       name="confidential"
                       value="Yes"
-                      checked={formData.confidential === "Yes"}
+                      checked={inputs.confidential === "Yes"}
                       onChange={handleChange}
                     />
                     {""}
@@ -1608,7 +1607,7 @@ const TCCIntermediate = () => {
                       type="radio"
                       name="confidential"
                       value="No"
-                      checked={formData.confidential === "No"}
+                      checked={inputs.confidential === "No"}
                       onChange={handleChange}
                     />{" "}
                     No
