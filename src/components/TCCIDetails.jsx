@@ -8,6 +8,7 @@ const TCCIDetails = ({ financialYears }) => {
     videref4: "heyhey",
     videref5: "heyhey",
     videref6: "heyhey",
+    videref7: "heyhey",
     amount: "",
     date1: "",
     date2: "",
@@ -19,6 +20,11 @@ const TCCIDetails = ({ financialYears }) => {
     date8: "",
     date9: "",
     date10: "",
+    date11: "",
+    date12: "",
+    date13: "",
+    date14: "",
+    date15: "",
     grantedBy1: "heyhey",
     grantedBy2: "heyhey",
     grantedBy3: "heyhey",
@@ -26,10 +32,6 @@ const TCCIDetails = ({ financialYears }) => {
     grantedBy5: "heyhey",
     grantedBy6: "heyhey",
     grantedBy7: "heyhey",
-    grantedBy8: "heyhey",
-    grantedBy9: "heyhey",
-    grantedBy10: "heyhey",
-    grantedBy11: "heyhey",
     annexure1: "ANNEXURE1",
     annexure2: "ANNEXURE1",
     annexure3: "ANNEXURE1",
@@ -41,18 +43,16 @@ const TCCIDetails = ({ financialYears }) => {
     annexure9: "ANNEXURE1",
     annexure10: "ANNEXURE1",
     annexure11: "ANNEXURE1",
+    annexure12: "ANNEXURE1",
+    annexure13: "ANNEXURE1",
+    annexure14: "ANNEXURE1",
+    annexure15: "ANNEXURE1",
+    annexure16: "ANNEXURE1",
     itemDetails1: "hey",
     itemDetails2: "hey",
     itemDetails3: "hey",
-    itemDetails4: "hey",
-    itemDetails5: "hey",
-    itemDetails6: "hey",
     refNo1: "1324657398",
     refNo2: "1324657398",
-    refNo3: "1324657398",
-    refNo4: "1324657398",
-    refNo5: "1324657398",
-    refNo6: "1324657398",
     address: "UPSO2",
     twoB: "twoB",
     three: "three",
@@ -60,6 +60,35 @@ const TCCIDetails = ({ financialYears }) => {
     threeB: "threeB",
     four: "four",
     corrigendum: "NA",
+    tccmembers: "heyheyhey",
+    modeoftendering: "NONE",
+    typeoftendering: "None",
+    tenderissued: "NONE",
+    timeallowed: "NONE",
+    prebidmeetings: "NONE",
+    noofoffersreceived: "NONE",
+    nooflatetenders: "NONE",
+    prequalificationcriteria: "NONE",
+    emd: "NONE",
+    clarificationtovendors: "NONE",
+    noofoffersrejectedtechnically: "NONE",
+    rejectedvendorsnames: "NONE",
+    noofoffersrejectedonthegrounds: "NONE",
+    noofoffersrejectedonthegroundsreason: "NONE",
+    referenceoftechnicalbidtcc: "NONE",
+    anyprepricebidmeetingheld: "NONE",
+    detailsofdeviationacceptedbytcc: "NONE",
+    partieswhodonotagreeonabovedeviations: "NONE",
+    anyrevisedpricebid: "NONE",
+    noofpartieswhoqualifyforopeningofpricebids: "NONE",
+    partieswhoqualifyforopeningofpricebids: "NONE",
+    validityofoffers: "NONE",
+    weathercvcguidelineshavebeencompiledwith: "NONE",
+    anyotherrelevantinfo: "NONE",
+    doaapprovingauthorityone: "NONE",
+    doaapprovingauthoritytwo: "NONE",
+    doaapprovingauthoritythree: "NONE",
+
   };
 
   const [formData, setFormData] = useState(predefinedValues);
@@ -542,30 +571,36 @@ const TCCIDetails = ({ financialYears }) => {
               />{" "}
               at{" "}
               <input
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                type="text"
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               />{" "}
               is granted by{" "}
               <input
-              name="grantedBy7"
-              value={formData.grantedBy7}
-              onChange={handleChange}
+                name="grantedBy7"
+                value={formData.grantedBy7}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               />{" "}
               vide note ref:{" "}
               <textarea
-              name="videref6"
-              value={formData.videref6}
-              onChange={handleChange}
+                name="videref6"
+                value={formData.videref6}
+                onChange={handleChange}
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-
                 id=""
               ></textarea>{" "}
-              dated <input type="date" name="date9" value={formData.date9} onChange={handleChange} id="" />{" "}
+              dated{" "}
+              <input
+                type="date"
+                name="date9"
+                value={formData.date9}
+                onChange={handleChange}
+                id=""
+              />{" "}
               <p className="font-bold">
                 <input
                   type="text"
@@ -587,9 +622,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
-              name="corrigendum"
-              value={formData.corrigendum}
-              onChange={handleChange}
+                name="corrigendum"
+                value={formData.corrigendum}
+                onChange={handleChange}
                 className="border-b-2 outline-none focus:border-blue-500"
                 type="text"
               />
@@ -604,13 +639,26 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               Following are the TCC members vide office order:{" "}
               <textarea
-                name=""
+                name="videref7"
+                value={formData.videref7}
+                onChange={handleChange}
                 id=""
                 className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
               ></textarea>{" "}
-              dated <input className="" type="date" /> <br />{" "}
+              dated{" "}
+              <input
+                className=""
+                name="date9"
+                value={formData.date9}
+                onChange={handleChange}
+                type="date"
+              />{" "}
+              <br />{" "}
               <p className="font-bold">
                 <input
+                  name="annexure8"
+                  value={formData.annexure8}
+                  onChange={handleChange}
                   type="text"
                   className="border-2 rounded-md p-1 mt-2"
                   placeholder="ANNEXURE"
@@ -621,7 +669,9 @@ const TCCIDetails = ({ financialYears }) => {
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none"
                 placeholder="Name of TCC Members"
-                name=""
+                name="tccmembers"
+                value={formData.tccmembers}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -634,6 +684,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="modeoftempering"
+                value={formData.modeoftendering}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -647,11 +700,17 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="typeoftendering"
+                value={formData.typeoftendering}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />{" "}
               <p>
                 <input
+                  name="annexure9"
+                  value={formData.annexure9}
+                  onChange={handleChange}
                   type="text"
                   className="border-2 focus:border-blue-500 rounded-md p-1 font-bold mt-2"
                   placeholder="ANNEXURE"
@@ -667,6 +726,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="tenderissued"
+                value={formData.tenderissued}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -681,12 +743,18 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="timeallowed"
+                value={formData.timeallowed}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none mt-2"
                 placeholder=""
               />{" "}
               <p>
                 <input
+                  name="annexure10"
+                  value={formData.annexure10}
+                  onChange={handleChange}
                   type="text"
                   className="border-2 p-1 rounded-md focus:border-blue-500 outline-none mt-2 font-bold"
                   placeholder="ANNEXURE"
@@ -702,6 +770,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300 ">
               <input
+                name="prebidmeetings"
+                value={formData.prebidmeetings}
+                onChange={handleChange}
                 type="text"
                 className="border-b-2 focus:border-blue-500 outline-none"
               />
@@ -714,14 +785,18 @@ const TCCIDetails = ({ financialYears }) => {
               Due Date & Receipt of E-tenders
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
-              <input type="date" name="" className="w-[12vw] mb-2" id="" /> @{" "}
               <input
-                type="text"
-                placeholder="time"
-                className="w-[5vw] border-b-2 focus:border-blue-500 outline-none"
+                type="datetime-local"
+                name="date10"
+                value={formData.date10}
+                onChange={handleChange}
+                id=""
               />{" "}
               <p>
                 <input
+                  name="annexure11"
+                  value={formData.annexure11}
+                  onChange={handleChange}
                   type="text"
                   placeholder="ANNEXURE"
                   className="font-bold p-1 rounded-md border-2 focus:border-blue-500"
@@ -736,14 +811,18 @@ const TCCIDetails = ({ financialYears }) => {
               Actual Date & Time of Opening of E-tenders
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
-              <input type="date" name="" className="w-[12vw] mb-2" id="" /> @{" "}
               <input
-                type="text"
-                placeholder="time"
-                className="w-[5vw] border-b-2 focus:border-blue-500 outline-none"
+                type="datetime-local"
+                name="date11"
+                value={formData.date11}
+                onChange={handleChange}
+                id=""
               />{" "}
               <p>
                 <input
+                  name="annexure12"
+                  value={formData.annexure12}
+                  onChange={handleChange}
                   type="text"
                   placeholder="ANNEXURE"
                   className="font-bold p-1 rounded-md border-2 focus:border-blue-500"
@@ -759,11 +838,20 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               The technical bid of the subject tender was opened on{" "}
-              <input type="date" name="" id="" />. On due date and time, the
-              offers of the following parties were received:
+              <input
+                type="date"
+                name="date12"
+                value={formData.date12}
+                onChange={handleChange}
+                id=""
+              />
+              . On due date and time, the offers of the following parties were
+              received:
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none"
-                name=""
+                name="noofoffersreceived"
+                value={formData.noofoffersreceived}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -776,6 +864,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="nooflatetenders"
+                value={formData.nooflatetenders}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none"
                 type="text"
               />
@@ -789,6 +880,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 font-bold border-r rounded-md border-gray-300">
               <input
+                name="annexure12"
+                value={formData.annexure12}
+                onChange={handleChange}
                 type="text"
                 className="border-2 rounded-md p-1 "
                 placeholder="ANNEXURE"
@@ -880,7 +974,9 @@ const TCCIDetails = ({ financialYears }) => {
               security declaration */}
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none"
-                name=""
+                name="emd"
+                value={formData.emd}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -895,32 +991,64 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               Technical clarifications were raised on GeM Portal dated
-              <input type="date" name="" id="" />,{" "}
-              <input type="date" name="" id="" /> and{" "}
-              <input type="date" name="" id="" /> <br /> (&nbsp;{" "}
               <input
+                type="date"
+                name="date13"
+                value={formData.date13}
+                onChange={handleChange}
+                id=""
+              />
+              ,{" "}
+              <input
+                type="date"
+                name="date14"
+                value={formData.date14}
+                onChange={handleChange}
+                id=""
+              />{" "}
+              and{" "}
+              <input
+                type="date"
+                name="date15"
+                value={formData.date15}
+                onChange={handleChange}
+                id=""
+              />{" "}
+              <br /> (&nbsp;{" "}
+              <input
+                name="annexure13"
+                value={formData.annexure13}
+                onChange={handleChange}
                 type="text"
                 placeholder="ANNEXURE"
                 className="font-bold p-1 rounded-md border-2 mt-2"
               />{" "}
               ,{" "}
               <input
+                name="annexure14"
+                value={formData.annexure14}
+                onChange={handleChange}
                 placeholder="ANNEXURE"
                 className="font-bold p-1 rounded-md border-2 mt-2"
                 type="text"
               />{" "}
               and{" "}
               <input
+                name="annexure15"
+                value={formData.annexure15}
+                onChange={handleChange}
                 placeholder="ANNEXURE"
                 type="text"
                 className="font-bold p-1 w-52 mt-2 rounded-md border-2"
-                name=""
                 id=""
               />
               &nbsp;&nbsp;)
               <br />
               All clarifications are raised to all the{" "}
               <input
+                name="clarificationtovendors"
+                value={formData.clarificationtovendors}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 w-28 outline-none"
                 type="text"
               />{" "}
@@ -935,6 +1063,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <input
+                name="noofoffersrejectedtechnically"
+                value={formData.noofoffersrejectedtechnically}
+                onChange={handleChange}
                 placeholder="number"
                 className="border-b-2 focus:border-blue-500 outline-none mb-5"
                 type="text"
@@ -943,7 +1074,9 @@ const TCCIDetails = ({ financialYears }) => {
               <textarea
                 placeholder="vendorname with reason "
                 className="border-b-2 w-72 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="rejectedvendorsname"
+                value={formData.rejectedvendorsnames}
+                onChange={handleChange}
                 id=""
               ></textarea>
               <br />
@@ -958,6 +1091,9 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r  border-gray-300">
               <input
+                name="noofoffersrejectedonthegrounds"
+                value={formData.noofoffersrejectedonthegrounds}
+                onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
                 type="text"
               />
@@ -965,7 +1101,9 @@ const TCCIDetails = ({ financialYears }) => {
               <br />
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="noofoffersrejectedonthegroundsreason"
+                value={formData.noofoffersrejectedonthegroundsreason}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -979,10 +1117,15 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="referenceoftechnicalbidtcc"
+                value={formData.referenceoftechnicalbidtcc}
+                onChange={handleChange}
                 id=""
               ></textarea>
               <input
+                name="annexure16"
+                value={formData.annexure16}
+                onChange={handleChange}
                 className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
                 placeholder="ANNEXURE"
                 type="text"
@@ -999,7 +1142,9 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="anyprepricebidmeetingheld"
+                value={formData.anyprepricebidmeetingheld}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1013,7 +1158,9 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="detailsofdeviationacceptedbytcc"
+                value={formData.detailsofdeviationacceptedbytcc}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1026,8 +1173,11 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
+              
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="partieswhodonotagreeonabovedeviations"
+                value={formData.partieswhodonotagreeonabovedeviations}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1041,7 +1191,9 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="anyrevisedpricebid"
+                value={formData.anyrevisedpricebid}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1058,13 +1210,18 @@ const TCCIDetails = ({ financialYears }) => {
               <input
                 className="border-b-2 w-36 mr-2 focus:border-blue-500 outline-none mb-2"
                 type="text"
+                name="noofpartieswhoqualifyforopeningofpricebids"
+                value={formData.noofpartieswhoqualifyforopeningofpricebids}
+                onChange={handleChange}
               />
               bidders who have been qualified as per PQ criteria and submission
               of relevant other mandatory document criteria.
               <br />
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="partieswhoqualifyforopeningofpricebids"
+                value={formData.partieswhoqualifyforopeningofpricebids}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1078,7 +1235,9 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="validityofoffers"
+                value={formData.validityofoffers}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1090,7 +1249,10 @@ const TCCIDetails = ({ financialYears }) => {
               Weather CVC guidelines have been complied with.
             </td>
             <td className="px-6 py-4 border-r border-gray-300">
-              <input
+              <textarea
+              name="weathercvcguidelineshavebeencompiledwith"
+              value={formData.weathercvcguidelineshavebeencompiledwith}
+              onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
                 type="text"
               />
@@ -1105,7 +1267,9 @@ const TCCIDetails = ({ financialYears }) => {
             <td className="px-6 py-4 border-r border-gray-300">
               <textarea
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                name=""
+                name="anyotherrelevantinfo"
+                value={formData.anyotherrelevantinfo}
+                onChange={handleChange}
                 id=""
               ></textarea>
             </td>
@@ -1120,11 +1284,17 @@ const TCCIDetails = ({ financialYears }) => {
             </td>
             <td className="px-6 py-4 border-r border-b border-gray-300">
               <input
+              name="doaapprovingauthorityone"
+              value={formData.doaapprovingauthorityone}
+              onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
                 type="text"
               />{" "}
               is requested to accord approval for opening of Price Bid of the{" "}
               <input
+              name="doaapprovingauthoritytwo"
+              value={formData.doaapprovingauthoritytwo}
+              onChange={handleChange}
                 className="border-b-2 w-40 focus:border-blue-500 outline-none mb-2"
                 type="text"
               />{" "}
@@ -1132,6 +1302,9 @@ const TCCIDetails = ({ financialYears }) => {
               <br />
               Approval sought under{" "}
               <input
+              name="doaapprovingauthoritythree"
+              value={formData.doaapprovingauthoritythree}
+              onChange={handleChange}
                 className="border-b-2 focus:border-blue-500 outline-none mb-2"
                 type="text"
               />
