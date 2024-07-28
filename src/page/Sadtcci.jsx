@@ -11,6 +11,15 @@ const SAD = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
 
+
+  const PercentageDisplay = ({ number, percentage }) => {
+    const calculatePercentage = () => {
+      return (number * percentage) / 100;
+    };
+
+    return <p>{calculatePercentage()}</p>;
+  };
+
   useEffect(() => {
     const fetchDraft = async () => {
       try {
@@ -325,7 +334,7 @@ const SAD = () => {
                         <input
                           className="font-bold p-1"
                           name="date1"
-                          value={formData.date1}
+                          value={formData.date1?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
 
@@ -367,7 +376,7 @@ const SAD = () => {
                           className=" p-1 mt-1"
                           type="date"
                           name="date2"
-                          value={formData.date2}
+                          value={formData.date2?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                         />{" "}
@@ -405,7 +414,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date3"
-                          value={formData.date3}
+                          value={formData.date3?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -481,7 +490,7 @@ const SAD = () => {
                         <input
                           className="rounded-md p-1"
                           name="date4"
-                          value={formData.date4}
+                          value={formData.date4?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           type="date"
@@ -512,7 +521,7 @@ const SAD = () => {
                         dated{" "}
                         <input
                           name="date5"
-                          value={formData.date5}
+                          value={formData.date5?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           type="date"
@@ -550,7 +559,7 @@ const SAD = () => {
                         dated{" "}
                         <input
                           name="date6"
-                          value={formData.date6}
+                          value={formData.date6?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           type="date"
@@ -559,7 +568,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date7"
-                          value={formData.date7}
+                          value={formData.date7?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -626,7 +635,7 @@ const SAD = () => {
                         dated{" "}
                         <input
                           name="date8"
-                          value={formData.date8}
+                          value={formData.date8?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           className="p-1 border-b-2 focus:border-blue-500 outline-none"
@@ -830,7 +839,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date9"
-                          value={formData.date9}
+                          value={formData.date9?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -890,7 +899,7 @@ const SAD = () => {
                         <input
                           className=""
                           name="date9"
-                          value={formData.date9}
+                          value={formData.date9?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           type="date"
@@ -1051,7 +1060,7 @@ const SAD = () => {
                         <input
                           type="datetime-local"
                           name="date10"
-                          value={formData.date10}
+                          value={formData.date10?.split(".")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -1081,7 +1090,7 @@ const SAD = () => {
                         <input
                           type="datetime-local"
                           name="date11"
-                          value={formData.date11}
+                          value={formData.date11?.split(".")[0] || ""}
                           disabled={!isEditing}
                           onChange={handleChange}
                           id=""
@@ -1113,7 +1122,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date12"
-                          value={formData.date12}
+                          value={formData.date12?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -1188,19 +1197,19 @@ const SAD = () => {
                         <div>NON-MSE BIDDER:</div>
                         <div>
                           <span>1. Bidder Turnover - Rs </span>
-                          {/* <PercentageDisplay
+                          <PercentageDisplay
                             number={formData.amount}
                             percentage={60}
-                          /> */}
+                          />
                           <span> (60%)</span>
                         </div>
                         <div style={{ marginTop: "1rem" }}>MSE BIDDER:</div>
                         <div>
                           <span>1. Bidder Turnover – Rs </span>
-                          {/* <PercentageDisplay
+                          <PercentageDisplay
                             number={formData.amount}
                             percentage={51}
-                          /> */}
+                          />
                           <span> (51%)</span>
                         </div>
                       </td>
@@ -1218,48 +1227,48 @@ const SAD = () => {
                         NON MSE BIDDER:
                         <br />
                         1. Three works – Rs{" "}
-                        {/* <PercentageDisplay
+                        <PercentageDisplay
                           number={formData.amount}
                           percentage={30}
-                        />{" "} */}
+                        />{" "}
                         each
                         <br />
                         2. Two works – Rs{" "}
-                        {/* <PercentageDisplay
+                        <PercentageDisplay
                           number={formData.amount}
                           percentage={40}
                         />{" "}
-                        each */}
+                        each
                         <br />
                         3. One work – Rs{" "}
-                        {/* <PercentageDisplay
+                        <PercentageDisplay
                           number={formData.amount}
                           percentage={25.5}
-                        />{" "} */}
+                        />{" "}
                         each
                         <br />
                         <br />
                         MSE BIDDER:
                         <br />
                         1. Three works – Rs{" "}
-                        {/* <PercentageDisplay
+                        <PercentageDisplay
                           number={formData.amount}
                           percentage={25.5}
-                        />{" "} */}
+                        />{" "}
                         each
                         <br />
                         2. Two works – Rs{" "}
-                        {/* <PercentageDisplay
+                        <PercentageDisplay
                           number={formData.amount}
                           percentage={34}
-                        />{" "} */}
+                        />{" "}
                         each
                         <br />
                         3. One work – Rs{" "}
-                        {/* <PercentageDisplay
+                        <PercentageDisplay
                           number={formData.amount}
                           percentage={42.5}
-                        />{" "} */}
+                        />{" "}
                         each
                         <br />
                       </td>
@@ -1301,7 +1310,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date13"
-                          value={formData.date13}
+                          value={formData.date13?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -1310,7 +1319,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date14"
-                          value={formData.date14}
+                          value={formData.date14?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
@@ -1319,7 +1328,7 @@ const SAD = () => {
                         <input
                           type="date"
                           name="date15"
-                          value={formData.date15}
+                          value={formData.date15?.split("T")[0] || ""}
                           onChange={handleChange}
                           disabled={!isEditing}
                           id=""
