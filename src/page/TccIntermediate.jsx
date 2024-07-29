@@ -37,6 +37,7 @@ const TCCIntermediate = () => {
     date13: "",
     date14: "",
     date15: "",
+    date16: "", 
     grantedBy1: "",
     grantedBy2: "",
     grantedBy3: "",
@@ -131,7 +132,6 @@ const TCCIntermediate = () => {
   }, []);
 
   
-
   const PercentageDisplay = ({ number, percentage }) => {
     const calculatePercentage = () => {
       return (number * percentage) / 100;
@@ -845,8 +845,8 @@ const TCCIntermediate = () => {
                         dated{" "}
                         <input
                           className=""
-                          name="date9"
-                          value={inputs.date9}
+                          name="date10"
+                          value={inputs.date10}
                           onChange={handleChange}
                           type="date"
                         />{" "}
@@ -996,8 +996,8 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           type="datetime-local"
-                          name="date10"
-                          value={inputs.date10}
+                          name="date11"
+                          value={inputs.date11}
                           onChange={handleChange}
                           id=""
                         />{" "}
@@ -1024,8 +1024,8 @@ const TCCIntermediate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           type="datetime-local"
-                          name="date11"
-                          value={inputs.date11}
+                          name="date12"
+                          value={inputs.date12}
                           onChange={handleChange}
                           id=""
                         />{" "}
@@ -1054,8 +1054,8 @@ const TCCIntermediate = () => {
                         The technical bid of the subject tender was opened on{" "}
                         <input
                           type="date"
-                          name="date12"
-                          value={inputs.date12}
+                          name="date13"
+                          value={inputs.date13}
                           onChange={handleChange}
                           id=""
                         />
@@ -1237,24 +1237,24 @@ const TCCIntermediate = () => {
                         Technical clarifications were raised on GeM Portal dated
                         <input
                           type="date"
-                          name="date13"
-                          value={inputs.date13}
+                          name="date14"
+                          value={inputs.date14}
                           onChange={handleChange}
                           id=""
                         />
                         ,{" "}
                         <input
                           type="date"
-                          name="date14"
-                          value={inputs.date14}
+                          name="date15"
+                          value={inputs.date15}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         and{" "}
                         <input
                           type="date"
-                          name="date15"
-                          value={inputs.date15}
+                          name="date16"
+                          value={inputs.date16}
                           onChange={handleChange}
                           id=""
                         />{" "}
