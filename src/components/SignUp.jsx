@@ -23,7 +23,7 @@ const SignUp = () => {
 
   const handleSignup = async () => {
     try {
-      const res = await fetch("/api/users/signup", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(inputs),
