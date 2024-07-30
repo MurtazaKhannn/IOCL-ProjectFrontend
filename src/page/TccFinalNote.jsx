@@ -45,7 +45,7 @@ const BudgetaryEstimate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/forms/tccfinalnote", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/tccfinalnote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

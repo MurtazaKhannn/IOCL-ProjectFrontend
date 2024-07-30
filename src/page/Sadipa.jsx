@@ -15,7 +15,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`/api/forms/Inprinciple%20Approval/${draftId}`, {
+        const res = await fetch(`https://iocl-project-backend.vercel.app/api/forms/Inprinciple%20Approval/${draftId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

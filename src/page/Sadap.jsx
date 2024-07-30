@@ -14,7 +14,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const url = `/api/forms/Administrative%20Page/${draftId}`;
+        const url = `https://iocl-project-backend.vercel.app/api/forms/Administrative%20Page/${draftId}`;
         const res = await fetch(url, {
           method: "GET",
           headers: {

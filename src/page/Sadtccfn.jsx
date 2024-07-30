@@ -58,7 +58,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `/api/forms/edittccfn/${draftId}`;
+      const url = `https://iocl-project-backend.vercel.app/api/forms/edittccfn/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

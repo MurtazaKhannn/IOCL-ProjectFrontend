@@ -9,7 +9,7 @@ const SDone = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`/api/forms/savedraft/${draftId}`, {
+        const res = await fetch(`https://iocl-project-backend.vercel.app/api/forms/savedraft/${draftId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

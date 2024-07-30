@@ -24,7 +24,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const url = `/api/forms/TCC%20Intermediate/${draftId}`;
+        const url = `https://iocl-project-backend.vercel.app/api/forms/TCC%20Intermediate/${draftId}`;
         const res = await fetch(url, {
           method: "GET",
           headers: {
@@ -69,7 +69,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `/api/forms/edittcci/${draftId}`;
+      const url = `https://iocl-project-backend.vercel.app/api/forms/edittcci/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

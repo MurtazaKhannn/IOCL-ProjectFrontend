@@ -157,7 +157,7 @@ const TCCIntermediate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/forms/tccintermediate", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/tccintermediate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

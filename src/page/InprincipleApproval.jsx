@@ -44,7 +44,7 @@ const InprincipleApproval = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/forms/inprincipleapproval", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/inprincipleapproval", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

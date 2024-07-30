@@ -13,7 +13,7 @@ const SavedDraft = () => {
   useEffect(() => {
     const fetchDrafts = async () => {
       try {
-        const res = await fetch(`/api/forms/alldrafts/${userId}`, {
+        const res = await fetch(`https://iocl-project-backend.vercel.app/api/forms/alldrafts/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const SavedDraft = () => {
     if (isConfirmed) {
       try {
         setLoadingDelete(true);
-        const res = await fetch(`/api/forms/delete/${draftId}/${draftType}`, {
+        const res = await fetch(`https://iocl-project-backend.vercel.app/api/forms/delete/${draftId}/${draftType}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

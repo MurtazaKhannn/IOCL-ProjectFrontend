@@ -10,7 +10,7 @@ const CreateNew = () => {
 
   const handleDraft = async () => {
     try {
-      const res = await fetch("/api/forms/savedraft", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/savedraft", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
