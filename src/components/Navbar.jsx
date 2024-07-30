@@ -12,6 +12,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
+      console.log(apiUrl);
       const res = await fetch(`${apiUrl}/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
