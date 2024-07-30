@@ -51,7 +51,7 @@ const AdministrativePage = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/forms/administrativepage", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/administrativepage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
