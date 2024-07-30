@@ -7,6 +7,8 @@ import { ClimbingBoxLoader, ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
 
+  const apiUrl = process.env.API_URL;
+
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -48,7 +50,7 @@ const BudgetaryEstimate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/budgetaryestimate" , {
+      const res = await fetch(`${apiUrl}/api/forms/budgetaryestimate` , {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

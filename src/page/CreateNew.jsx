@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const CreateNew = () => {
+  const apiUrl = process.env.API_URL;
+  
   const [selectedOption, setSelectedOption] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleDraft = async () => {
     try {
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/savedraft", {
+      const res = await fetch(`${apiUrl}/api/forms/savedraft`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

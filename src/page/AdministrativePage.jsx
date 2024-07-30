@@ -8,6 +8,7 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
 
 const AdministrativePage = () => {
+  const apiUrl = process.env.API_URL;
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -51,7 +52,7 @@ const AdministrativePage = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/administrativepage", {
+      const res = await fetch(`${apiUrl}/api/forms/administrativepage`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

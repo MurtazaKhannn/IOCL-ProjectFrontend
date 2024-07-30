@@ -7,6 +7,7 @@ import Spinner from '../page/Spinner.jsx';
 import { ClipLoader } from 'react-spinners';
 
 const Login = () => {
+  const apiUrl = process.env.API_URL;
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userAtom);
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/users/login", {
+      const res = await fetch(`${apiUrl}/api/users/login`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',

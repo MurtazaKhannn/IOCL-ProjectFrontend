@@ -10,11 +10,12 @@ const SAD = () => {
   const [draft, setDraft] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-
+  const apiUrl = process.env.API_URL;
   useEffect(() => {
+
     const fetchDraft = async () => {
       try {
-        const url = `/api/forms/TCC%20FinalNote/${draftId}`;
+        const url = `${apiUrl}/api/forms/TCC%20FinalNote/${draftId}`;
         const res = await fetch(url, {
           method: "GET",
           headers: {
@@ -58,7 +59,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `https://iocl-project-backend.vercel.app/api/forms/edittccfn/${draftId}`;
+      const url = `${apiUrl}/api/forms/edittccfn/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

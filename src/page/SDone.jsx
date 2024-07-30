@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const SDone = () => {
+  const apiUrl = process.env.API_URL;
+  
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
   const [selectedForm, setSelectedForm] = useState(null);
@@ -9,7 +11,7 @@ const SDone = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`https://iocl-project-backend.vercel.app/api/forms/savedraft/${draftId}`, {
+        const res = await fetch(`${apiUrl}/api/forms/savedraft/${draftId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

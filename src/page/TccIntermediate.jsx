@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const TCCIntermediate = () => {
+  const apiUrl = process.env.API_URL;
+  
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -157,7 +159,7 @@ const TCCIntermediate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/tccintermediate", {
+      const res = await fetch(`${apiUrl}/api/forms/tccintermediate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

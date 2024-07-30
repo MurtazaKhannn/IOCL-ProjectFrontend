@@ -7,6 +7,8 @@ import { Document, Packer, Paragraph, ImageRun } from 'docx';
 import { saveAs } from 'file-saver'; // Don't forget to import this
 
 const SAD = () => {
+  const apiUrl = process.env.API_URL;
+  
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -56,7 +58,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `https://iocl-project-backend.vercel.app/api/forms/editbe/${draftId}`;
+      const url = `${apiUrl}/api/forms/editbe/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

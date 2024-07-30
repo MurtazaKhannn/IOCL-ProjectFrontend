@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const InprincipleApproval = () => {
+  const apiUrl = process.env.API_URL;
+
   const predefinedValues = {
     section: 'Information System',
     department: 'Information Technology',
@@ -44,7 +46,7 @@ const InprincipleApproval = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/forms/inprincipleapproval", {
+      const res = await fetch(`${apiUrl}/api/forms/inprincipleapproval`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

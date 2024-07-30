@@ -7,6 +7,8 @@ import { Document, Packer, Paragraph, ImageRun } from 'docx';
 import { saveAs } from 'file-saver'; // Don't forget to import this
 
 const SAD = () => {
+  const apiUrl = process.env.API_URL;
+  
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -15,7 +17,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`https://iocl-project-backend.vercel.app/api/forms/Inprinciple%20Approval/${draftId}`, {
+        const res = await fetch(`${apiUrl}/api/forms/Inprinciple%20Approval/${draftId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -5,13 +5,14 @@ import userAtom from "../atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const apiUrl = process.env.API_URL;
   const setUser = useSetRecoilState(userAtom);
   const currentUser = useRecoilValue(userAtom); //logged in user
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/users/logout", {
+      const res = await fetch(`${apiUrl}/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });

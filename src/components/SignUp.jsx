@@ -6,6 +6,7 @@ import userAtom from '../atoms/userAtom';
 import authScreenAtom from '../atoms/authAtom';
 
 const SignUp = () => {
+  const apiUrl = process.env.API_URL;
   const navigate = useNavigate();
   const setAuthScreenState = useSetRecoilState(authScreenAtom);
   const setUser = useSetRecoilState(userAtom);
@@ -23,7 +24,7 @@ const SignUp = () => {
 
   const handleSignup = async () => {
     try {
-      const res = await fetch("https://iocl-project-backend.vercel.app/api/users/signup", {
+      const res = await fetch(`${apiUrl}/api/users/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(inputs),
