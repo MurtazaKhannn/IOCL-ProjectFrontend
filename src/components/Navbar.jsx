@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const apiUrl = process.env.API_URL;
+  console.log(apiUrl);
   const setUser = useSetRecoilState(userAtom);
   const currentUser = useRecoilValue(userAtom); //logged in user
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      console.log(apiUrl);
       const res = await fetch(`${apiUrl}/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
