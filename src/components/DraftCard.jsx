@@ -2,13 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import Spinner from '../page/Spinner';
+import userAtom from '../atoms/userAtom';
+import { useRecoilValue } from 'recoil';
+
+
 
 
 const DraftCard = () => {
   const [loadingNew, setLoadingNew] = useState(false);
   const [loadingDrafts, setLoadingDrafts] = useState(false);
   const navigate = useNavigate();
-  const userId = '6694cf84e02a217abe0f7bda'; // Replace with dynamic user ID if available
+  const currentUser = useRecoilValue(userAtom);
+  const userId = currentUser._id;
+
 
   const handleCreateNew = () => {
     setLoadingNew(true);
