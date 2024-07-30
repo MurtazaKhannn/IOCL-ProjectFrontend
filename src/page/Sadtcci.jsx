@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import IOL from "../assets/logo.webp";
-import { Document, ImageRun, Packer, Paragraph } from "docx";
+import { Packer, Document, Paragraph, Table, TableRow, TableCell, WidthType, TextRun, ImageRun } from "docx";
 
 const SAD = () => {
   const { draftId } = useParams();
@@ -218,56 +218,401 @@ const SAD = () => {
 
   const generateDOCX = async () => {
     const imageBuffer = await fetch(IOL).then((res) => res.arrayBuffer());
+
+    const tableRows = [
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("1")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Brief background of the main project")] }),
+                new TableCell({ children: [new Paragraph(`Vide note ref: ${draft.videref1 || ""} dated ${draft.date1 || ""}, approval is granted by ${draft.dgmi || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 1`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("1")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Approval for technical specifications")] }),
+                new TableCell({ children: [new Paragraph(`vide ref: ${draft.videref2 || ""} dated ${draft.date2 || ""} is approved by ${draft.dgmi || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 2`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("1")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Estimate approval")] }),
+                new TableCell({ children: [new Paragraph(`Vide note ref: ${draft.videref3 || ""} dated ${draft.date3 || ""}, estimate for Rs. ${draft.estimate || ""} including GST is approved by ${draft.dgmi2 || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 3`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("1")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Admin approval for procurement")] }),
+                new TableCell({ children: [new Paragraph(`for ${draft.procurement || ""} at Rs. ${draft.amount || ""} is granted by ${draft.grantedBy || ""} vide note ref: ${draft.noteRef || ""} dated ${draft.noteDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 4`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("1")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Approval for PQ, Evaluation criteria")] }),
+                new TableCell({ children: [new Paragraph(`vide note ref: ${draft.pqRef || ""} dated ${draft.pqDate || ""} duly approved by ${draft.pqApprovedBy || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 5`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("1")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("E-Tender")] }),
+                new TableCell({ children: [new Paragraph(`published on GeM portal on ${draft.eTenderDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 6`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("2")] }),
+                new TableCell({ children: [new Paragraph("B")] }),
+                new TableCell({ children: [new Paragraph("Description of tendered work")] }),
+                new TableCell({ children: [new Paragraph(`Procurement of ${draft.tenderedWork || ""} at ${draft.location || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("2")] }),
+                new TableCell({ children: [new Paragraph("C")] }),
+                new TableCell({ children: [new Paragraph("Tender No")] }),
+                new TableCell({ children: [new Paragraph(`${draft.tenderNo || ""} dated ${draft.tenderDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("2")] }),
+                new TableCell({ children: [new Paragraph("D")] }),
+                new TableCell({ children: [new Paragraph("Estimated value of work")] }),
+                new TableCell({ children: [new Paragraph(`Rs. ${draft.estimatedValue || ""} including GST`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("2")] }),
+                new TableCell({ children: [new Paragraph("E")] }),
+                new TableCell({ children: [new Paragraph("Approved by")] }),
+                new TableCell({ children: [new Paragraph(`${draft.approvedBy || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("2")] }),
+                new TableCell({ children: [new Paragraph("F")] }),
+                new TableCell({ children: [new Paragraph("In case the estimate is more than Rs. 25 Lacs whether vetted by Finance")] }),
+                new TableCell({ children: [new Paragraph(`${draft.financeVet || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("3")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Whether Capital / Revenue Item")] }),
+                new TableCell({ children: [new Paragraph(`${draft.capitalRevenue || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("3")] }),
+                new TableCell({ children: [new Paragraph("B")] }),
+                new TableCell({ children: [new Paragraph("In case of Revenue expenditure give ref No:")] }),
+                new TableCell({ children: [new Paragraph(`${draft.revenueRefNo || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("3")] }),
+                new TableCell({ children: [new Paragraph("C")] }),
+                new TableCell({ children: [new Paragraph("In case of Capital Item give IR No and Amount with Administrative Approval reference")] }),
+                new TableCell({ children: [new Paragraph(`${draft.capitalIRNo || ""} and Amount ${draft.capitalAmount || ""} with Admin Approval ref: ${draft.capitalAdminApproval || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("4")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Cumulative commitments made prior to the current proposal against the approval given in item No: 3 above")] }),
+                new TableCell({ children: [new Paragraph(`${draft.cumulativeCommitments || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("5")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Approval Reference for inviting Tender")] }),
+                new TableCell({ children: [new Paragraph(`Admin approval for procurement of ${draft.procurement || ""} at ${draft.location || ""} is granted by ${draft.adminApprovalBy || ""} vide note ref: ${draft.adminApprovalNoteRef || ""} dated ${draft.adminApprovalNoteDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph(`Annexure 7`)] }),
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("6")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Corrigendum issued if any")] }),
+                new TableCell({ children: [new Paragraph(`${draft.corrigendum || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("7")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("TCC members")] }),
+                new TableCell({ children: [new Paragraph(`Following are the TCC members vide office order: ${draft.tccOrder || ""} dated ${draft.tccDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("8")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Mode of Tendering (ST/LT/PT)")] }),
+                new TableCell({ children: [new Paragraph(`${draft.tenderMode || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("9")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Type of Tendering system (Single bid / Two Bid System)")] }),
+                new TableCell({ children: [new Paragraph(`${draft.tenderingSystem || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("10")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Tenders Issued / No of parties to whom enquiry was sent")] }),
+                new TableCell({ children: [new Paragraph(`${draft.tendersIssued || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("11")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Time allowed for submission of tenders from the date of opening of sale of tender documents")] }),
+                new TableCell({ children: [new Paragraph(`${draft.timeAllowed || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("12")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Whether any Pre-bid meeting held")] }),
+                new TableCell({ children: [new Paragraph(`${draft.preBidMeeting || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("13")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Due Date & Receipt of E-tenders")] }),
+                new TableCell({ children: [new Paragraph(`${draft.dueDate || ""} ${draft.receipt || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("14")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Actual Date & Time of Opening of E-tenders")] }),
+                new TableCell({ children: [new Paragraph(`${draft.openingDate || ""} ${draft.openingTime || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("15")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("No of Offers received up to the due date and time of receipt")] }),
+                new TableCell({ children: [new Paragraph(`The technical bid of the subject tender was opened on ${draft.technicalBidOpenDate || ""}. On due date and time, the offers of the following parties were received: ${draft.offersReceived || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("16")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("No of Late Tenders")] }),
+                new TableCell({ children: [new Paragraph(`${draft.lateTenders || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("17")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Pre-Qualification Criteria")] }),
+                new TableCell({ children: [new Paragraph(`NON-MSE BIDDER: Bidder Turnover - Rs ${draft.nonMseTurnover || ""} (${draft.nonMsePercentage || ""}) MSE BIDDER: Bidder Turnover – Rs ${draft.mseTurnover || ""} (${draft.msePercentage || ""})`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("17")] }),
+                new TableCell({ children: [new Paragraph("B")] }),
+                new TableCell({ children: [new Paragraph("Similar Work")] }),
+                new TableCell({ children: [new Paragraph(`NON MSE BIDDER: Three works – Rs ${draft.nonMseThreeWorks || ""} each Two works – Rs ${draft.nonMseTwoWorks || ""} each One work – Rs ${draft.nonMseOneWork || ""} each MSE BIDDER: Three works – Rs ${draft.mseThreeWorks || ""} each Two works – Rs ${draft.mseTwoWorks || ""} each One work – Rs ${draft.mseOneWork || ""} each`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("17")] }),
+                new TableCell({ children: [new Paragraph("C")] }),
+                new TableCell({ children: [new Paragraph("EMD")] }),
+                new TableCell({ children: [new Paragraph(`${draft.emd || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("18")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Technical Evaluation of Bidders as per PQ Criteria and Other mandatory document criteria")] }),
+                new TableCell({ children: [new Paragraph(`Technical clarifications were raised on GeM Portal dated ${draft.technicalClarifications || ""} All clarifications are raised to all the ${draft.vendors || ""} vendors.`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("19")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("No of Offers rejected technically")] }),
+                new TableCell({ children: [new Paragraph(`${draft.offersRejectedTechnically || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("20")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("No of offer rejected on the grounds of Holiday listing and reasons thereof (in case of two bid)")] }),
+                new TableCell({ children: [new Paragraph(`${draft.offersRejectedHoliday || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("21")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Reference of Technical bid TCC minutes")] }),
+                new TableCell({ children: [new Paragraph(`${draft.tccMinutes || ""} ANNEXURE 1`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("22")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Reference of commercial bid TCC minutes")] }),
+                new TableCell({ children: [new Paragraph(`${draft.tccMinutesCommercial || ""} ANNEXURE 2`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("23")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Evaluation of bids and recommended bidder")] }),
+                new TableCell({ children: [new Paragraph(`Following are the recommended bidders: ${draft.recommendedBidders || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("24")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Approval of recommended bidders")] }),
+                new TableCell({ children: [new Paragraph(`Approval for ${draft.recommendedBidders || ""} was granted by ${draft.approvedBy || ""} vide ref: ${draft.approvalRef || ""} dated ${draft.approvalDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("25")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("No of L1 or lowest bidder")] }),
+                new TableCell({ children: [new Paragraph(`${draft.lowestBidder || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("26")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Approval of the final recommendation")] }),
+                new TableCell({ children: [new Paragraph(`Final recommendation for ${draft.finalRecommendation || ""} was approved by ${draft.finalApprovalBy || ""} vide ref: ${draft.finalApprovalRef || ""} dated ${draft.finalApprovalDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("27")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Contracts awarded and orders placed")] }),
+                new TableCell({ children: [new Paragraph(`${draft.contractsAwarded || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+        new TableRow({
+            children: [
+                new TableCell({ children: [new Paragraph("28")] }),
+                new TableCell({ children: [new Paragraph("A")] }),
+                new TableCell({ children: [new Paragraph("Invoice approval")] }),
+                new TableCell({ children: [new Paragraph(`Invoices for the contract ${draft.contractNumber || ""} were approved on ${draft.invoiceApprovalDate || ""}`)] }),
+                new TableCell({ children: [new Paragraph("")] }),  // Empty cell if no content
+            ],
+        }),
+    ];
+
     const doc = new Document({
-      sections: [
-        {
-          properties: {},
-          children: [
-            new Paragraph({
-              children: [
-                new ImageRun({
-                  data: imageBuffer,
-                  transformation: {
-                    width: 100,
-                    height: 100,
-                  },
-                }),
-              ],
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Section: ${draft.section}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Department: ${draft.department}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Location: ${draft.location}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Date: ${draft.date}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Subject: ${draft.subject}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Confidential: ${draft.confidential}`,
-              spacing: { after: 200 },
-            }),
-          ],
-        },
-      ],
+        sections: [
+            {
+                properties: {},
+                children: [
+                    new Table({
+                        rows: tableRows,
+                        width: {
+                            size: 100,
+                            type: WidthType.PERCENTAGE,
+                        },
+                    }),
+                    // Add other document content here if needed
+                ],
+            },
+        ],
     });
 
-    Packer.toBlob(doc).then((blob) => {
-      saveAs(blob, "administrative_approval.docx");
-    });
-  };
+    const blob = await Packer.toBlob(doc);
+    saveAs(blob, "example.docx");
+};
+  
 
   return (
     <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-sans justify-center items-center">
