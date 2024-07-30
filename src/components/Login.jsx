@@ -60,7 +60,7 @@ const Login = () => {
       setUser(data);
 
       console.log("Navigating to /draft"); // Debugging line
-      navigate("https://iocl-project-backend.vercel.app/api/forms/draft", { replace: true });
+      navigate("/draft", { replace: true });
     } catch (error) {
       alert("Error: " + error);
       console.log("Error:", error); // Debugging line
