@@ -32,7 +32,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/users/login", {
+      const res = await fetch("https://iocl-project-frontend.vercel.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
