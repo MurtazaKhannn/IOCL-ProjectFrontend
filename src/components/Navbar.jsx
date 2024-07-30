@@ -5,15 +5,15 @@ import userAtom from "../atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
-  console.log(apiUrl);
+  // const apiUrl = process.env.REACT_APP_API_URL;
+  // console.log("API URL:", apiUrl); 
   const setUser = useSetRecoilState(userAtom);
   const currentUser = useRecoilValue(userAtom); //logged in user
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const res = await fetch(`${apiUrl}/api/users/logout`, {
+      const res = await fetch(`/api/users/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
