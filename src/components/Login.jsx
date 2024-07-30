@@ -32,7 +32,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://iocl-project-frontend.vercel.app/login", {
+      const res = await fetch("https://iocl-project-backend.vercel.app/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -41,12 +41,12 @@ const Login = () => {
         }),
       });
 
-      if (!res.ok) {
-        // Log the response as text to see what is actually being returned
-        const errorText = await res.text();
-        console.error('Error response:', errorText);
-        throw new Error(`HTTP error! Status: ${res.status}`);
-      }
+       if (!res.ok) {
+      // Log the response as text to see what is actually being returned
+      const errorText = await res.text();
+      console.error('Error response:', errorText);
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
 
       const data = await res.json();
       console.log("Response data:", data); // Debugging line
