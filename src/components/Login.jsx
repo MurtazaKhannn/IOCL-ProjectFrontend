@@ -34,8 +34,10 @@ const Login = () => {
       setLoading(true);
       const res = await fetch("https://iocl-project-backend.vercel.app/api/users/login", {
         method: "POST",
-        Accept:'application/form-data' ,
-        'Content-Type': 'application/json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
         body: JSON.stringify({
           email: inputs.email,
           password: inputs.password,
