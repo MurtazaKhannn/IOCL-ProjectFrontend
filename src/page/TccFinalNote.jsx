@@ -7,7 +7,7 @@ import { ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
 
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const predefinedValues = {
     section: "Information System",

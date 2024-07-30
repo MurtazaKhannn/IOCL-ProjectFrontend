@@ -8,7 +8,7 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
 
 const AdministrativePage = () => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",

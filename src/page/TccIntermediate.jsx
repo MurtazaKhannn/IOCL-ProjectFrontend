@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const TCCIntermediate = () => {
-  const apiUrl = process.env.API_URL;
-  
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",

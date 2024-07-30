@@ -10,7 +10,7 @@ const SAD = () => {
   const [draft, setDraft] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {
 
     const fetchDraft = async () => {

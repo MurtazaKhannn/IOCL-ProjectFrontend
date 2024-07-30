@@ -6,7 +6,7 @@ import userAtom from '../atoms/userAtom';
 import authScreenAtom from '../atoms/authAtom';
 
 const SignUp = () => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const setAuthScreenState = useSetRecoilState(authScreenAtom);
   const setUser = useSetRecoilState(userAtom);

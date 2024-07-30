@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const CreateNew = () => {
-  const apiUrl = process.env.API_URL;
-  
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [selectedOption, setSelectedOption] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

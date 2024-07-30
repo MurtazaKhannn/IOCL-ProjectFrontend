@@ -7,7 +7,7 @@ import Spinner from '../page/Spinner.jsx';
 import { ClipLoader } from 'react-spinners';
 
 const Login = () => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userAtom);
   const [loading, setLoading] = useState(false);

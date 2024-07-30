@@ -6,7 +6,7 @@ import IOL from "../assets/logo.webp";
 import { Document, ImageRun, Packer, Paragraph } from "docx";
 
 const SAD = () => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);

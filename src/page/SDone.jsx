@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const SDone = () => {
-  const apiUrl = process.env.API_URL;
-  
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
   const [selectedForm, setSelectedForm] = useState(null);

@@ -5,7 +5,7 @@ import userAtom from "../atoms/userAtom";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
   console.log(apiUrl);
   const setUser = useSetRecoilState(userAtom);
   const currentUser = useRecoilValue(userAtom); //logged in user

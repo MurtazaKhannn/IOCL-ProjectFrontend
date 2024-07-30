@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const SavedDraft = () => {
-  const apiUrl = process.env.API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const { userId } = useParams(); // Get userId from URL params
   const [drafts, setDrafts] = useState([]);
