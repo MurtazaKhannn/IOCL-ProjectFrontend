@@ -6,7 +6,7 @@ import IOL from "../assets/logo.webp";
 import { Document, ImageRun, Packer, Paragraph } from "docx";
 
 const SAD = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
@@ -16,7 +16,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const url = `${apiUrl}/api/forms/Administrative%20Page/${draftId}`;
+        const url = `/api/forms/Administrative%20Page/${draftId}`;
         const res = await fetch(url, {
           method: "GET",
           headers: {
@@ -60,7 +60,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `${apiUrl}/api/forms/editap/${draftId}`;
+      const url = `/api/forms/editap/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

@@ -7,7 +7,7 @@ import { ClimbingBoxLoader, ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
 
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const predefinedValues = {
     section: "Information System",
@@ -50,7 +50,7 @@ const BudgetaryEstimate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${apiUrl}/api/forms/budgetaryestimate` , {
+      const res = await fetch(`/api/forms/budgetaryestimate` , {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

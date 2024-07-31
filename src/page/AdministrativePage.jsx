@@ -8,7 +8,7 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
 
 const AdministrativePage = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -52,7 +52,7 @@ const AdministrativePage = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${apiUrl}/api/forms/administrativepage`, {
+      const res = await fetch(`/api/forms/administrativepage`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const InprincipleApproval = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const predefinedValues = {
     section: 'Information System',
@@ -46,7 +46,7 @@ const InprincipleApproval = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${apiUrl}/api/forms/inprincipleapproval`, {
+      const res = await fetch(`/api/forms/inprincipleapproval`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

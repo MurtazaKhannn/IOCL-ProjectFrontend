@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const TCCIntermediate = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const predefinedValues = {
     section: "Information System",
@@ -159,7 +159,7 @@ const TCCIntermediate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${apiUrl}/api/forms/tccintermediate`, {
+      const res = await fetch(`/api/forms/tccintermediate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

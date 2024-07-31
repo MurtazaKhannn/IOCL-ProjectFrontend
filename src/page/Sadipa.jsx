@@ -7,7 +7,7 @@ import { Document, Packer, Paragraph, ImageRun } from 'docx';
 import { saveAs } from 'file-saver'; // Don't forget to import this
 
 const SAD = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
@@ -17,7 +17,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`${apiUrl}/api/forms/Inprinciple%20Approval/${draftId}`, {
+        const res = await fetch(`/api/forms/Inprinciple%20Approval/${draftId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

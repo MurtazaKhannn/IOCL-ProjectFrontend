@@ -6,7 +6,7 @@ import IOL from "../assets/logo.webp";
 import { Packer, Document, Paragraph, Table, TableRow, TableCell, WidthType, TextRun, ImageRun } from "docx";
 
 const SAD = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
@@ -26,7 +26,7 @@ const SAD = () => {
   useEffect(() => {
     const fetchDraft = async () => {
       try {
-        const url = `${apiUrl}/api/forms/TCC%20Intermediate/${draftId}`;
+        const url = `/api/forms/TCC%20Intermediate/${draftId}`;
         const res = await fetch(url, {
           method: "GET",
           headers: {
@@ -71,7 +71,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `${apiUrl}/api/forms/edittcci/${draftId}`;
+      const url = `/api/forms/edittcci/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

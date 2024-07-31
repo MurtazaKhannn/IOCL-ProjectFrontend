@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const CreateNew = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  // const apiUrl = process.env.REACT_APP_API_URL;
 
   const [selectedOption, setSelectedOption] = useState("");
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const CreateNew = () => {
 
   const handleDraft = async () => {
     try {
-      const res = await fetch(`${apiUrl}/api/forms/savedraft`, {
+      const res = await fetch(`/api/forms/savedraft`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
