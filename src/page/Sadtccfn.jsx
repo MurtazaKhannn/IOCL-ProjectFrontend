@@ -59,7 +59,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `${apiUrl}/api/forms/edittccfn/${draftId}`;
+      const url = `/api/forms/edittccfn/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {

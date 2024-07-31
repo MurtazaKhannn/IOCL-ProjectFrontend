@@ -1,28 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import IOL from "../assets/logo.webp";
-import { Document, Packer, Paragraph, ImageRun } from 'docx';
-import { saveAs } from 'file-saver'; // Don't forget to import this
+import { Document, ImageRun, Packer, Paragraph } from "docx";
 
 const SAD = () => {
-  // const apiUrl = process.env.REACT_APP_API_URL;
-
   const { draftId } = useParams();
   const [draft, setDraft] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-
+  // const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {
+
     const fetchDraft = async () => {
       try {
-        const res = await fetch(`/api/forms/Budgetary%20Estimate/${draftId}`, {
-          method: 'GET',
+        const url = `/api/forms/PQC%20Approval/${draftId}`;
+        const res = await fetch(url, {
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          credentials: 'include',
+          credentials: "include",
         });
 
         if (res.ok) {
@@ -30,15 +29,17 @@ const SAD = () => {
           setDraft(data);
           setFormData(data);
         } else {
-          console.log('Failed to fetch Draft Details');
+          console.log("Failed to fetch Draft Details");
         }
       } catch (error) {
-        console.log('Error in fetching draft details', error);
+        console.log("Error in fetching draft details", error);
       }
     };
 
     fetchDraft();
   }, [draftId]);
+
+  if (!draft) return <p>Loading ... </p>;
 
   const handleChange = (e) => {
     setFormData({
@@ -58,7 +59,7 @@ const SAD = () => {
 
   const handleSave = async () => {
     try {
-      const url = `/api/forms/editbe/${draftId}`;
+      const url = `/api/forms/editpqc/${draftId}`;
       const res = await fetch(url, {
         method: "PUT",
         headers: {
@@ -109,22 +110,15 @@ const SAD = () => {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       let position = 0;
-      const margin = 10; // Margin around the content
 
-      // Scale the image to fit within one page
-      const scale = Math.min((pageHeight - 2 * margin) / imgHeight, 1);
-      const scaledImgWidth = imgWidth * scale;
-      const scaledImgHeight = imgHeight * scale;
-
-      pdf.addImage(imgData, "PNG", margin, position + margin, scaledImgWidth, scaledImgHeight);
-
-      // Ensure that the content fits within a single page
-      if (scaledImgHeight > pageHeight - 2 * margin) {
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", margin, position + margin, scaledImgWidth, scaledImgHeight);
+      if (imgHeight > pageHeight) {
+        const scale = pageHeight / imgHeight;
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth * scale, pageHeight);
+      } else {
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       }
 
-      pdf.save("budgetary_estimate.pdf");
+      pdf.save("tcc_finalnote.pdf");
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
@@ -153,62 +147,33 @@ const SAD = () => {
               ],
               spacing: { after: 200 },
             }),
-            new Paragraph({
-              text: `Section: ${draft.section}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Department: ${draft.department}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Location: ${draft.location}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Date: ${draft.date}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Subject: ${draft.subject}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Background: ${draft.background}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Proposal: ${draft.proposal}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Conclusion: ${draft.conclusion}`,
-              spacing: { after: 200 },
-            }),
-            new Paragraph({
-              text: `Confidential: ${draft.confidential}`,
-              spacing: { after: 200 },
-            }),
+            new Paragraph({ text: `Section: ${draft.section}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Department: ${draft.department}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Location: ${draft.location}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Date: ${draft.date}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Subject: ${draft.subject}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Background: ${draft.background}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Recommendation: ${draft.recommendation}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `DOA Applicable: ${draft.doaApplicable}`, spacing: { after: 200 } }),
+            new Paragraph({ text: `Confidential: ${draft.confidential}`, spacing: { after: 200 } }),
           ],
         },
       ],
     });
 
     Packer.toBlob(doc).then((blob) => {
-      saveAs(blob, "budgetary_estimate.docx");
+      saveAs(blob, "administrative_approval.docx");
     });
   };
 
-  if (!draft) return <><p>Loading ... </p></> ;
-
   return (
-    <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center">
+    <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-sans justify-center items-center">
       <div className="flex w-full h-full items-center justify-center">
         <div
           id="formContainer"
-          className="flex flex-col items-center w-[794px] h-[900px] rounded-md justify-center gap-5 p-2 bg-white border"
+          className="flex flex-col items-center rounded-md w-[794px] h-[1070px] justify-center gap-5 p-2 bg-white border"
         >
-          <h1 className="text-4xl font-semibold">Budgetary Estimate</h1>
+          <h1 className="text-4xl font-semibold mt-8">PQC Approval</h1>
 
           <img src={IOL} className="w-64" alt="" />
 
@@ -284,6 +249,7 @@ const SAD = () => {
             />
           </div>
 
+
           <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="background">Background</label>
             <input
@@ -306,6 +272,30 @@ const SAD = () => {
             />
           </div>
 
+
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="doaApplicable">DOA Applicable</label>
+            <input
+              name="doaApplicable"
+              value={formData.doaApplicable}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+
+          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+            <label htmlFor="effectiveAuthority">Effective Authority</label>
+            <input
+              name="effectiveAuthority"
+              value={formData.effectiveAuthority}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className="rounded-md p-2 w-full"
+            />
+          </div>
+
           <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="conclusion">Conclusion</label>
             <input
@@ -317,6 +307,7 @@ const SAD = () => {
             />
           </div>
 
+        
           <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
             <label htmlFor="confidential">Confidential</label>
             <input

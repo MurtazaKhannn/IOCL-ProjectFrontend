@@ -1488,7 +1488,137 @@ const BudgetaryEstimate = () => {
                         party, basis of allocation.
                       </td>
                       <td className="px-6 py-4 border-r border-b border-gray-300">
-                        <textarea name="awardofjob" value={inputs.awardofonejob} onChange={handleChange} id=""></textarea>
+                        <textarea
+                          name="awardofjob"
+                          value={inputs.awardofjob}
+                          onChange={handleChange}
+                          id=""
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                        ></textarea>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        F
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Validity of offer
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="validityofoffer"
+                          value={inputs.validityofoffer}
+                          onChange={handleChange}
+                          id=""
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                        ></textarea>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        G
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        All declaration duly filled & signed by party
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="alldeclaration"
+                          value={inputs.alldeclaration}
+                          onChange={handleChange}
+                          id=""
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                        ></textarea>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        H
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Whether CVC guidelines have been complies with
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="cvcguidelines"
+                          value={inputs.cvcguidelines}
+                          onChange={handleChange}
+                          id=""
+                        ></textarea>
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        I
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Any other relevant information
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="anyotherrelevantinformation"
+                          value={inputs.anyotherrelevantinformation}
+                          onChange={handleChange}
+                          id=""
+                        />
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        31
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300"></td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        DOA/Approving Authority
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="grantedby13"
+                          value={inputs.grantedby13}
+                          onChange={handleChange}
+                          id=""
+                        />
+                        may kindly accord approval with FC or placement of order
+                        on L-1 party ie.
+                        <textarea
+                          type="text"
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          name="recommendationbytcc"
+                          value={inputs.recommendationbytcc}
+                          onChange={handleChange}
+                        />
+                        for Rs
+                        <input
+                          type="text"
+                          name="amount"
+                          value={inputs.amount}
+                          onChange={handleChange}
+                        />
+                        <textarea
+                          name="rsinwords"
+                          value={inputs.rsinwords}
+                          onChange={handleChange}
+                          id=""
+                        />
+                        including GST @18% Approval sought under{" "}
+                        <input
+                          type="text"
+                          name="doalaw"
+                          value={inputs.doalaw}
+                          onChange={handleChange}
+                        />
                       </td>
                     </tr>
                   </tbody>
@@ -1532,6 +1662,94 @@ const BudgetaryEstimate = () => {
                     No
                   </label>
                 </div>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="doaclause">Number of Applicable DOA Clause</label>
+                <input
+                  id="doaclause"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="doaclause"
+                  value={inputs.doaclause}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="firstapplicabledoa">First Applicable DOA</label>
+                <input
+                  id="firstapplicabledoa"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="firstapplicabledoa"
+                  value={inputs.firstapplicabledoa}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="doadivision">DOA Division</label>
+                <input
+                  id="doadivision"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="doadivision"
+                  value={inputs.doadivision}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="preamble">Preamble Applicable</label>
+                <input
+                  id="preamble"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="preamble"
+                  value={inputs.preamble}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="amount">Amount</label>
+                <input
+                  id="amount"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="amount"
+                  value={inputs.amount}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="amountinwords">Amount in words</label>
+                <textarea
+                  id="amountinwords"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="amountinwords"
+                  value={inputs.amountinwords}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="doadesc">DOA Description</label>
+                <textarea
+                  id="doadesc"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="doadesc"
+                  value={inputs.doadesc}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-4">
+                <label htmlFor="remarks">Remarks</label>
+                <textarea
+                  id="remarks"
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  name="remarks"
+                  value={inputs.remarks}
+                  onChange={handleChange}
+                />
               </div>
 
               <div className="flex gap-5">

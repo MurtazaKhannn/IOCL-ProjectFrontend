@@ -20,6 +20,8 @@ import Sadbe from "./page/Sadbe";
 import Sadtcci from "./page/Sadtcci";
 import Sadtccfn from "./page/Sadtccfn";
 import Sadipa from "./page/Sadipa";
+import Sadpqc from "./page/Sadpqc";
+
 import SDone from "./page/SDone";
 // import PqcApproval from "./page/PqcApproval";
 import TechnicalSpecification from "./page/TechnicalSpecificationPage";
@@ -51,6 +53,7 @@ const App = () => {
           <Route path="/TCC Intermediate/:draftId" element={<Sadtcci />} />
           <Route path="/TCC FinalNote/:draftId" element={<Sadtccfn />} />
           <Route path="/Inprinciple Approval/:draftId" element={<Sadipa />} />
+          <Route path="/PQC Approval/:draftId" element={<Sadpqc />} />
           <Route path="/administrativepage" element={<AdministrativePage />} />
           <Route path="/budgetaryestimate" element={<BudgetaryEstimate />}  />
           <Route path="/inprincipleapproval" element={<InprincipleApproval />} />
@@ -60,10 +63,6 @@ const App = () => {
           <Route path="/pqcapproval" element={<PQCApprovalPage/>} />
           <Route path="/technicalspecification" element={<TechnicalSpecification/>} />
           <Route path="/interofficememo" element={<InterOfficeMemo/>} />
-        </Routes>
-
-        <Routes>
-          
         </Routes>
       </div>
     </>
