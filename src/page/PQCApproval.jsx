@@ -33,12 +33,18 @@ const PQCApprovalPage = () => {
     }
   }, [setInputs]);
 
+  useEffect(() => {
+    console.log(inputs);
+  }, [inputs]);
+
   const handleChange = (e) => {
     if (e.target.name === "date") {
       const dateValue = e.target.value.split("T")[0];
       setInputs({ ...inputs, [e.target.name]: dateValue });
+      console.log(inputs);
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
+      console.log(inputs);
     }
 
     const newInputs = { ...inputs, [e.target.name]: e.target.value };
@@ -49,7 +55,7 @@ const PQCApprovalPage = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/forms/administrativepage", {
+      const res = await fetch("/api/forms/pqcapproval", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
