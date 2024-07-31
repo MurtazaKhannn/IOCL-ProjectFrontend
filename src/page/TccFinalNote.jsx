@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
-
   // const apiUrl = process.env.REACT_APP_API_URL;
 
   const predefinedValues = {
@@ -38,7 +37,7 @@ const BudgetaryEstimate = () => {
   };
 
   const [inputs, setinputs] = useState(predefinedValues);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("tccfn-form"));
@@ -53,19 +52,19 @@ const BudgetaryEstimate = () => {
         financialYears: getPastThreeFinancialYears(),
       }));
     }
-  } , [setinputs]);
-    
+  }, [setinputs]);
+
   const handleChange = (e) => {
     if (e.target.name === "date") {
       // Extract only the date part (yyyy-mm-dd) from the input value
       const dateValue = e.target.value.split("T")[0]; // split to remove timestamp
-      setInputs({ ...inputs, [e.target.name]: dateValue });
+      setinputs({ ...inputs, [e.target.name]: dateValue });
     } else {
-      setInputs({ ...inputs, [e.target.name]: e.target.value });
+      setinputs({ ...inputs, [e.target.name]: e.target.value });
     }
 
     const newInputs = { ...inputs, [e.target.name]: e.target.value };
-    setInputs(newInputs);
+    setinputs(newInputs);
     localStorage.setItem("tccfn-form", JSON.stringify(newInputs));
   };
 
@@ -90,7 +89,7 @@ const BudgetaryEstimate = () => {
 
       alert("Form saved successfully!");
 
-      setInputs(predefinedValues);
+      setinputs(predefinedValues);
       localStorage.removeItem("tccfn-form");
     } catch (error) {
       alert("Error: " + error);
@@ -106,43 +105,41 @@ const BudgetaryEstimate = () => {
     handleSave();
   };
 
+  const navigate = useNavigate();
+  const generatePDF = async () => {
+    // Hide the Save button
+    const saveButton = document.getElementById("saveBtn");
+    const dropbtn = document.getElementById("dropbtn");
+    dropbtn.style.display = "none";
+    saveButton.style.display = "none";
 
-    const navigate = useNavigate();
-    const generatePDF = async () => {
-        // Hide the Save button
-        const saveButton = document.getElementById("saveBtn");
-        const dropbtn = document.getElementById("dropbtn");
-        dropbtn.style.display = "none";
-        saveButton.style.display = "none";
-    
-        const input = document.getElementById("formContainer");
-        const canvas = await html2canvas(input);
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-    
-        // Get the dimensions of the canvas
-        const imgWidth = 210; // A4 width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-        // Scale the image to fit within the page
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
-        const scaledWidth = imgWidth * scaleFactor;
-        const scaledHeight = imgHeight * scaleFactor;
-    
-        // Calculate the x and y coordinates to center the image
-        const xOffset = (pdfWidth - scaledWidth) / 2;
-        const yOffset = (pdfHeight - scaledHeight) / 2;
-    
-        pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
-        pdf.save("tccfinalnote.pdf");
-    
-        // Show the Save button again
-        saveButton.style.display = "block";
-        dropbtn.style.display = "block";
-      };
+    const input = document.getElementById("formContainer");
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
 
+    // Get the dimensions of the canvas
+    const imgWidth = 210; // A4 width in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // Scale the image to fit within the page
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
+    const scaledWidth = imgWidth * scaleFactor;
+    const scaledHeight = imgHeight * scaleFactor;
+
+    // Calculate the x and y coordinates to center the image
+    const xOffset = (pdfWidth - scaledWidth) / 2;
+    const yOffset = (pdfHeight - scaledHeight) / 2;
+
+    pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
+    pdf.save("tccfinalnote.pdf");
+
+    // Show the Save button again
+    saveButton.style.display = "block";
+    dropbtn.style.display = "block";
+  };
 
   return (
     <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-sans">
@@ -182,7 +179,6 @@ const BudgetaryEstimate = () => {
                   onChange={handleChange}
                   readOnly
                 />
-                
               </div>
 
               <div className="flex flex-col gap-4">
@@ -207,7 +203,6 @@ const BudgetaryEstimate = () => {
                   onChange={handleChange}
                   readOnly
                 />
-
               </div>
 
               <div className="flex flex-col gap-4">
@@ -260,244 +255,21 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">A</td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Brief background of the main project
+                        Brief back ground of the main project
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
-                        Vide note ref:{" "}
-                        <textarea
-                          name="videref1"
-                          value={inputs.videref1}
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          type="text"
-                        />{" "}
-                        dated{" "}
-                        <input
-                          className="font-bold p-1"
-                          name="date1"
-                          value={inputs.date1}
-                          onChange={handleChange}
-                          type="date"
-                        />
-                        , approval is granted by{" "}
-                        <input
-                          name="grantedBy1"
-                          value={inputs.grantedBy1}
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          type="text"
-                          placeholder=""
-                        />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure1"
-                            value={inputs.annexure1}
-                            onChange={handleChange}
-                            className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
-                            placeholder="Annexure"
-                            type="text"
-                          />
-                        </p>
-                        <br className="" />
-                        Approval for technical specifications vide ref:{" "}
-                        <textarea
-                          name="videref2"
-                          value={inputs.videref2}
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          type="text"
-                        />{" "}
-                        dated{" "}
-                        <input
-                          className=" p-1 mt-1"
-                          type="date"
-                          name="date2"
-                          value={inputs.date2}
-                          onChange={handleChange}
-                        />{" "}
-                        &nbsp; is approved by{" "}
-                        <input
-                          name="grantedBy2"
-                          value={inputs.grantedBy2}
-                          onChange={handleChange}
-                          type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                        />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure2"
-                            value={inputs.annexure2}
-                            onChange={handleChange}
-                            className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
-                            placeholder="Annexure"
-                            type="text"
-                          />
-                        </p>
-                        <br className="mt-2" />
-                        Vide note ref:{" "}
-                        <textarea
-                          name="videref3"
-                          value={inputs.videref3}
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          type="text"
-                        />{" "}
-                        dated{" "}
-                        <input
-                          type="date"
-                          name="date3"
-                          value={inputs.date3}
-                          onChange={handleChange}
-                          id=""
-                        />
-                        , estimate for Rs.{" "}
-                        <input
-                          name="amount"
-                          value={inputs.amount}
-                          onChange={handleChange}
-                          type="number"
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-                          placeholder="Amount"
-                        />{" "}
-                        including GST is approved by{" "}
-                        <input
-                          name="grantedBy3"
-                          value={inputs.grantedBy3}
-                          onChange={handleChange}
-                          type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                        />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure3"
-                            value={inputs.annexure3}
-                            onChange={handleChange}
-                            className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
-                            placeholder="Annexure"
-                            type="text"
-                          />
-                        </p>
-                        <br className="mt-2" />
-                        Admin approval for procurement of{" "}
-                        <textarea
-                          name="itemDetails1"
-                          value={inputs.itemDetails1}
-                          onChange={handleChange}
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-                          type="text"
-                        />{" "}
-                        at{" "}
-                        <input
-                          name="amount"
-                          value={inputs.amount}
-                          onChange={handleChange}
-                          type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                        />{" "}
-                        is granted by{" "}
-                        <input
-                          name="grantedBy4"
-                          value={inputs.grantedBy4}
-                          onChange={handleChange}
-                          type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                        />{" "}
-                        vide note ref:{" "}
-                        <textarea
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          name="videref4"
-                          value={inputs.videref4}
-                          onChange={handleChange}
-                          id=""
-                        ></textarea>{" "}
-                        dated{" "}
-                        <input
-                          className="rounded-md p-1"
-                          name="date4"
-                          value={inputs.date4}
-                          onChange={handleChange}
-                          type="date"
-                        />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure4"
-                            value={inputs.annexure4}
-                            onChange={handleChange}
-                            className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
-                            placeholder="Annexure"
-                            type="text"
-                          />
-                        </p>
-                        <br className="mt-2" />
-                        Approval for PQ, Evaluation criteria, Special Terms and
-                        Conditions, Tender Document, Draft Bid Document is
-                        provided vide note ref:{" "}
-                        <textarea
-                          name="videref5"
-                          value={inputs.videref5}
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          id=""
-                        ></textarea>{" "}
-                        dated{" "}
-                        <input
-                          name="date5"
-                          value={inputs.date5}
-                          onChange={handleChange}
-                          type="date"
-                        />{" "}
-                        duly approved by{" "}
-                        <input
-                          name="grantedBy5"
-                          value={inputs.grantedBy5}
-                          onChange={handleChange}
-                          type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                        />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure5"
-                            value={inputs.annexure5}
-                            onChange={handleChange}
-                            className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
-                            placeholder="Annexure"
-                            type="text"
-                          />
-                        </p>
-                        <br className="mt-2" />
-                        E-Tender -{" "}
-                        <input
-                          name="refNo1"
-                          value={inputs.refNo1}
-                          onChange={handleChange}
-                          type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                        />{" "}
-                        dated{" "}
-                        <input
-                          name="date6"
-                          value={inputs.date6}
-                          onChange={handleChange}
-                          type="date"
-                        />{" "}
-                        was published on GeM portal on{" "}
-                        <input
-                          type="date"
-                          name="date7"
-                          value={inputs.date7}
-                          onChange={handleChange}
-                          id=""
-                        />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure6"
-                            value={inputs.annexure6}
-                            onChange={handleChange}
-                            className="border-2 rounded-md p-1 focus:border-blue-500 outline-none mt-2"
-                            placeholder="Annexure"
-                            type="text"
-                          />
-                        </p>
+                        Procurement of 04 Nos of Laptops through GeM Portal{" "}
+                        <br /> <br />
+                        E-Tender - GEM/2023/B/3974893 dated was published on GeM
+                        portal on 21.09.2023 (Annexure 1) <br /> <br />{" "}
+                        Nominated TCC Members: (Annexure-2) <br /> <br /> ⦁
+                        Parul Chandra, M(IS), UPSO-II ⦁ Arnan Kumar, AM(Engg),
+                        UPSO-II ⦁ Priyanka Maurya, AO (Finance), UPSO-II <br />{" "}
+                        <br /> TCC Recommendations - Administrative Approval
+                        vide ref no: Administrative
+                        ApprovaPl500dS00/2023-2024/104586 and Administrative
+                        Approval/1500/lS00/2023-2024/107169 are attached as
+                        Annexure-3
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -582,12 +354,47 @@ const BudgetaryEstimate = () => {
                         Approved by
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
+                        Admin approval for Rs
+                        <input
+                          name="amount"
+                          value={inputs.amount}
+                          onChange={handleChange}
+                          placeholder="amount"
+                          type="text"
+                          className="border-b-2 mt-2 focus:border-blue-500 outline-none"
+                        />{" "}
+                        by
                         <input
                           name="grantedBy6"
                           value={inputs.grantedBy6}
                           onChange={handleChange}
                           type="text"
+                          className="border-b-2 mt-2 border-gray-300 focus:border-blue-500 outline-none"
+                        />
+                        vide note ref no :
+                        <textarea
+                          name="videref6"
+                          value={inputs.videref6}
+                          onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          id=""
+                        ></textarea>{" "}
+                        <br />
+                        dated &nbsp;&nbsp;
+                        <input
+                          type="date"
+                          name="date9"
+                          value={inputs.date9}
+                          onChange={handleChange}
+                          id=""
+                        />{" "}
+                        <input
+                          type="text"
+                          name="annexure3"
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          value={inputs.annexure3}
+                          placeholder="annexure"
+                          onChange={handleChange}
                         />
                       </td>
                     </tr>
@@ -670,6 +477,48 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
+                        />
+                        Admin Approval for Rs
+                        <input
+                          name="amount"
+                          value={inputs.amount}
+                          onChange={handleChange}
+                          placeholder="amount"
+                          type="text"
+                          className="border-b-2 mt-2 focus:border-blue-500 outline-none"
+                        />{" "}
+                        by
+                        <input
+                          name="grantedBy7"
+                          value={inputs.grantedBy7}
+                          onChange={handleChange}
+                          type="text"
+                          className="border-b-2 mt-2 border-gray-300 focus:border-blue-500 outline-none"
+                        />
+                        vide note ref no :
+                        <textarea
+                          name="videref7"
+                          value={inputs.videref7}
+                          onChange={handleChange}
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          id=""
+                        ></textarea>{" "}
+                        <br />
+                        dated &nbsp;&nbsp;
+                        <input
+                          type="date"
+                          name="date10"
+                          value={inputs.date10}
+                          onChange={handleChange}
+                          id=""
+                        />{" "}
+                        <input
+                          type="text"
+                          name="annexure3"
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          value={inputs.annexure3}
+                          placeholder="annexure"
+                          onChange={handleChange}
                         />
                       </td>
                     </tr>
@@ -755,75 +604,10 @@ const BudgetaryEstimate = () => {
                         </p>
                       </td>
                     </tr>
+
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
                         6
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Corrigendum issued if any
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
-                        <input
-                          name="corrigendum"
-                          value={inputs.corrigendum}
-                          onChange={handleChange}
-                          className="border-b-2 outline-none focus:border-blue-500"
-                          type="text"
-                        />
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
-                        7
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        TCC members
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
-                        Following are the TCC members vide office order:{" "}
-                        <textarea
-                          name="videref7"
-                          value={inputs.videref7}
-                          onChange={handleChange}
-                          id=""
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-                        ></textarea>{" "}
-                        dated{" "}
-                        <input
-                          className=""
-                          name="date10"
-                          value={inputs.date10}
-                          onChange={handleChange}
-                          type="date"
-                        />{" "}
-                        <br />{" "}
-                        <p className="font-bold">
-                          <input
-                            name="annexure8"
-                            value={inputs.annexure8}
-                            onChange={handleChange}
-                            type="text"
-                            className="border-2 rounded-md p-1 mt-2"
-                            placeholder="ANNEXURE"
-                          />
-                        </p>{" "}
-                        <br />
-                        <br />
-                        <textarea
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          placeholder="Name of TCC Members"
-                          name="tccmembers"
-                          value={inputs.tccmembers}
-                          onChange={handleChange}
-                          id=""
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
-                        8
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -841,7 +625,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        9
+                        7
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -869,7 +653,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        10
+                        8
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -887,7 +671,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        11
+                        9
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -917,7 +701,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        12
+                        10
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -935,7 +719,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        13
+                        11
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -963,7 +747,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        14
+                        12
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -991,7 +775,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        15
+                        13
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1020,7 +804,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        16
+                        14
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1038,7 +822,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        17
+                        15
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1058,49 +842,54 @@ const BudgetaryEstimate = () => {
 
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        17
+                        16
                       </td>
-                      <td className="px-6 py-4 border-r border-gray-300">A</td>
+                      <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Annual Turnover{" "}
-                        {inputs.financialYears &&
+                        {/* Annual Turnover{" "} */}
+                        {/* {inputs.financialYears &&
                           inputs.financialYears.map((year, index) => (
                             <div key={index} className="mb-2">
                               <div>{year}</div>
                             </div>
-                          ))}
+                          ))} */}
+                        EMD
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
-                        <div>NON-MSE BIDDER:</div>
-                        <div>
+                        {/* <div>NON-MSE BIDDER:</div> */}
+                        {/* <div>
                           <span>1. Bidder Turnover - Rs </span>
                           <PercentageDisplay
                             number={inputs.amount}
                             percentage={60}
                           />
                           <span> (60%)</span>
-                        </div>
-                        <div style={{ marginTop: "1rem" }}>MSE BIDDER:</div>
-                        <div>
+                        </div> */}
+                        {/* <div style={{ marginTop: "1rem" }}>MSE BIDDER:</div> */}
+                        {/* <div>
                           <span>1. Bidder Turnover – Rs </span>
                           <PercentageDisplay
                             number={inputs.amount}
                             percentage={51}
                           />
                           <span> (51%)</span>
-                        </div>
+                        </div> */}
+                        <input
+                          type="text"
+                          className="border-b-2 focus:border-blue-500 outline-none"
+                        />
                       </td>
                     </tr>
 
-                    <tr className="border-b border-gray-300">
+                    {/* <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
                         17
                       </td>
-                      <td className="px-6 py-4 border-r border-gray-300">B</td>
+                      <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Similar Work
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
+                        {/* Similar Work */}
+                    {/* </td> */}
+                    {/* <td className="px-6 py-4 border-r border-gray-300">
                         NON MSE BIDDER:
                         <br />
                         1. Three works – Rs{" "}
@@ -1148,10 +937,10 @@ const BudgetaryEstimate = () => {
                         />{" "}
                         each
                         <br />
-                      </td>
-                    </tr>
+                      </td> */}
+                    {/* </tr> */}
 
-                    <tr className="border-b border-gray-300">
+                    {/* <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
                         17
                       </td>
@@ -1159,10 +948,10 @@ const BudgetaryEstimate = () => {
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
                         EMD
                       </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
-                        {/* NIL – EMD is waivered off. All the bidders have to submit the bid
+                      <td className="px-6 py-4 border-r border-gray-300"> */}
+                    {/* NIL – EMD is waivered off. All the bidders have to submit the bid
               security declaration */}
-                        <textarea
+                    {/* <textarea
                           className="border-b-2 focus:border-blue-500 outline-none"
                           name="emd"
                           value={inputs.emd}
@@ -1170,9 +959,9 @@ const BudgetaryEstimate = () => {
                           id=""
                         ></textarea>
                       </td>
-                    </tr>
+                    </tr> */}
 
-                    <tr className="border-b border-gray-300">
+                    {/* <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
                         18
                       </td>
@@ -1246,14 +1035,14 @@ const BudgetaryEstimate = () => {
                         />{" "}
                         vendors.
                       </td>
-                    </tr>
+                    </tr> */}
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        19
+                        17
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        No of Offers rejected technically
+                        No of Offers rejected based on technical evaluation
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
@@ -1278,7 +1067,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        20
+                        18
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1289,6 +1078,15 @@ const BudgetaryEstimate = () => {
                         <input
                           name="noofoffersrejectedonthegrounds"
                           value={inputs.noofoffersrejectedonthegrounds}
+                          onChange={handleChange}
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          type="text"
+                        />
+                        Holiday listing status has been checked from Vendor
+                        Holiday List on intranet,
+                        <input
+                          name="noofoffersrejectedonthegroundstwo"
+                          value={inputs.noofoffersrejectedonthegroundstwo}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
@@ -1306,7 +1104,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        21
+                        19
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1314,12 +1112,21 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <textarea
-                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          className="border-b-2 focus:border-blue-500 outline-none "
                           name="referenceoftechnicalbidtcc"
                           value={inputs.referenceoftechnicalbidtcc}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        ></textarea>{" "}
+                        dated
+                        <input
+                          type="date"
+                          name="date11"
+                          value={inputs.date11}
+                          onChange={handleChange}
+                          className="mb-2 mt-1"
+                          id=""
+                        />
                         <input
                           name="annexure17"
                           value={inputs.annexure17}
@@ -1332,7 +1139,7 @@ const BudgetaryEstimate = () => {
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        22
+                        20
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1346,12 +1153,12 @@ const BudgetaryEstimate = () => {
                           value={inputs.anyprepricebidmeetingheld}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        23
+                        21
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1364,12 +1171,12 @@ const BudgetaryEstimate = () => {
                           value={inputs.detailsofdeviationacceptedbytcc}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        24
+                        22
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1383,12 +1190,12 @@ const BudgetaryEstimate = () => {
                           value={inputs.partieswhodonotagreeonabovedeviations}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        25
+                        23
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1401,12 +1208,12 @@ const BudgetaryEstimate = () => {
                           value={inputs.anyrevisedpricebid}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
-                        26
+                        24
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
@@ -1431,13 +1238,49 @@ const BudgetaryEstimate = () => {
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           name="partieswhoqualifyforopeningofpricebids"
-                          value={
-                            inputs.partieswhoqualifyforopeningofpricebids
-                          }
+                          value={inputs.partieswhoqualifyforopeningofpricebids}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                       </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-l border-gray-300">
+                        25
+                      </td>
+                      <td className="px-6 py-4 border-r border-gray-300"></td>
+                      <td className="px-6 py-4 font-bold border-r border-gray-300">
+                        Date of Opening Price Bids
+                      </td>
+                      <td className="px-6 py-4 border-r border-gray-300">
+                        <input
+                          type="date"
+                          name="date12"
+                          value={inputs.date12}
+                          onChange={handleChange}
+                          id=""
+                        />
+                        dated
+                        <input
+                          name="annexure18"
+                          value={inputs.annexure18}
+                          onChange={handleChange}
+                          className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
+                          placeholder="ANNEXURE"
+                          type="text"
+                        />
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-l border-gray-300">
+                        26
+                      </td>
+                      <td className="px-6 py-4 border-r border-gray-300"></td>
+                      <td className="px-6 py-4 font-bold border-r border-gray-300">
+                        Summarized statement of the evaluated prices of
+                        technically acceptable offer
+                      </td>
+                      <td className="px-6 py-4 border-r border-gray-300"></td>
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
@@ -1445,91 +1288,207 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Validity of Offer
+                        Public sector/NSIC/IOC IV participating in the tender,
+                        if any
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                          name="validityofoffers"
-                          value={inputs.validityofoffers}
+                          name="publicsector"
+                          value={inputs.publicsector}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
-                        28
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Weather CVC guidelines have been complied with.
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
-                        <textarea
-                          name="weathercvcguidelineshavebeencompiledwith"
-                          value={
-                            inputs.weathercvcguidelineshavebeencompiledwith
-                          }
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                          type="text"
                         />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        28
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300"></td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Any price/purchase preference proposed to be given to
+                        NSIC /PSU/IOC JV as per guidelines, details
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="pricepreference"
+                          value={inputs.pricepreference}
+                          onChange={handleChange}
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          type="text"
+                        />{" "}
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
                         29
                       </td>
-                      <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Any other relevant information.
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        A
                       </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Any Price Negotiation held with L -1.If so, reasons for
+                        negotiation
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="pricenegotiation"
+                          value={inputs.pricenegotiation}
+                          onChange={handleChange}
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          type="text"
+                        />{" "}
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        29
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        B
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Summarized statement of the evaluated prices of
+                        technically acceptable offer after negotiation with L-1
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300"></td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        29
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        C
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Letters of other parties who have not quoted
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
                         <textarea
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                          name="anyotherrelevantinfo"
-                          value={inputs.anyotherrelevantinfo}
+                          name="letterofparties"
+                          value={inputs.letterofparties}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-b border-l border-gray-300">
                         30
                       </td>
-                      <td className="px-6 py-4 border-r border-b border-gray-300"></td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        A
+                      </td>
                       <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
-                        DOA/Approving Authority.
+                        Recommendation of TCC for award of work
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        The final rate quoted by L-1 party after negotiation is
+                        Rs.{" "}
+                        <input
+                          type="text"
+                          name="amount"
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          value={inputs.amount}
+                          onChange={handleChange}
+                        />{" "}
+                        against public bid on GeM Portal. Therefore, TCC
+                        recommends that work may be awarded to{" "}
+                        <textarea
+                          type="text"
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          name="recommendationbytcc"
+                          value={inputs.recommendationbytcc}
+                          onChange={handleChange}
+                        />
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        B
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Recommended parties and finalized L-1 rates accepted by
+                        party
                       </td>
                       <td className="px-6 py-4 border-r border-b border-gray-300">
                         <input
-                          name="doaapprovingauthorityone"
-                          value={inputs.doaapprovingauthorityone}
+                          name="recommendationbytcc"
+                          value={inputs.recommendationbytcc}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
                         />{" "}
-                        is requested to accord approval for opening of Price Bid
-                        of the{" "}
+                        is recommended with L1 rate of Rs.
                         <input
-                          name="doaapprovingauthoritytwo"
-                          value={inputs.doaapprovingauthoritytwo}
+                          name="amount"
+                          value={inputs.amount}
                           onChange={handleChange}
                           className="border-b-2 w-40 focus:border-blue-500 outline-none mb-2"
                           type="text"
                         />{" "}
-                        technically qualified bidder as recommended above.
-                        <br />
-                        Approval sought under{" "}
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        C
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Contact Value
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        Rs
                         <input
-                          name="doaapprovingauthoritythree"
-                          value={inputs.doaapprovingauthoritythree}
+                          name="amount"
+                          value={inputs.amount}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
-                        />
+                        />{" "}
+                        (inclusive of 18% GST)
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        D
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        Reason for recommendation
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea
+                          name="reasonofrecommendation"
+                          value={inputs.reasonofrecommendation}
+                          onChange={handleChange}
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+                          type="text"
+                        />{" "}
+                      </td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="px-6 py-4 border-r border-b border-l border-gray-300">
+                        30
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        E
+                      </td>
+                      <td className="px-6 py-4 font-bold border-r border-b border-gray-300">
+                        In case of award of job is recommended on more than one
+                        party, basis of allocation.
+                      </td>
+                      <td className="px-6 py-4 border-r border-b border-gray-300">
+                        <textarea name="awardofjob" value={inputs.awardofonejob} onChange={handleChange} id=""></textarea>
                       </td>
                     </tr>
                   </tbody>
@@ -1557,13 +1516,20 @@ const BudgetaryEstimate = () => {
                       type="radio"
                       name="doaApplicable"
                       value="Yes"
-                      checked={inputs.doaApplicable === "Yes"}  
+                      checked={inputs.doaApplicable === "Yes"}
                       onChange={handleChange}
                     />{" "}
                     Yes
                   </label>
                   <label>
-                    <input type="radio" name="doaApplicable" value="No" checked={inputs.doaApplicable === "No"} onChange={handleChange} /> No
+                    <input
+                      type="radio"
+                      name="doaApplicable"
+                      value="No"
+                      checked={inputs.doaApplicable === "No"}
+                      onChange={handleChange}
+                    />{" "}
+                    No
                   </label>
                 </div>
               </div>
@@ -1582,7 +1548,14 @@ const BudgetaryEstimate = () => {
                     Yes
                   </label>
                   <label>
-                    <input type="radio" name="confidential" value="No" checked={inputs.confidential === "No"} onChange={handleChange} /> No
+                    <input
+                      type="radio"
+                      name="confidential"
+                      value="No"
+                      checked={inputs.confidential === "No"}
+                      onChange={handleChange}
+                    />{" "}
+                    No
                   </label>
                 </div>
               </div>
@@ -1603,8 +1576,16 @@ const BudgetaryEstimate = () => {
                 >
                   {loading ? <ClipLoader size={16} /> : "Save"}
                 </button>
-                
-                <button id="dropbtn" onClick={() => {navigate("/createnew")}} className="bg-blue-500 rounded-md w-full max-w-xs py-3 text-white">Back to DROP-DOWN</button>
+
+                <button
+                  id="dropbtn"
+                  onClick={() => {
+                    navigate("/createnew");
+                  }}
+                  className="bg-blue-500 rounded-md w-full max-w-xs py-3 text-white"
+                >
+                  Back to DROP-DOWN
+                </button>
               </div>
               <p id="saveMessage" className="flex justify-center hidden">
                 Information saved
