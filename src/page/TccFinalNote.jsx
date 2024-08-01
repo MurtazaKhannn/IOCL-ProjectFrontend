@@ -14,6 +14,96 @@ const BudgetaryEstimate = () => {
     location: "Uttar Pradesh",
     date: "",
     subject: "",
+    noofitemsGEM: "",
+    noofitems: "",
+    modeoftendering: "",
+    typeoftendering: "",
+    tenderissued: "",
+    timeallowed: "",
+    prebidmeetings: "",
+    noofoffersreceived: "",
+    nooflatetenders: "",
+    noofoffersrejectedtechnically: "",
+    rejectedvendorsnames: "",
+    noofoffersrejectedonthegrounds: "",
+    noofoffersrejectedonthegroundstwo : "" ,
+    noofoffersrejectedonthegroundsreason: "",
+    referenceoftechnicalbidtcc: "" ,
+    anyprepricebidmeetingheld: "" ,
+    detailsofdeviationacceptedbytcc: "",
+    partieswhodonotagreeonabovedeviations: "",
+    anyrevisedpricebid: "",
+    noofpartieswhoqualifyforopeningofpricebids: "",
+    partieswhoqualifyforopeningofpricebids: "",
+    emd: "",
+    amount: "",
+    twoB: "",
+    three: "",
+    four: "",
+    threeA: "",
+    threeB: "",
+    refno1: "",
+    refno2: "",
+    refno3: "",
+    refno4: "",
+    refno5: "",
+    refno6: "",
+    refno7: "",
+    refno8: "",
+    refno9: "",
+    refno10: "",
+    videref1: "",
+    videref2: "",
+    videref3: "",
+    videref4: "",
+    videref5: "",
+    videref6: "",
+    videref7: "",
+    videref8: "",
+    videref9: "",
+    videref10: "",
+    grantedBy1: "",
+    grantedBy2: "",
+    grantedBy3: "",
+    grantedBy4: "",
+    grantedBy5: "",
+    grantedBy6: "",
+    grantedBy7: "",
+    grantedBy8: "",
+    grantedBy9: "",
+    grantedBy10: "",
+    date1: "",
+    date2: "",
+    date3: "",
+    date4: "",
+    date5: "",
+    date6: "",
+    date7: "",
+    date8: "",
+    date9: "",
+    date10: "",
+    date11: "",
+    date12: "",
+    date13: "",
+    date14: "",
+    date15: "",
+    date16: "",
+    annexure1: "",
+    annexure2: "",
+    annexure3: "",
+    annexure4: "",
+    annexure5: "",
+    annexure6: "",
+    annexure7: "",
+    annexure8: "",
+    annexure9: "",
+    annexure10: "",
+    annexure11: "",
+    annexure12: "",
+    annexure13: "",
+    annexure14: "",
+    annexure15: "",
+    annexure16: "",
     recommendation: "",
     doaApplicable: "No",
     confidential: "Yes",
@@ -258,18 +348,86 @@ const BudgetaryEstimate = () => {
                         Brief back ground of the main project
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
-                        Procurement of 04 Nos of Laptops through GeM Portal{" "}
+                        <textarea
+                          name="noofitems1"
+                          value={inputs.noofitemsGEM}
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          onChange={handleChange}
+                          id=""
+                        />
                         <br /> <br />
-                        E-Tender - GEM/2023/B/3974893 dated was published on GeM
-                        portal on 21.09.2023 (Annexure 1) <br /> <br />{" "}
-                        Nominated TCC Members: (Annexure-2) <br /> <br /> ⦁
-                        Parul Chandra, M(IS), UPSO-II ⦁ Arnan Kumar, AM(Engg),
-                        UPSO-II ⦁ Priyanka Maurya, AO (Finance), UPSO-II <br />{" "}
-                        <br /> TCC Recommendations - Administrative Approval
-                        vide ref no: Administrative
-                        ApprovaPl500dS00/2023-2024/104586 and Administrative
-                        Approval/1500/lS00/2023-2024/107169 are attached as
-                        Annexure-3
+                        E-Tender -{" "}
+                        <input
+                          name="refno1"
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          value={inputs.refno1}
+                          onChange={handleChange}
+                          type="text"
+                        />{" "}
+                        dated was published on GeM portal on{" "}
+                        <input
+                          type="date"
+                          name="date1"
+                          value={inputs.date1}
+                          onChange={handleChange}
+                          id=""
+                        />
+                        <input
+                          type="text"
+                          name="annexure1"
+                          className="p-1"
+                          value={inputs.annexure1}
+                          placeholder="ANNEXURE"
+                          onChange={handleChange}
+                        />{" "}
+                        <br /> <br /> Nominated TCC Members:
+                        <input
+                          type="text"
+                          name="annexure2"
+                          value={inputs.annexure2}
+                          onChange={handleChange}
+                          placeholder="ANNEXURE"
+                        />{" "}
+                        <br /> <br />
+                        <textarea
+                          name="tccmembers1"
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          value={inputs.tccmembers}
+                          placeholder="about TCC members"
+                          onChange={handleChange}
+                          id=""
+                          rows="2"
+                          cols="30"
+                        />
+                        <br /> <br /> TCC Recommendations - Administrative
+                        Approval vide ref no:
+                        <textarea
+                          name="videref1"
+                          value={inputs.videref1}
+                          onChange={handleChange}
+                          id=""
+                          cols="30"
+                          rows="1"
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+
+                        /> and 
+                        <textarea
+                          name="videref2"
+                          value={inputs.videref2}
+                          onChange={handleChange}
+                          id=""
+                          cols="30"
+                          rows="1"
+                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+
+                        />
+                        are attached as <input
+                          type="text"
+                          name="annexure3"
+                          value={inputs.annexure3}
+                          onChange={handleChange}
+                          placeholder="ANNEXURE"
+                        />{" "}
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -283,8 +441,8 @@ const BudgetaryEstimate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         Procurement of{" "}
                         <textarea
-                          name="itemDetails2"
-                          value={inputs.itemDetails2}
+                          name="noofitems"
+                          value={inputs.noofitems}
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           type="text"
@@ -309,16 +467,16 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
-                          name="refNo2"
-                          value={inputs.refNo2}
+                          name="refno2"
+                          value={inputs.refno2}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                         />{" "}
                         dated{" "}
                         <input
-                          name="date8"
-                          value={inputs.date8}
+                          name="date2"
+                          value={inputs.date2}
                           onChange={handleChange}
                           className="p-1 border-b-2 focus:border-blue-500 outline-none"
                           type="date"
@@ -365,34 +523,34 @@ const BudgetaryEstimate = () => {
                         />{" "}
                         by
                         <input
-                          name="grantedBy6"
-                          value={inputs.grantedBy6}
+                          name="grantedBy1"
+                          value={inputs.grantedBy1}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 mt-2 border-gray-300 focus:border-blue-500 outline-none"
                         />
                         vide note ref no :
                         <textarea
-                          name="videref6"
-                          value={inputs.videref6}
+                          name="videref2"
+                          value={inputs.videref2}
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           id=""
-                        ></textarea>{" "}
+                        />
                         <br />
                         dated &nbsp;&nbsp;
                         <input
                           type="date"
-                          name="date9"
-                          value={inputs.date9}
+                          name="date3"
+                          value={inputs.date3}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <input
                           type="text"
-                          name="annexure3"
+                          name="annexure4"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-                          value={inputs.annexure3}
+                          value={inputs.annexure4}
                           placeholder="annexure"
                           onChange={handleChange}
                         />
@@ -489,34 +647,35 @@ const BudgetaryEstimate = () => {
                         />{" "}
                         by
                         <input
-                          name="grantedBy7"
-                          value={inputs.grantedBy7}
+                          name="grantedBy2"
+                          value={inputs.grantedBy2}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 mt-2 border-gray-300 focus:border-blue-500 outline-none"
                         />
                         vide note ref no :
                         <textarea
-                          name="videref7"
-                          value={inputs.videref7}
+                          name="videref3"
+                          value={inputs.videref3}
                           onChange={handleChange}
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          className="border-b-2 mt-2 ml-1 border-gray-300 focus:border-blue-500 outline-none"
                           id=""
-                        ></textarea>{" "}
+                          rows="1"
+                        />
                         <br />
                         dated &nbsp;&nbsp;
                         <input
                           type="date"
-                          name="date10"
-                          value={inputs.date10}
+                          name="date4"
+                          value={inputs.date4}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <input
                           type="text"
-                          name="annexure3"
+                          name="annexure5"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-                          value={inputs.annexure3}
+                          value={inputs.annexure5}
                           placeholder="annexure"
                           onChange={handleChange}
                         />
@@ -533,12 +692,14 @@ const BudgetaryEstimate = () => {
                         proposal against the approval given in item No: 3 above
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
-                        <input
+                        <textarea
                           name="four"
                           value={inputs.four}
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
+                          cols="30"
+                          rows="3"
                         />
                       </td>
                     </tr>
@@ -547,17 +708,17 @@ const BudgetaryEstimate = () => {
                         5
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
+                      <td className="px-6 py-4 mb-2 font-bold border-r border-gray-300">
                         Approval Reference for inviting Tender
                       </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
+                      <td className="px-6 mb-2 py-4 border-r border-gray-300">
                         Admin approval for procurement of{" "}
-                        <textarea
-                          name="itemDetails3"
-                          value={inputs.itemDetails3}
+                        <input
+                          name="noofitems"
+                          value={inputs.noofitems}
                           onChange={handleChange}
                           type="text"
-                          className="border-b-2 focus:border-blue-500 outline-none"
+                          className="border-b-2 mb-2 focus:border-blue-500 outline-none"
                         />{" "}
                         at{" "}
                         <input
@@ -565,29 +726,29 @@ const BudgetaryEstimate = () => {
                           value={inputs.address}
                           onChange={handleChange}
                           type="text"
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          className="border-b-2 mb-2 border-gray-300 focus:border-blue-500 outline-none"
                         />{" "}
                         is granted by{" "}
                         <input
-                          name="grantedBy7"
-                          value={inputs.grantedBy7}
+                          name="grantedBy3"
+                          value={inputs.grantedBy3}
                           onChange={handleChange}
                           type="text"
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          className="border-b-2 mb-2 border-gray-300 focus:border-blue-500 outline-none"
                         />{" "}
                         vide note ref:{" "}
-                        <textarea
-                          name="videref6"
-                          value={inputs.videref6}
+                        <input
+                          name="videref4"
+                          value={inputs.videref4}
                           onChange={handleChange}
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          className="border-b-2 mb-2 border-gray-300 focus:border-blue-500 outline-none"
                           id=""
-                        ></textarea>{" "}
+                        />
                         dated{" "}
                         <input
                           type="date"
-                          name="date9"
-                          value={inputs.date9}
+                          name="date5"
+                          value={inputs.date5}
                           onChange={handleChange}
                           id=""
                         />{" "}
@@ -596,8 +757,8 @@ const BudgetaryEstimate = () => {
                             type="text"
                             className="border-2 rounded-md p-1 focus:border-blue-500 font-bold mt-2"
                             placeholder="ANNEXURE"
-                            name="annexure7"
-                            value={inputs.annexure7}
+                            name="annexure6"
+                            value={inputs.annexure6}
                             onChange={handleChange}
                             id=""
                           />
@@ -641,8 +802,8 @@ const BudgetaryEstimate = () => {
                         />{" "}
                         <p>
                           <input
-                            name="annexure9"
-                            value={inputs.annexure9}
+                            name="annexure7"
+                            value={inputs.annexure7}
                             onChange={handleChange}
                             type="text"
                             className="border-2 focus:border-blue-500 rounded-md p-1 font-bold mt-2"
@@ -689,8 +850,8 @@ const BudgetaryEstimate = () => {
                         />{" "}
                         <p>
                           <input
-                            name="annexure10"
-                            value={inputs.annexure10}
+                            name="annexure8"
+                            value={inputs.annexure8}
                             onChange={handleChange}
                             type="text"
                             className="border-2 p-1 rounded-md focus:border-blue-500 outline-none mt-2 font-bold"
@@ -728,15 +889,15 @@ const BudgetaryEstimate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           type="datetime-local"
-                          name="date11"
-                          value={inputs.date11}
+                          name="date6"
+                          value={inputs.date6}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <p>
                           <input
-                            name="annexure11"
-                            value={inputs.annexure11}
+                            name="annexure9"
+                            value={inputs.annexure9}
                             onChange={handleChange}
                             type="text"
                             placeholder="ANNEXURE"
@@ -756,15 +917,15 @@ const BudgetaryEstimate = () => {
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
                           type="datetime-local"
-                          name="date12"
-                          value={inputs.date12}
+                          name="date7"
+                          value={inputs.date7}
                           onChange={handleChange}
                           id=""
                         />{" "}
                         <p>
                           <input
-                            name="annexure12"
-                            value={inputs.annexure12}
+                            name="annexure10"
+                            value={inputs.annexure10}
                             onChange={handleChange}
                             type="text"
                             placeholder="ANNEXURE"
@@ -786,8 +947,8 @@ const BudgetaryEstimate = () => {
                         The technical bid of the subject tender was opened on{" "}
                         <input
                           type="date"
-                          name="date13"
-                          value={inputs.date13}
+                          name="date8"
+                          value={inputs.date8}
                           onChange={handleChange}
                           id=""
                         />
@@ -799,7 +960,8 @@ const BudgetaryEstimate = () => {
                           value={inputs.noofoffersreceived}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                          cols="30"
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -830,8 +992,8 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 font-bold border-r rounded-md border-gray-300">
                         <input
-                          name="annexure13"
-                          value={inputs.annexure13}
+                          name="annexure11"
+                          value={inputs.annexure11}
                           onChange={handleChange}
                           type="text"
                           className="border-2 rounded-md p-1 "
@@ -877,6 +1039,9 @@ const BudgetaryEstimate = () => {
                         <input
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
+                          name="emd"
+                          value={inputs.emd}
+                          onChange={handleChange}
                         />
                       </td>
                     </tr>
@@ -1099,7 +1264,8 @@ const BudgetaryEstimate = () => {
                           value={inputs.noofoffersrejectedonthegroundsreason}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                          cols="30"
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -1117,7 +1283,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.referenceoftechnicalbidtcc}
                           onChange={handleChange}
                           id=""
-                        ></textarea>{" "}
+                        />
                         dated
                         <input
                           type="date"
@@ -1128,8 +1294,8 @@ const BudgetaryEstimate = () => {
                           id=""
                         />
                         <input
-                          name="annexure17"
-                          value={inputs.annexure17}
+                          name="annexure12"
+                          value={inputs.annexure12}
                           onChange={handleChange}
                           className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
                           placeholder="ANNEXURE"
@@ -1223,13 +1389,15 @@ const BudgetaryEstimate = () => {
                       <td className="px-6 py-4 border-r border-l border-gray-300">
                         TCC recommends opening of Price bids of following{" "}
                         <input
-                          className="border-b-2 w-36 mr-2 focus:border-blue-500 outline-none mb-2"
+                          className="border-b-2 w-36 focus:border-blue-500 outline-none "
                           type="text"
                           name="noofpartieswhoqualifyforopeningofpricebids"
                           value={
                             inputs.noofpartieswhoqualifyforopeningofpricebids
                           }
                           onChange={handleChange}
+                          cols="30"
+                          rows="1"
                         />
                         bidders who have been qualified as per PQ criteria and
                         submission of relevant other mandatory document
@@ -1241,6 +1409,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.partieswhoqualifyforopeningofpricebids}
                           onChange={handleChange}
                           id=""
+                          cols="30"
                         />
                       </td>
                     </tr>
@@ -1262,8 +1431,8 @@ const BudgetaryEstimate = () => {
                         />
                         dated
                         <input
-                          name="annexure18"
-                          value={inputs.annexure18}
+                          name="annexure13"
+                          value={inputs.annexure13}
                           onChange={handleChange}
                           className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
                           placeholder="ANNEXURE"
@@ -1665,7 +1834,9 @@ const BudgetaryEstimate = () => {
               </div>
 
               <div className="flex flex-col gap-4">
-                <label htmlFor="doaclause">Number of Applicable DOA Clause</label>
+                <label htmlFor="doaclause">
+                  Number of Applicable DOA Clause
+                </label>
                 <input
                   id="doaclause"
                   className="bg-zinc-100 rounded-md p-2 w-full"
