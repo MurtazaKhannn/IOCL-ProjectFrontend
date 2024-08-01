@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { ClimbingBoxLoader, ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
-
-  // const apiUrl = process.env.REACT_APP_API_URL;
-
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -22,19 +19,18 @@ const BudgetaryEstimate = () => {
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("be-form"));
     if (storedInputs) {
       setInputs(storedInputs);
     }
-  } , [setInputs]);
+  }, [setInputs]);
 
   const handleChange = (e) => {
-    if (e.target.name === 'date') {
-      // Extract only the date part (yyyy-mm-dd) from the input value
-      const dateValue = e.target.value.split('T')[0]; // split to remove timestamp
+    if (e.target.name === "date") {
+      const dateValue = e.target.value.split("T")[0];
       setInputs({ ...inputs, [e.target.name]: dateValue });
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -43,14 +39,12 @@ const BudgetaryEstimate = () => {
     const newInputs = { ...inputs, [e.target.name]: e.target.value };
     setInputs(newInputs);
     localStorage.setItem("be-form", JSON.stringify(newInputs));
-
   };
-  
-  
+
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/forms/budgetaryestimate` , {
+      const res = await fetch("/api/forms/budgetaryestimate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,8 +53,8 @@ const BudgetaryEstimate = () => {
       });
 
       const data = await res.json();
-      console.log("Response data:", data); // Debugging line
-    
+      console.log("Response data:", data);
+
       if (data.error) {
         alert("Error: " + data.error);
         return;
@@ -74,7 +68,7 @@ const BudgetaryEstimate = () => {
       alert("Error: " + error);
       console.log("Error:", error);
       setLoading(false);
-      return ;
+      return;
     } finally {
       setLoading(false);
     }
@@ -85,71 +79,54 @@ const BudgetaryEstimate = () => {
     handleSave();
   };
 
-    const navigate = useNavigate();
-    const generatePDF = async () => {
-        // Hide the Save button
-        const saveButton = document.getElementById("saveBtn");
-        const dropbtn = document.getElementById("dropbtn");
-        dropbtn.style.display = "none";
-        saveButton.style.display = "none";
-    
-        const input = document.getElementById("formContainer");
-        const canvas = await html2canvas(input);
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-    
-        // Get the dimensions of the canvas
-        const imgWidth = 210; // A4 width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    
-        // Scale the image to fit within the page
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
-        const scaledWidth = imgWidth * scaleFactor;
-        const scaledHeight = imgHeight * scaleFactor;
-    
-        // Calculate the x and y coordinates to center the image
-        const xOffset = (pdfWidth - scaledWidth) / 2;
-        const yOffset = (pdfHeight - scaledHeight) / 2;
-    
-        pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
-        pdf.save("budgetary-estimate.pdf");
-    
-        // Show the Save button again
-        saveButton.style.display = "block";
-        dropbtn.style.display = "block";
-      };
+  const navigate = useNavigate();
+  const generatePDF = async () => {
+    const saveButton = document.getElementById("saveBtn");
+    const dropbtn = document.getElementById("dropbtn");
+    dropbtn.style.display = "none";
+    saveButton.style.display = "none";
 
+    const input = document.getElementById("formContainer");
+    const canvas = await html2canvas(input);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+
+    const imgWidth = 210;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const scaleFactor = imgHeight > pdfHeight ? pdfHeight / imgHeight : 1;
+    const scaledWidth = imgWidth * scaleFactor;
+    const scaledHeight = imgHeight * scaleFactor;
+
+    const xOffset = (pdfWidth - scaledWidth) / 2;
+    const yOffset = (pdfHeight - scaledHeight) / 2;
+
+    pdf.addImage(imgData, "PNG", xOffset, yOffset, scaledWidth, scaledHeight);
+    pdf.save("budgetary-estimate.pdf");
+
+    saveButton.style.display = "block";
+    dropbtn.style.display = "block";
+  };
 
   return (
-    <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-sans">
+    <div className="w-full flex items-center justify-center pt-5 min-h-screen bg-zinc-100 font-sans">
       <div
-        className="w-full max-w-7xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
+        className="w-full max-w-6xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
         id="formContainer"
       >
         <div className="w-full min-h-full flex flex-col gap-5 items-center justify-center">
-          <img src={IOL} alt="Logo" className="w-3/4 sm:w-1/2 lg:w-1/4" />
+          <img src={IOL} alt="Logo" className="w-1/4" />
           <h1 className="font-semibold text-2xl sm:text-3xl lg:text-4xl">
             BUDGETARY ESTIMATE
           </h1>
           <div className="w-full flex items-center justify-center gap-10">
             <form
-              className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-3xl"
+              className="flex flex-col text-lg sm:text-xl gap-6 w-full max-w-4xl"
               action=""
               onSubmit={handleSubmit}
             >
-              {/* <div className="flex flex-col gap-4">
-                <label htmlFor="dialogue1">Ref No:</label>
-                <input
-                  className="bg-zinc-100 rounded-md p-2 w-full"
-                  type="text"
-                  id="dialogue1"
-                  name="dialogue1"
-                  readOnly
-                />
-              </div> */}
-
               <div className="flex flex-col gap-4">
                 <label htmlFor="section">Section:</label>
                 <input
@@ -206,22 +183,120 @@ const BudgetaryEstimate = () => {
                   name="subject"
                   value={inputs.subject}
                   onChange={handleChange}
-                >
-                  
-                </textarea>
+                />
               </div>
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="background">Background:</label>
-                <textarea
-                  id="background"
-                  className="bg-zinc-100 rounded-md p-2 w-full"
-                  name="background"
-                  value={inputs.background}
-                  onChange={handleChange}
-                >
-                  
-                </textarea>
+                <div className="bg-zinc-100 rounded-md p-2 w-full overflow-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr>
+                        <th className="border border-gray-300 px-2 py-1">
+                          S. No.
+                        </th>
+                        <th className="border border-gray-300 px-2 py-1">
+                          Product Category
+                        </th>
+                        <th className="border border-gray-300 px-2 py-1">
+                          Unit Price (Rs)
+                        </th>
+                        <th className="border border-gray-300 px-2 py-1">
+                          GST@18% (Rs)
+                        </th>
+                        <th className="border border-gray-300 px-2 py-1">
+                          Total (Rs)
+                        </th>
+                        <th className="border border-gray-300 px-2 py-1">
+                          Total Amount for 35 PCs (Rs)
+                        </th>
+                        <th className="border border-gray-300 px-2 py-1">
+                          Remarks
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-gray-300 px-2 py-1">1</td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          All-In-One PC
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          93,262.71
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          16,787.29
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          1,10,050
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          38,51,750
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          AIO PC purchased by SRO. PO copy dated 29.01.2024 is
+                          attached as Annexure-3
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 px-2 py-1">2</td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          All-In-One PC
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          1,00,870
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          18,156.6
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          1,19,026.6
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          41,65,931
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          AIO PC purchased by UPSO-II. PO copy dated 08.02.2024
+                          is attached as Annexure-4
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 px-2 py-1">3</td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          All-In-One PC
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          1,17,559.30
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          21,160.67
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          1,38,719.97
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          48,55,199
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          AIO PC purchased by TNSO. PO copy dated 22.05.2024 is
+                          attached as Annexure-5
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          className="border border-gray-300 px-2 py-1"
+                          colSpan="5"
+                        >
+                          Average
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1">
+                          42,90,960
+                        </td>
+                        <td className="border border-gray-300 px-2 py-1"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -232,11 +307,8 @@ const BudgetaryEstimate = () => {
                   name="proposal"
                   value={inputs.proposal}
                   onChange={handleChange}
-                >
-                  
-                </textarea>
+                />
               </div>
-
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="conclusion">Conclusion:</label>
@@ -246,9 +318,7 @@ const BudgetaryEstimate = () => {
                   name="conclusion"
                   value={inputs.conclusion}
                   onChange={handleChange}
-                >
-                  
-                </textarea>
+                />
               </div>
 
               <div className="flex gap-5">
@@ -259,26 +329,23 @@ const BudgetaryEstimate = () => {
                       type="radio"
                       name="confidential"
                       value="Yes"
-                      checked={inputs.confidential  === "Yes"}
+                      checked={inputs.confidential === "Yes"}
                     />{" "}
                     Yes
                   </label>
                   <label>
-                    <input type="radio" name="confidential" value="No" checked={inputs.value === "No"} /> No
+                    <input
+                      type="radio"
+                      name="confidential"
+                      value="No"
+                      checked={inputs.confidential === "No"}
+                    />{" "}
+                    No
                   </label>
                 </div>
               </div>
 
               <div className="flex gap-20 items-center justify-center">
-                {/* <button
-                  className="bg-orange-500 rounded-md w-full max-w-xs text-white"
-                  type="button"
-                  id="saveBtn"
-                  onClick={generatePDF}
-                >
-                  Save as PDF
-                </button> */}
-
                 <button
                   type="submit"
                   className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
@@ -286,8 +353,15 @@ const BudgetaryEstimate = () => {
                   {loading ? <ClipLoader size={24} /> : "Save"}
                 </button>
 
-
-                <button id="dropbtn" onClick={() => {navigate("/createnew")}} className="bg-blue-500 rounded-md w-full max-w-xs py-3 text-white">Back to DROP-DOWN</button>
+                <button
+                  id="dropbtn"
+                  onClick={() => {
+                    navigate("/createnew");
+                  }}
+                  className="bg-blue-500 rounded-md w-full max-w-xs py-3 text-white"
+                >
+                  Back to DROP-DOWN
+                </button>
               </div>
               <p id="saveMessage" className="flex justify-center hidden">
                 Information saved
