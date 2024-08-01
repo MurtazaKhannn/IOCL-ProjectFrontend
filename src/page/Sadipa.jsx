@@ -229,7 +229,7 @@ const SAD = () => {
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
             <label htmlFor="date">Date</label>
-            <input type="text" name='date' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.date?.split('T')[0] || ''} disabled={!isEditing} />
+            <input type="date" name='date' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.date?.split('T')[0] || ''} disabled={!isEditing} />
           </div>
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>

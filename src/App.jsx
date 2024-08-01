@@ -21,6 +21,9 @@ import Sadtcci from "./page/Sadtcci";
 import Sadtccfn from "./page/Sadtccfn";
 import Sadipa from "./page/Sadipa";
 import Sadpqc from "./page/Sadpqc";
+import Sadiom from "./page/Sadiom";
+import Sadts from "./page/Sadts";
+
 
 import SDone from "./page/SDone";
 // import PqcApproval from "./page/PqcApproval";
@@ -54,6 +57,8 @@ const App = () => {
           <Route path="/TCC FinalNote/:draftId" element={<Sadtccfn />} />
           <Route path="/Inprinciple Approval/:draftId" element={<Sadipa />} />
           <Route path="/PQC Approval/:draftId" element={<Sadpqc />} />
+          <Route path="/Technical Specification/:draftId" element={<Sadts />} />
+          <Route path="/InterOffice Memo/:draftId" element={<Sadiom />} />
           <Route path="/administrativepage" element={<AdministrativePage />} />
           <Route path="/budgetaryestimate" element={<BudgetaryEstimate />}  />
           <Route path="/inprincipleapproval" element={<InprincipleApproval />} />

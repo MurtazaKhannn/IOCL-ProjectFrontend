@@ -1700,7 +1700,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           id=""
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -1718,8 +1718,9 @@ const BudgetaryEstimate = () => {
                           name="cvcguidelines"
                           value={inputs.cvcguidelines}
                           onChange={handleChange}
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           id=""
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -1738,6 +1739,8 @@ const BudgetaryEstimate = () => {
                           value={inputs.anyotherrelevantinformation}
                           onChange={handleChange}
                           id=""
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
+
                         />
                       </td>
                     </tr>
@@ -1752,6 +1755,7 @@ const BudgetaryEstimate = () => {
                       <td className="px-6 py-4 border-r border-b border-gray-300">
                         <textarea
                           name="grantedby4"
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           value={inputs.grantedby4}
                           onChange={handleChange}
                           id=""
@@ -1769,11 +1773,13 @@ const BudgetaryEstimate = () => {
                         <input
                           type="text"
                           name="amount"
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           value={inputs.amount}
                           onChange={handleChange}
                         />
                         <textarea
                           name="rsinwords"
+                          className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           value={inputs.rsinwords}
                           onChange={handleChange}
                           id=""
