@@ -26,16 +26,38 @@ const BudgetaryEstimate = () => {
     noofoffersrejectedtechnically: "",
     rejectedvendorsnames: "",
     noofoffersrejectedonthegrounds: "",
-    noofoffersrejectedonthegroundstwo : "" ,
+    noofoffersrejectedonthegroundstwo: "",
     noofoffersrejectedonthegroundsreason: "",
-    referenceoftechnicalbidtcc: "" ,
-    anyprepricebidmeetingheld: "" ,
+    referenceoftechnicalbidtcc: "",
+    anyprepricebidmeetingheld: "",
     detailsofdeviationacceptedbytcc: "",
     partieswhodonotagreeonabovedeviations: "",
     anyrevisedpricebid: "",
     noofpartieswhoqualifyforopeningofpricebids: "",
     partieswhoqualifyforopeningofpricebids: "",
     emd: "",
+    publicsector: "",
+    pricepreference: "",
+    pricenegotiation: "",
+    letterofparties: "",
+    recommendationbytcc: "",
+    reasonofrecommendation: "",
+    awardofjob: "",
+    validityofoffer: "",
+    alldeclaration: "",
+    cvcguidelines: "",
+    anyotherrelevantinformation: "",
+    recommendedparties: "",
+    recommendationdoa: "",
+    preamble: "",
+    amountinwords: "",
+    rsinwords: "",
+    doalaw: "",
+    doaclause: "",
+    doadesc: "",
+    remarks: "",
+    firstapplicabledoa: "",
+    doadivision: "",
     amount: "",
     twoB: "",
     three: "",
@@ -44,34 +66,14 @@ const BudgetaryEstimate = () => {
     threeB: "",
     refno1: "",
     refno2: "",
-    refno3: "",
-    refno4: "",
-    refno5: "",
-    refno6: "",
-    refno7: "",
-    refno8: "",
-    refno9: "",
-    refno10: "",
     videref1: "",
     videref2: "",
     videref3: "",
     videref4: "",
-    videref5: "",
-    videref6: "",
-    videref7: "",
-    videref8: "",
-    videref9: "",
-    videref10: "",
     grantedBy1: "",
     grantedBy2: "",
     grantedBy3: "",
     grantedBy4: "",
-    grantedBy5: "",
-    grantedBy6: "",
-    grantedBy7: "",
-    grantedBy8: "",
-    grantedBy9: "",
-    grantedBy10: "",
     date1: "",
     date2: "",
     date3: "",
@@ -84,10 +86,6 @@ const BudgetaryEstimate = () => {
     date10: "",
     date11: "",
     date12: "",
-    date13: "",
-    date14: "",
-    date15: "",
-    date16: "",
     annexure1: "",
     annexure2: "",
     annexure3: "",
@@ -101,9 +99,6 @@ const BudgetaryEstimate = () => {
     annexure11: "",
     annexure12: "",
     annexure13: "",
-    annexure14: "",
-    annexure15: "",
-    annexure16: "",
     recommendation: "",
     doaApplicable: "No",
     confidential: "Yes",
@@ -134,12 +129,10 @@ const BudgetaryEstimate = () => {
     if (storedInputs) {
       setinputs({
         ...storedInputs,
-        financialYears: getPastThreeFinancialYears(),
       });
     } else {
       setinputs((prevInputs) => ({
         ...prevInputs,
-        financialYears: getPastThreeFinancialYears(),
       }));
     }
   }, [setinputs]);
@@ -161,6 +154,8 @@ const BudgetaryEstimate = () => {
   const handleSave = async () => {
     try {
       setLoading(true);
+
+
       const res = await fetch(`/api/forms/tccfinalnote`, {
         method: "POST",
         headers: {
@@ -232,9 +227,9 @@ const BudgetaryEstimate = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-sans">
+    <div className="flex w-[100vw] items-center justify-center gap-10 pt-5 min-h-[88.9vh] bg-zinc-100 font-sans">
       <div
-        className="w-full max-w-7xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
+        className="w-[100vw] min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
         id="formContainer"
       >
         <div className="w-full min-h-full flex flex-col gap-5 items-center justify-center">
@@ -244,7 +239,7 @@ const BudgetaryEstimate = () => {
           </h1>
           <div className="w-full flex items-center justify-center gap-10">
             <form
-              className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-3xl"
+              className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-5xl"
               action=""
               onSubmit={handleSubmit}
             >
@@ -321,7 +316,7 @@ const BudgetaryEstimate = () => {
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-[760px] divide-y divide-gray-200 text-xl">
+                <table className="w-5xl divide-y divide-gray-200 text-xl">
                   <thead>
                     <tr>
                       <th className="px-6 py-3 font-bold border-b border-gray-300">
@@ -349,7 +344,7 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <textarea
-                          name="noofitems1"
+                          name="noofitemsGEM"
                           value={inputs.noofitemsGEM}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           onChange={handleChange}
@@ -375,7 +370,7 @@ const BudgetaryEstimate = () => {
                         <input
                           type="text"
                           name="annexure1"
-                          className="p-1"
+                          className="p-2 font-bold rounded-md"
                           value={inputs.annexure1}
                           placeholder="ANNEXURE"
                           onChange={handleChange}
@@ -387,6 +382,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.annexure2}
                           onChange={handleChange}
                           placeholder="ANNEXURE"
+                          className="font-bold rounded-md p-2"
                         />{" "}
                         <br /> <br />
                         <textarea
@@ -409,8 +405,8 @@ const BudgetaryEstimate = () => {
                           cols="30"
                           rows="1"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-
-                        /> and 
+                        />{" "}
+                        and
                         <textarea
                           name="videref2"
                           value={inputs.videref2}
@@ -419,14 +415,15 @@ const BudgetaryEstimate = () => {
                           cols="30"
                           rows="1"
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
-
                         />
-                        are attached as <input
+                        are attached as{" "}
+                        <input
                           type="text"
                           name="annexure3"
                           value={inputs.annexure3}
                           onChange={handleChange}
                           placeholder="ANNEXURE"
+                          className="font-bold p-2 rounded-md"
                         />{" "}
                       </td>
                     </tr>
@@ -549,9 +546,9 @@ const BudgetaryEstimate = () => {
                         <input
                           type="text"
                           name="annexure4"
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          className="border-2 mt-2 font-bold rounded-md p-2 border-gray-300 focus:border-blue-500 outline-none"
                           value={inputs.annexure4}
-                          placeholder="annexure"
+                          placeholder="ANNEXURE"
                           onChange={handleChange}
                         />
                       </td>
@@ -674,9 +671,9 @@ const BudgetaryEstimate = () => {
                         <input
                           type="text"
                           name="annexure5"
-                          className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
+                          className="border-2 mt-2 font-bold rounded-md p-2 border-gray-300 focus:border-blue-500 outline-none"
                           value={inputs.annexure5}
-                          placeholder="annexure"
+                          placeholder="ANNEXURE"
                           onChange={handleChange}
                         />
                       </td>
@@ -755,7 +752,7 @@ const BudgetaryEstimate = () => {
                         <p className="font-bold">
                           <input
                             type="text"
-                            className="border-2 rounded-md p-1 focus:border-blue-500 font-bold mt-2"
+                            className="border-2 rounded-md p-2 focus:border-blue-500 font-bold mt-2"
                             placeholder="ANNEXURE"
                             name="annexure6"
                             value={inputs.annexure6}
@@ -806,7 +803,7 @@ const BudgetaryEstimate = () => {
                             value={inputs.annexure7}
                             onChange={handleChange}
                             type="text"
-                            className="border-2 focus:border-blue-500 rounded-md p-1 font-bold mt-2"
+                            className="border-2 focus:border-blue-500 p-2 rounded-md p-1 font-bold mt-2"
                             placeholder="ANNEXURE"
                           />
                         </p>
@@ -854,7 +851,7 @@ const BudgetaryEstimate = () => {
                             value={inputs.annexure8}
                             onChange={handleChange}
                             type="text"
-                            className="border-2 p-1 rounded-md focus:border-blue-500 outline-none mt-2 font-bold"
+                            className="border-2 p-2 rounded-md focus:border-blue-500 outline-none mt-2 font-bold"
                             placeholder="ANNEXURE"
                           />
                         </p>
@@ -901,7 +898,7 @@ const BudgetaryEstimate = () => {
                             onChange={handleChange}
                             type="text"
                             placeholder="ANNEXURE"
-                            className="font-bold p-1 rounded-md border-2 focus:border-blue-500"
+                            className="font-bold p-2 rounded-md border-2 focus:border-blue-500"
                           />
                         </p>
                       </td>
@@ -929,7 +926,7 @@ const BudgetaryEstimate = () => {
                             onChange={handleChange}
                             type="text"
                             placeholder="ANNEXURE"
-                            className="font-bold p-1 rounded-md border-2 focus:border-blue-500"
+                            className="font-bold p-2 rounded-md border-2 focus:border-blue-500"
                           />
                         </p>
                       </td>
@@ -996,7 +993,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.annexure11}
                           onChange={handleChange}
                           type="text"
-                          className="border-2 rounded-md p-1 "
+                          className="border-2  rounded-md p-2 "
                           placeholder="ANNEXURE"
                         />
                       </td>
@@ -1297,7 +1294,7 @@ const BudgetaryEstimate = () => {
                           name="annexure12"
                           value={inputs.annexure12}
                           onChange={handleChange}
-                          className="border-2 p-1 rounded-md outline-none mb-2 font-bold"
+                          className="border-2 p-2 rounded-md outline-none mb-2 font-bold"
                           placeholder="ANNEXURE"
                           type="text"
                         />
@@ -1587,8 +1584,8 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-b border-gray-300">
                         <input
-                          name="recommendationbytcc"
-                          value={inputs.recommendationbytcc}
+                          name="recommendedparties"
+                          value={inputs.recommendedparties}
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
@@ -1754,8 +1751,8 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-b border-gray-300">
                         <textarea
-                          name="grantedby13"
-                          value={inputs.grantedby13}
+                          name="grantedby4"
+                          value={inputs.grantedby4}
                           onChange={handleChange}
                           id=""
                         />
@@ -1764,8 +1761,8 @@ const BudgetaryEstimate = () => {
                         <textarea
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                          name="recommendationbytcc"
-                          value={inputs.recommendationbytcc}
+                          name="recommendationdoa"
+                          value={inputs.recommendationdoa}
                           onChange={handleChange}
                         />
                         for Rs
