@@ -28,6 +28,14 @@ const BudgetaryEstimate = () => {
     }
   }, [setInputs]);
 
+  const PercentageDisplay = ({ number, percentage }) => {
+    const calculatePercentage = () => {
+      return (number * percentage) / 100;
+    };
+
+    return <p>{calculatePercentage()}</p>;
+  };
+
   const handleChange = (e) => {
     if (e.target.name === "date") {
       const dateValue = e.target.value.split("T")[0];
