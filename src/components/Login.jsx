@@ -45,12 +45,12 @@ const Login = () => {
         }),
       });
 
-       if (!res.ok) {
-      // Log the response as text to see what is actually being returned
-      const errorText = await res.text();
-      console.error('Error response:', errorText);
-      throw new Error(`HTTP error! Status: ${res.status}`);
-    }
+    //    if (!res.ok) {
+    //   // Log the response as text to see what is actually being returned
+    //   const errorText = await res.text();
+    //   console.error('Error response:', errorText);
+    //   throw new Error(`HTTP error! Status: ${res.status}`);
+    // }
 
       const data = await res.json();
       console.log("Response data:", data); // Debugging line
