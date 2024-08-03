@@ -349,6 +349,8 @@ const BudgetaryEstimate = () => {
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           onChange={handleChange}
                           id=""
+                          cols={"64"}
+                          rows={"1"}
                         />
                         <br /> <br />
                         E-Tender -{" "}
@@ -392,8 +394,8 @@ const BudgetaryEstimate = () => {
                           placeholder="about TCC members"
                           onChange={handleChange}
                           id=""
-                          rows="2"
-                          cols="30"
+                          cols={"64"}
+                          rows={"1"}
                         />
                         <br /> <br /> TCC Recommendations - Administrative
                         Approval vide ref no:
@@ -402,8 +404,8 @@ const BudgetaryEstimate = () => {
                           value={inputs.videref1}
                           onChange={handleChange}
                           id=""
-                          cols="30"
-                          rows="1"
+                          cols={"64"}
+                          rows={"1"}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                         />{" "}
                         and
@@ -412,8 +414,8 @@ const BudgetaryEstimate = () => {
                           value={inputs.videref2}
                           onChange={handleChange}
                           id=""
-                          cols="30"
-                          rows="1"
+                          cols={"50"}
+                          rows={"1"}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                         />
                         are attached as{" "}
@@ -443,6 +445,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           type="text"
+                          rows={"1"}
                         />{" "}
                         at{" "}
                         <input
@@ -533,6 +536,8 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           className="border-b-2 border-gray-300 focus:border-blue-500 outline-none"
                           id=""
+                          cols={"49"}
+                          rows={"1"}
                         />
                         <br />
                         dated &nbsp;&nbsp;
@@ -570,6 +575,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
+                          
                         />
                       </td>
                     </tr>
@@ -658,6 +664,7 @@ const BudgetaryEstimate = () => {
                           className="border-b-2 mt-2 ml-1 border-gray-300 focus:border-blue-500 outline-none"
                           id=""
                           rows="1"
+                          cols={"62"}
                         />
                         <br />
                         dated &nbsp;&nbsp;
@@ -695,7 +702,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
-                          cols="30"
+                          cols="64"
                           rows="3"
                         />
                       </td>
@@ -957,7 +964,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.noofoffersreceived}
                           onChange={handleChange}
                           id=""
-                          cols="30"
+                          cols="64"
                         />
                       </td>
                     </tr>
@@ -1005,34 +1012,9 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300"></td>
                       <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        {/* Annual Turnover{" "} */}
-                        {/* {inputs.financialYears &&
-                          inputs.financialYears.map((year, index) => (
-                            <div key={index} className="mb-2">
-                              <div>{year}</div>
-                            </div>
-                          ))} */}
                         EMD
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
-                        {/* <div>NON-MSE BIDDER:</div> */}
-                        {/* <div>
-                          <span>1. Bidder Turnover - Rs </span>
-                          <PercentageDisplay
-                            number={inputs.amount}
-                            percentage={60}
-                          />
-                          <span> (60%)</span>
-                        </div> */}
-                        {/* <div style={{ marginTop: "1rem" }}>MSE BIDDER:</div> */}
-                        {/* <div>
-                          <span>1. Bidder Turnover – Rs </span>
-                          <PercentageDisplay
-                            number={inputs.amount}
-                            percentage={51}
-                          />
-                          <span> (51%)</span>
-                        </div> */}
                         <input
                           type="text"
                           className="border-b-2 focus:border-blue-500 outline-none"
@@ -1043,161 +1025,7 @@ const BudgetaryEstimate = () => {
                       </td>
                     </tr>
 
-                    {/* <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
-                        17
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        {/* Similar Work */}
-                    {/* </td> */}
-                    {/* <td className="px-6 py-4 border-r border-gray-300">
-                        NON MSE BIDDER:
-                        <br />
-                        1. Three works – Rs{" "}
-                        <PercentageDisplay
-                          number={inputs.amount}
-                          percentage={30}
-                        />{" "}
-                        each
-                        <br />
-                        2. Two works – Rs{" "}
-                        <PercentageDisplay
-                          number={inputs.amount}
-                          percentage={40}
-                        />{" "}
-                        each
-                        <br />
-                        3. One work – Rs{" "}
-                        <PercentageDisplay
-                          number={inputs.amount}
-                          percentage={25.5}
-                        />{" "}
-                        each
-                        <br />
-                        <br />
-                        MSE BIDDER:
-                        <br />
-                        1. Three works – Rs{" "}
-                        <PercentageDisplay
-                          number={inputs.amount}
-                          percentage={25.5}
-                        />{" "}
-                        each
-                        <br />
-                        2. Two works – Rs{" "}
-                        <PercentageDisplay
-                          number={inputs.amount}
-                          percentage={34}
-                        />{" "}
-                        each
-                        <br />
-                        3. One work – Rs{" "}
-                        <PercentageDisplay
-                          number={inputs.amount}
-                          percentage={42.5}
-                        />{" "}
-                        each
-                        <br />
-                      </td> */}
-                    {/* </tr> */}
-
-                    {/* <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
-                        17
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300">C</td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        EMD
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300"> */}
-                    {/* NIL – EMD is waivered off. All the bidders have to submit the bid
-              security declaration */}
-                    {/* <textarea
-                          className="border-b-2 focus:border-blue-500 outline-none"
-                          name="emd"
-                          value={inputs.emd}
-                          onChange={handleChange}
-                          id=""
-                        ></textarea>
-                      </td>
-                    </tr> */}
-
-                    {/* <tr className="border-b border-gray-300">
-                      <td className="px-6 py-4 border-r border-l border-gray-300">
-                        18
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300"></td>
-                      <td className="px-6 py-4 font-bold border-r border-gray-300">
-                        Technical Evaluation of Bidders as per PQ Criteria and
-                        Other mandatory document criteria
-                      </td>
-                      <td className="px-6 py-4 border-r border-gray-300">
-                        Technical clarifications were raised on GeM Portal dated
-                        <input
-                          type="date"
-                          name="date14"
-                          value={inputs.date14}
-                          onChange={handleChange}
-                          id=""
-                        />
-                        ,{" "}
-                        <input
-                          type="date"
-                          name="date15"
-                          value={inputs.date15}
-                          onChange={handleChange}
-                          id=""
-                        />{" "}
-                        and{" "}
-                        <input
-                          type="date"
-                          name="date16"
-                          value={inputs.date16}
-                          onChange={handleChange}
-                          id=""
-                        />{" "}
-                        <br /> (&nbsp;{" "}
-                        <input
-                          name="annexure14"
-                          value={inputs.annexure14}
-                          onChange={handleChange}
-                          type="text"
-                          placeholder="ANNEXURE"
-                          className="font-bold p-1 rounded-md border-2 mt-2"
-                        />{" "}
-                        ,{" "}
-                        <input
-                          name="annexure15"
-                          value={inputs.annexure15}
-                          onChange={handleChange}
-                          placeholder="ANNEXURE"
-                          className="font-bold p-1 rounded-md border-2 mt-2"
-                          type="text"
-                        />{" "}
-                        and{" "}
-                        <input
-                          name="annexure16"
-                          value={inputs.annexure16}
-                          onChange={handleChange}
-                          placeholder="ANNEXURE"
-                          type="text"
-                          className="font-bold p-1 w-52 mt-2 rounded-md border-2"
-                          id=""
-                        />
-                        &nbsp;&nbsp;)
-                        <br />
-                        All clarifications are raised to all the{" "}
-                        <input
-                          name="clarificationtovendors"
-                          value={inputs.clarificationtovendors}
-                          onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 w-28 outline-none"
-                          type="text"
-                        />{" "}
-                        vendors.
-                      </td>
-                    </tr> */}
+                  
                     <tr className="border-b border-gray-300">
                       <td className="px-6 py-4 border-r border-l border-gray-300">
                         17
@@ -1220,10 +1048,11 @@ const BudgetaryEstimate = () => {
                           placeholder="vendorname with reason "
                           className="border-b-2 w-72 focus:border-blue-500 outline-none mb-2"
                           name="rejectedvendorsnames"
+                          cols={64}
                           value={inputs.rejectedvendorsnames}
                           onChange={handleChange}
                           id=""
-                        ></textarea>
+                        />
                         <br />
                       </td>
                     </tr>
@@ -1261,7 +1090,8 @@ const BudgetaryEstimate = () => {
                           value={inputs.noofoffersrejectedonthegroundsreason}
                           onChange={handleChange}
                           id=""
-                          cols="30"
+                          cols="64"
+                          
                         />
                       </td>
                     </tr>
@@ -1280,6 +1110,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.referenceoftechnicalbidtcc}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                         dated
                         <input
@@ -1316,6 +1147,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.anyprepricebidmeetingheld}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1334,6 +1166,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.detailsofdeviationacceptedbytcc}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1353,6 +1186,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.partieswhodonotagreeonabovedeviations}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1371,6 +1205,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.anyrevisedpricebid}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1393,7 +1228,7 @@ const BudgetaryEstimate = () => {
                             inputs.noofpartieswhoqualifyforopeningofpricebids
                           }
                           onChange={handleChange}
-                          cols="30"
+                          cols={64}
                           rows="1"
                         />
                         bidders who have been qualified as per PQ criteria and
@@ -1420,13 +1255,16 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-gray-300">
                         <input
+                        className="p-1 rounded-md"
                           type="date"
                           name="date12"
                           value={inputs.date12}
                           onChange={handleChange}
                           id=""
                         />
+                        &nbsp;
                         dated
+                        &nbsp;
                         <input
                           name="annexure13"
                           value={inputs.annexure13}
@@ -1464,6 +1302,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.publicsector}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1483,6 +1322,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
+                          cols={64}
                         />{" "}
                       </td>
                     </tr>
@@ -1504,6 +1344,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
+                          cols={64}
                         />{" "}
                       </td>
                     </tr>
@@ -1537,6 +1378,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.letterofparties}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1568,6 +1410,7 @@ const BudgetaryEstimate = () => {
                           name="recommendationbytcc"
                           value={inputs.recommendationbytcc}
                           onChange={handleChange}
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1639,6 +1482,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           type="text"
+                          cols={64}
                         />{" "}
                       </td>
                     </tr>
@@ -1660,7 +1504,8 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           id=""
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                        ></textarea>
+                          cols={64}
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -1679,8 +1524,9 @@ const BudgetaryEstimate = () => {
                           value={inputs.validityofoffer}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                        ></textarea>
+                        />
                       </td>
                     </tr>
                     <tr className="border-b border-gray-300">
@@ -1699,6 +1545,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.alldeclaration}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                         />
                       </td>
@@ -1720,6 +1567,7 @@ const BudgetaryEstimate = () => {
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
                           id=""
+                          cols={64}
                         />
                       </td>
                     </tr>
@@ -1739,6 +1587,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.anyotherrelevantinformation}
                           onChange={handleChange}
                           id=""
+                          cols={64}
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
 
                         />
@@ -1754,11 +1603,12 @@ const BudgetaryEstimate = () => {
                       </td>
                       <td className="px-6 py-4 border-r border-b border-gray-300">
                         <textarea
-                          name="grantedby4"
+                          name="grantedBy4"
                           className="border-b-2 focus:border-blue-500 outline-none mb-2"
-                          value={inputs.grantedby4}
+                          value={inputs.grantedBy4}
                           onChange={handleChange}
                           id=""
+                          rows={1}
                         />
                         may kindly accord approval with FC or placement of order
                         on L-1 party ie.
@@ -1768,6 +1618,7 @@ const BudgetaryEstimate = () => {
                           name="recommendationdoa"
                           value={inputs.recommendationdoa}
                           onChange={handleChange}
+                          rows={1}
                         />
                         for Rs
                         <input
@@ -1783,6 +1634,7 @@ const BudgetaryEstimate = () => {
                           value={inputs.rsinwords}
                           onChange={handleChange}
                           id=""
+                          rows={1}
                         />
                         including GST @18% Approval sought under{" "}
                         <input

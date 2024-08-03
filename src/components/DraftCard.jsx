@@ -65,7 +65,7 @@ const DraftCard = () => {
                 setTimeout(() => {
                   setLoadingDrafts(false);
                   navigate(`/savedrafts/${userId}`);
-                }, 500);
+                }, 100);
               }} 
               className='text-[0.8rem] md:text-[1rem] mb-4 flex justify-center items-center w-full md:w-[15vw] p-2 font-semibold rounded-md bg-white text-black'
               disabled={loadingDrafts}
