@@ -3,7 +3,7 @@ import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
-import { ClimbingBoxLoader, ClipLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 const BudgetaryEstimate = () => {
   const predefinedValues = {
@@ -20,6 +20,9 @@ const BudgetaryEstimate = () => {
 
   const [inputs, setInputs] = useState(predefinedValues);
   const [loading, setLoading] = useState(false);
+  const [tableRows, setTableRows] = useState([
+    { id: 1, productCategory: "", unitPrice: "", gst: "", total: "", totalAmount: "", remarks: "" }
+  ]);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("be-form"));
@@ -28,13 +31,28 @@ const BudgetaryEstimate = () => {
     }
   }, [setInputs]);
 
-  const PercentageDisplay = ({ number, percentage }) => {
-    const calculatePercentage = () => {
-      return (number * percentage) / 100;
-    };
+  const calculateAverages = () => {
+    const sum = tableRows.reduce(
+      (acc, row) => {
+        acc.unitPrice += parseFloat(row.unitPrice || 0);
+        acc.gst += parseFloat(row.gst || 0);
+        acc.total += parseFloat(row.total || 0);
+        acc.totalAmount += parseFloat(row.totalAmount || 0);
+        return acc;
+      },
+      { unitPrice: 0, gst: 0, total: 0, totalAmount: 0 }
+    );
 
-    return <p>{calculatePercentage()}</p>;
+    const count = tableRows.length;
+    return {
+      avgUnitPrice: (sum.unitPrice / count).toFixed(2),
+      avgGST: (sum.gst / count).toFixed(2),
+      avgTotal: (sum.total / count).toFixed(2),
+      avgTotalAmount: (sum.totalAmount / count).toFixed(2),
+    };
   };
+
+  const averages = calculateAverages();
 
   const handleChange = (e) => {
     if (e.target.name === "date") {
@@ -43,10 +61,21 @@ const BudgetaryEstimate = () => {
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
     }
-
     const newInputs = { ...inputs, [e.target.name]: e.target.value };
     setInputs(newInputs);
     localStorage.setItem("be-form", JSON.stringify(newInputs));
+  };
+
+  const handleTableChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedRows = [...tableRows];
+    updatedRows[index][name] = value;
+    setTableRows(updatedRows);
+  };
+
+  const addTableRow = () => {
+    const newRow = { id: tableRows.length + 1, productCategory: "", unitPrice: "", gst: "", total: "", totalAmount: "", remarks: "" };
+    setTableRows([...tableRows, newRow]);
   };
 
   const handleSave = async () => {
@@ -57,7 +86,7 @@ const BudgetaryEstimate = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs),
+        body: JSON.stringify({ ...inputs, tableRows }),
       });
 
       const data = await res.json();
@@ -71,6 +100,7 @@ const BudgetaryEstimate = () => {
       alert("Form saved successfully!");
 
       setInputs(predefinedValues);
+      setTableRows([{ id: 1, productCategory: "", unitPrice: "", gst: "", total: "", totalAmount: "", remarks: "" }]);
       localStorage.removeItem("be-form");
     } catch (error) {
       alert("Error: " + error);
@@ -121,7 +151,7 @@ const BudgetaryEstimate = () => {
   return (
     <div className="w-full flex items-center justify-center pt-5 min-h-screen bg-zinc-100 font-sans">
       <div
-        className="w-full max-w-6xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
+        className="w-full max-w-7xl min-h-[80vh] bg-white flex p-5 flex-col items-center rounded-md justify-center"
         id="formContainer"
       >
         <div className="w-full min-h-full flex flex-col gap-5 items-center justify-center">
@@ -131,7 +161,7 @@ const BudgetaryEstimate = () => {
           </h1>
           <div className="w-full flex items-center justify-center gap-10">
             <form
-              className="flex flex-col text-lg sm:text-xl gap-6 w-full max-w-4xl"
+              className="flex flex-col text-lg sm:text-xl gap-6 w-full max-w-6xl"
               action=""
               onSubmit={handleSubmit}
             >
@@ -196,7 +226,7 @@ const BudgetaryEstimate = () => {
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="background">Background:</label>
-                <div className="bg-zinc-100 rounded-md p-2 w-full overflow-auto">
+                <div className="rounded-md p-2 w-full overflow-auto">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr>
@@ -210,13 +240,13 @@ const BudgetaryEstimate = () => {
                           Unit Price (Rs)
                         </th>
                         <th className="border border-gray-300 px-2 py-1">
-                          GST@18% (Rs)
+                          GST (%) (Rs)
                         </th>
                         <th className="border border-gray-300 px-2 py-1">
                           Total (Rs)
                         </th>
                         <th className="border border-gray-300 px-2 py-1">
-                          Total Amount for 35 PCs (Rs)
+                          Total Amount (Rs)
                         </th>
                         <th className="border border-gray-300 px-2 py-1">
                           Remarks
@@ -224,84 +254,94 @@ const BudgetaryEstimate = () => {
                       </tr>
                     </thead>
                     <tbody>
+                      {tableRows.map((row, index) => (
+                        <tr key={row.id}>
+                          <td className="border border-gray-300 px-2 py-1">
+                            {row.id}
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <input
+                              className="w-full"
+                              type="text"
+                              name="productCategory"
+                              value={row.productCategory}
+                              onChange={(e) => handleTableChange(index, e)}
+                            />
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <input
+                              className="w-full"
+                              type="number"
+                              name="unitPrice"
+                              value={row.unitPrice}
+                              onChange={(e) => handleTableChange(index, e)}
+                            />
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <input
+                              className="w-full"
+                              type="number"
+                              name="gst"
+                              value={row.gst}
+                              onChange={(e) => handleTableChange(index, e)}
+                            />
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <input
+                              className="w-full"
+                              type="number"
+                              name="total"
+                              value={row.total}
+                              onChange={(e) => handleTableChange(index, e)}
+                            />
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <input
+                              className="w-full"
+                              type="number"
+                              name="totalAmount"
+                              value={row.totalAmount}
+                              onChange={(e) => handleTableChange(index, e)}
+                            />
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <input
+                              className="w-full"
+                              type="text"
+                              name="remarks"
+                              value={row.remarks}
+                              onChange={(e) => handleTableChange(index, e)}
+                            />
+                          </td>
+                        </tr>
+                      ))}
                       <tr>
-                        <td className="border border-gray-300 px-2 py-1">1</td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          All-In-One PC
+                        <td colSpan="2" className="border border-gray-300 px-2 py-1">
+                          <button
+                            type="button"
+                            onClick={addTableRow}
+                            className="bg-blue-500 text-white p-2 rounded"
+                          >
+                            Add Row
+                          </button>
+                        </td>
+                        {/* <td colSpan="4" className="border border-gray-300 px-2 py-1">
+                          <strong>Total Amount:</strong>
+                        </td>
+                        
+                        <td className="border border-gray-300 px-2 py-1"> */}
+                        <td colSpan="3" className="border border-gray-300 px-2 py-1">
+                          <strong>Average:</strong>
                         </td>
                         <td className="border border-gray-300 px-2 py-1">
-                          93,262.71
+                          {averages.avgTotalAmount}
                         </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          16,787.29
+                          {/* Calculation for total amount */}
+                          {/* {tableRows.reduce((acc, row) => acc + parseFloat(row.totalAmount || 0), 0).toFixed(2)}
                         </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          1,10,050
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          38,51,750
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          AIO PC purchased by SRO. PO copy dated 29.01.2024 is
-                          attached as Annexure-3
-                        </td>
+                        <td></td> */}
                       </tr>
-                      <tr>
-                        <td className="border border-gray-300 px-2 py-1">2</td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          All-In-One PC
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          1,00,870
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          18,156.6
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          1,19,026.6
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          41,65,931
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          AIO PC purchased by UPSO-II. PO copy dated 08.02.2024
-                          is attached as Annexure-4
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-gray-300 px-2 py-1">3</td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          All-In-One PC
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          1,17,559.30
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          21,160.67
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          1,38,719.97
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          48,55,199
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          AIO PC purchased by TNSO. PO copy dated 22.05.2024 is
-                          attached as Annexure-5
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          className="border border-gray-300 px-2 py-1"
-                          colSpan="5"
-                        >
-                          Average
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          42,90,960
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1"></td>
-                      </tr>
+                      {/* Row for averages */}
                     </tbody>
                   </table>
                 </div>
@@ -310,8 +350,8 @@ const BudgetaryEstimate = () => {
               <div className="flex flex-col gap-4">
                 <label htmlFor="proposal">Proposal:</label>
                 <textarea
-                  id="proposal"
                   className="bg-zinc-100 rounded-md p-2 w-full"
+                  id="proposal"
                   name="proposal"
                   value={inputs.proposal}
                   onChange={handleChange}
@@ -329,54 +369,39 @@ const BudgetaryEstimate = () => {
                 />
               </div>
 
-              <div className="flex gap-5">
-                <label>Confidential:</label>
-                <div className="flex gap-5">
-                  <label>
-                    <input
-                      type="radio"
-                      name="confidential"
-                      value="Yes"
-                      checked={inputs.confidential === "Yes"}
-                    />{" "}
-                    Yes
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="confidential"
-                      value="No"
-                      checked={inputs.confidential === "No"}
-                    />{" "}
-                    No
-                  </label>
-                </div>
+              <div className="flex flex-col gap-4">
+                <label htmlFor="confidential">Confidential:</label>
+                <input
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  id="confidential"
+                  name="confidential"
+                  value={inputs.confidential}
+                  onChange={handleChange}
+                  readOnly
+                />
               </div>
 
-              <div className="flex gap-20 items-center justify-center">
+              <div className="flex gap-5">
+                <button
+                  type="button"
+                  className="bg-blue-500 text-white p-2 rounded"
+                  // onClick={generatePDF}
+                  onClick={() => {navigate('/createnew');}}
+                  id="saveBtn"
+                >
+                  Back to Dropdown
+                </button>
                 <button
                   type="submit"
-                  className="bg-zinc-100 rounded-md w-full max-w-xs py-3"
+                  className="bg-green-500 text-white p-2 rounded"
                 >
-                  {loading ? <ClipLoader size={24} /> : "Save"}
-                </button>
-
-                <button
-                  id="dropbtn"
-                  onClick={() => {
-                    navigate("/createnew");
-                  }}
-                  className="bg-blue-500 rounded-md w-full max-w-xs py-3 text-white"
-                >
-                  Back to DROP-DOWN
+                  Save
                 </button>
               </div>
-              <p id="saveMessage" className="flex justify-center hidden">
-                Information saved
-              </p>
             </form>
           </div>
         </div>
+        {loading && <ClipLoader color="#00BFFF" />}
       </div>
     </div>
   );
