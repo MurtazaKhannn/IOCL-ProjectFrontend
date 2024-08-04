@@ -98,8 +98,8 @@ const InterOfficeMemo = () => {
             className="flex flex-col gap-5 w-full max-w-3xl"
             onSubmit={handleSubmit}
           >
-            <div className="flex flex-col gap-4">
-              <label htmlFor="section">Ref No :</label>
+            {/* <div className="flex flex-col gap-4">
+              <label htmlFor="section">Ref No :</label> */}
               {/* <input
                 className="bg-zinc-100 rounded-md p-2 w-full"
                 id="section"
@@ -108,7 +108,7 @@ const InterOfficeMemo = () => {
                 onChange={handleChange}
                 readOnly
               /> */}
-            </div>
+            {/* </div> */}
             <div className="flex flex-col gap-4">
               <label htmlFor="section">Section:</label>
               <input

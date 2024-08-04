@@ -78,7 +78,7 @@ const SavedDraft = () => {
   };
 
   return (
-    <div className="w-full min-h-[88.9vh] font-teko mt-5 bg-zinc-100">
+    <div className="w-full min-h-[88.9vh] font-sans mt-5 bg-zinc-100">
       {drafts.length > 0 ? (
         drafts.map((draft) => (
           <div

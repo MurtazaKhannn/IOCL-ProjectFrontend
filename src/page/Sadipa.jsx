@@ -202,7 +202,7 @@ const SAD = () => {
   if (!draft) return <><p>Loading ... </p></> ;
 
   return (
-    <div id='formContainer' className='w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center'>
+    <div id='formContainer' className='w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-sans justify-center items-center'>
       <h1 className='text-4xl font-semibold '>Inprinciple Approval</h1>
       <img src={IOL} className='w-32' alt="" />
       <div className='flex w-full h-full items-center justify-center'>

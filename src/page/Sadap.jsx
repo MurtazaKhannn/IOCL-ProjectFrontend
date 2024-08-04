@@ -171,7 +171,7 @@ const SAD = () => {
   };
 
   return (
-    <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-teko justify-center items-center">
+    <div className="w-full min-h-[88.9vh] gap-5 p-5 flex flex-col font-sans justify-center items-center">
       <div className="flex w-full h-full items-center justify-center">
         <div
           id="formContainer"
