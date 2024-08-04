@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import IOL from "../assets/logo.webp";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
-import { Document, Packer, Paragraph, TextRun } from "docx";
-import { saveAs } from "file-saver";
 
 const AdministrativePage = () => {
-  // const apiUrl = process.env.REACT_APP_API_URL;
   const predefinedValues = {
     section: "Information System",
     department: "Information Technology",
@@ -22,7 +16,6 @@ const AdministrativePage = () => {
     effectiveAuthority: "",
     conclusion: "",
     confidential: "Yes",
-    // referenceNumber: "",
   };
 
   const [inputs, setInputs] = useState(predefinedValues);
@@ -37,8 +30,7 @@ const AdministrativePage = () => {
 
   const handleChange = (e) => {
     if (e.target.name === "date") {
-      // Extract only the date part (yyyy-mm-dd) from the input value
-      const dateValue = e.target.value.split("T")[0]; // split to remove timestamp
+      const dateValue = e.target.value.split("T")[0];
       setInputs({ ...inputs, [e.target.name]: dateValue });
     } else {
       setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -61,21 +53,20 @@ const AdministrativePage = () => {
       });
 
       const data = await res.json();
-      
-      console.log("Response data:", data); // Debugging line
+
+      console.log("Response data:", data);
 
       if (data.error) {
         alert("Error: " + data.error);
         return;
       }
 
-      alert("Form saved successfully!")
+      alert("Form saved successfully!");
 
       setInputs((prevInputs) => ({
         ...prevInputs,
-        referenceNumber: data.referenceNumber, // Update state with reference number
+        referenceNumber: data.referenceNumber,
       }));
-  
 
       setInputs(predefinedValues);
       localStorage.removeItem("ap-form");
@@ -95,8 +86,6 @@ const AdministrativePage = () => {
   };
 
   const navigate = useNavigate();
-  
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-zinc-100 font-sans">
@@ -111,17 +100,6 @@ const AdministrativePage = () => {
             className="flex flex-col gap-5 w-full max-w-3xl"
             onSubmit={handleSubmit}
           >
-            {/* <div className="flex flex-col gap-4">
-              <label htmlFor="section">Ref No :</label> */}
-              {/* <input
-                className="bg-zinc-100 rounded-md p-2 w-full"
-                id="section"
-                name="section"
-                value={inputs.referenceNumber}
-                onChange={handleChange}
-                readOnly
-              /> */}
-            {/* </div> */}
             <div className="flex flex-col gap-4">
               <label htmlFor="section">Section:</label>
               <input
@@ -192,6 +170,217 @@ const AdministrativePage = () => {
               />
             </div>
 
+            {/* <div className="overflow-x-auto">
+              <div className="mb-4 font-bold">
+                TECHNICALSPECIFICATIONS: Technical specification as approved by
+                MKHO is asfollows:
+              </div>
+              <table className="table-auto w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-300 px-4 py-2">S. No</th>
+                    <th className="border border-gray-300 px-4 py-2">
+                      Component
+                    </th>
+                    <th className="border border-gray-300 px-4 py-2">
+                      Technical Specification
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">1</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Processor
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Latest 12th Gen Intel i7 Processor / AMD RYZEN 7 or higher
+                      configuration processor (Minimum Base frequency 2.1 GHz or
+                      Higher, 25 MB Cache or Higher, 8 Cores or Higher, 16
+                      Threads or higher, 65W TDP or lower, 64 Bit X86 Processor
+                      or higher). Processor should have been launched in Q1 2022
+                      or after.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">2</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Chipset
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Intel Q670 or higher / AMD PRO 500 series or higher.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">3</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Motherboard
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Original OEM motherboard as manufactured /Certified by
+                      processor manufacturer/ OEM logo of the PC manufacturer
+                      should be embossed in the motherboard (Sticker not
+                      allowed).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">4</td>
+                    <td className="border border-gray-300 px-4 py-2">Memory</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Minimum 1X32 GB DDR4 with support for expansion up to 64
+                      GB or higher. Minimum 1 slot must be free for future
+                      expansion.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">5</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      RAM Type
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      DDR4 with 2933 MHz or higher.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">6</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Expansion Slots
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      2 slots or higher
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">7</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      SSD Capacity
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      M.2 1TB PCIe NVMe SSD
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">8</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Storage
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      M.2 PCIe 1TB NVMe SSD or higher
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">9</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Power Supply
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Should be capable to support fully configured system and
+                      should be fully energy-efficient Power Supply (BEE
+                      Certified) 80 Plus Power Supply 92% efficient or better.
+                      Should be of same make as that of PC
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">10</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Ethernet
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">1 Gbps</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">11</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      USB Ports
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      4xUSB 3.0, 2xUSB 2.0
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">12</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Keyboard
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      OEM standard Keyboard with full size
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">13</td>
+                    <td className="border border-gray-300 px-4 py-2">Mouse</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      OEM standard Mouse
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">14</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Monitor
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      24” LED Backlit LCD Monitor with height adjustment, LED
+                      Backlit display with minimum resolution of 1920x1080 or
+                      higher
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">15</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Operating System
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Windows 11 Professional 64-bit
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">16</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Power Management
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      SMPS surge protection, Voltage regulation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">17</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Energy Certification
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Energy Star certified
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">18</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Product Certification
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      RoHS, EPEAT Gold
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">19</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Security
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      TPM 2.0 Security Chip
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-300 px-4 py-2">20</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      Warranty
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      5-year onsite comprehensive warranty
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> */}
+
             <div className="flex flex-col gap-4">
               <label htmlFor="proposal">Proposal:</label>
               <textarea
@@ -205,7 +394,7 @@ const AdministrativePage = () => {
 
             <div className="flex flex-col gap-4">
               <label htmlFor="budgetAndFinancialImplication">
-                Budget & Financial Implication:
+                Budget and Financial Implication:
               </label>
               <textarea
                 id="budgetAndFinancialImplication"
@@ -216,37 +405,25 @@ const AdministrativePage = () => {
               />
             </div>
 
-            <div className="flex gap-5">
-              <label>DOA Applicable:</label>
-              <div className="flex gap-5">
-                <label>
-                  <input
-                    type="radio"
-                    name="doaApplicable"
-                    value="Yes"
-                    checked={inputs.doaApplicable === "Yes"}
-                    onChange={handleChange}
-                  />{" "}
-                  Yes
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="doaApplicable"
-                    value="No"
-                    checked={inputs.doaApplicable === "No"}
-                    onChange={handleChange}
-                  />{" "}
-                  No
-                </label>
-              </div>
+            <div className="flex flex-col gap-4">
+              <label htmlFor="doaApplicable">DOA Applicable:</label>
+              <select
+                className="bg-zinc-100 rounded-md p-2 w-full"
+                id="doaApplicable"
+                name="doaApplicable"
+                value={inputs.doaApplicable}
+                onChange={handleChange}
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
             </div>
 
             <div className="flex flex-col gap-4">
               <label htmlFor="effectiveAuthority">Effective Authority:</label>
               <textarea
-                className="bg-zinc-100 rounded-md p-2 w-full"
                 id="effectiveAuthority"
+                className="bg-zinc-100 rounded-md p-2 w-full"
                 name="effectiveAuthority"
                 value={inputs.effectiveAuthority}
                 onChange={handleChange}
@@ -256,76 +433,44 @@ const AdministrativePage = () => {
             <div className="flex flex-col gap-4">
               <label htmlFor="conclusion">Conclusion:</label>
               <textarea
-                className="bg-zinc-100 rounded-md p-2 w-full"
                 id="conclusion"
+                className="bg-zinc-100 rounded-md p-2 w-full"
                 name="conclusion"
                 value={inputs.conclusion}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="flex gap-5">
-              <label>Confidential:</label>
-              <div className="flex gap-5">
-                <label>
-                  <input
-                    type="radio"
-                    name="confidential"
-                    value="Yes"
-                    checked={inputs.confidential === "Yes"}
-                    onChange={handleChange}
-                  />{" "}
-                  Yes
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="confidential"
-                    value="No"
-                    checked={inputs.confidential === "No"}
-                    onChange={handleChange}
-                  />{" "}
-                  No
-                </label>
-              </div>
+            <div className="flex flex-col gap-4">
+              <label htmlFor="confidential">Confidential:</label>
+              <select
+                className="bg-zinc-100 rounded-md p-2 w-full"
+                id="confidential"
+                name="confidential"
+                value={inputs.confidential}
+                onChange={handleChange}
+              >
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
             </div>
 
-            <div className="flex gap-5 items-center justify-center">
-              {/* <button
-                className="bg-orange-500 py-2 rounded-md w-full max-w-xs text-white"
+            <div className="flex justify-end gap-4">
+              <button
                 type="button"
-                id="saveBtn"
-                onClick={generatePDF}
+                className="bg-zinc-400 text-white px-4 py-2 rounded-md"
+                onClick={() => navigate(-1)}
               >
-                Download as PDF
-              </button> */}
-
+                Cancel
+              </button>
               <button
                 type="submit"
-                className="bg-zinc-100 py-2 text-black rounded-md w-full max-w-xs"
+                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                disabled={loading}
               >
-                {loading ? <ClipLoader size={16} color="000" /> : "Save"}
-              </button>
-
-              {/* <button
-                className="bg-green-500 py-2 rounded-md w-full max-w-xs text-white"
-                type="button"
-                onClick={generateDOCX}
-              >
-                Save as DOC
-              </button> */}
-
-              <button
-                id="dropbtn"
-                onClick={() => navigate("/createnew")}
-                className="bg-blue-500 py-2 rounded-md w-full max-w-xs text-white"
-              >
-                Back to DROP-DOWN
+                {loading ? "Saving..." : "Save"}
               </button>
             </div>
-            <p id="saveMessage" className="flex justify-center hidden">
-              Information saved
-            </p>
           </form>
         </div>
       </div>

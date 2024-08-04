@@ -21,7 +21,16 @@ const BudgetaryEstimate = () => {
   const [inputs, setInputs] = useState(predefinedValues);
   const [loading, setLoading] = useState(false);
   const [tableRows, setTableRows] = useState([
-    { id: 1, productCategory: "", unitPrice: "", gst: "", total: "", totalAmount: "", remarks: "" }
+    {
+      id: 1,
+      productCategory: "",
+      unitPrice: "",
+      gst: "",
+      total: "",
+      totalAmount: "",
+      remarks: "",
+      avgTotalAmount: "",
+    },
   ]);
 
   useEffect(() => {
@@ -34,21 +43,15 @@ const BudgetaryEstimate = () => {
   const calculateAverages = () => {
     const sum = tableRows.reduce(
       (acc, row) => {
-        acc.unitPrice += parseFloat(row.unitPrice || 0);
-        acc.gst += parseFloat(row.gst || 0);
-        acc.total += parseFloat(row.total || 0);
         acc.totalAmount += parseFloat(row.totalAmount || 0);
         return acc;
       },
-      { unitPrice: 0, gst: 0, total: 0, totalAmount: 0 }
+      { totalAmount: 0 }
     );
-
+  
     const count = tableRows.length;
     return {
-      avgUnitPrice: (sum.unitPrice / count).toFixed(2),
-      avgGST: (sum.gst / count).toFixed(2),
-      avgTotal: (sum.total / count).toFixed(2),
-      avgTotalAmount: (sum.totalAmount / count).toFixed(2),
+      avgTotalAmount: count > 0 ? (sum.totalAmount / count).toFixed(2) : "0.00",
     };
   };
 
@@ -74,7 +77,16 @@ const BudgetaryEstimate = () => {
   };
 
   const addTableRow = () => {
-    const newRow = { id: tableRows.length + 1, productCategory: "", unitPrice: "", gst: "", total: "", totalAmount: "", remarks: "" };
+    const newRow = {
+      id: tableRows.length + 1,
+      productCategory: "",
+      unitPrice: "",
+      gst: "",
+      total: "",
+      totalAmount: "",
+      remarks: "",
+      averageTotalAmount: "",
+    };
     setTableRows([...tableRows, newRow]);
   };
 
@@ -100,7 +112,17 @@ const BudgetaryEstimate = () => {
       alert("Form saved successfully!");
 
       setInputs(predefinedValues);
-      setTableRows([{ id: 1, productCategory: "", unitPrice: "", gst: "", total: "", totalAmount: "", remarks: "" }]);
+      setTableRows([
+        {
+          id: 1,
+          productCategory: "",
+          unitPrice: "",
+          gst: "",
+          total: "",
+          totalAmount: "",
+          remarks: "",
+        },
+      ]);
       localStorage.removeItem("be-form");
     } catch (error) {
       alert("Error: " + error);
@@ -316,7 +338,10 @@ const BudgetaryEstimate = () => {
                         </tr>
                       ))}
                       <tr>
-                        <td colSpan="2" className="border border-gray-300 px-2 py-1">
+                        <td
+                          colSpan="2"
+                          className="border border-gray-300 px-2 py-1"
+                        >
                           <button
                             type="button"
                             onClick={addTableRow}
@@ -330,14 +355,17 @@ const BudgetaryEstimate = () => {
                         </td>
                         
                         <td className="border border-gray-300 px-2 py-1"> */}
-                        <td colSpan="3" className="border border-gray-300 px-2 py-1">
+                        <td
+                          colSpan="3"
+                          className="border border-gray-300 px-2 py-1"
+                        >
                           <strong>Average:</strong>
                         </td>
                         <td className="border border-gray-300 px-2 py-1">
                           {averages.avgTotalAmount}
                         </td>
-                          {/* Calculation for total amount */}
-                          {/* {tableRows.reduce((acc, row) => acc + parseFloat(row.totalAmount || 0), 0).toFixed(2)}
+                        {/* Calculation for total amount */}
+                        {/* {tableRows.reduce((acc, row) => acc + parseFloat(row.totalAmount || 0), 0).toFixed(2)}
                         </td>
                         <td></td> */}
                       </tr>
@@ -386,7 +414,9 @@ const BudgetaryEstimate = () => {
                   type="button"
                   className="bg-blue-500 text-white p-2 rounded"
                   // onClick={generatePDF}
-                  onClick={() => {navigate('/createnew');}}
+                  onClick={() => {
+                    navigate("/createnew");
+                  }}
                   id="saveBtn"
                 >
                   Back to Dropdown
