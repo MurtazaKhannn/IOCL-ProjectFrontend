@@ -103,7 +103,7 @@ const SavedDraft = () => {
                 onClick={() => handleDraftClick(draft._id , draft.formName)}
                 className="text-white text-xl bg-orange-500 hover:bg-orange-600 py-2 px-4 rounded-md"
               >
-                {loadingView[draft._id] ? <ClipLoader  size={20} color={"#fff"} /> : "Edit"}
+                {loadingView[draft._id] ? <ClipLoader  size={20} color={"#fff"} /> : "View"}
               </button>
             </div>
           </div>

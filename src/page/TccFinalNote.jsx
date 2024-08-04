@@ -239,7 +239,7 @@ const BudgetaryEstimate = () => {
           </h1>
           <div className="w-full flex items-center justify-center gap-10">
             <form
-              className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-5xl"
+              className="flex flex-col rounded-md text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-5xl"
               action=""
               onSubmit={handleSubmit}
             >
