@@ -48,7 +48,7 @@ const BudgetaryEstimate = () => {
       },
       { totalAmount: 0 }
     );
-  
+
     const count = tableRows.length;
     return {
       avgTotalAmount: count > 0 ? (sum.totalAmount / count).toFixed(2) : "0.00",
@@ -88,6 +88,16 @@ const BudgetaryEstimate = () => {
       averageTotalAmount: "",
     };
     setTableRows([...tableRows, newRow]);
+  };
+
+  const deleteTableRow = (index) => {
+    if (tableRows.length === 1) {
+      return;
+    } else {
+      const updatedRows = [...tableRows];
+      updatedRows.splice(index, 1);
+      setTableRows(updatedRows);
+    }
   };
 
   const handleSave = async () => {
@@ -282,7 +292,7 @@ const BudgetaryEstimate = () => {
                             {row.id}
                           </td>
                           <td className="border border-gray-300 px-2 py-1">
-                            <input
+                            <textarea
                               className="w-full"
                               type="text"
                               name="productCategory"
@@ -290,50 +300,63 @@ const BudgetaryEstimate = () => {
                               onChange={(e) => handleTableChange(index, e)}
                             />
                           </td>
-                          <td className="border border-gray-300 px-2 py-1">
+                          <td className="border items-center justify-center w-52 p-2 gap-4 border-gray-300 px-2 py-1">
+                            Rs
                             <input
-                              className="w-full"
+                              className="w-32 p-2"
                               type="number"
                               name="unitPrice"
                               value={row.unitPrice}
                               onChange={(e) => handleTableChange(index, e)}
                             />
                           </td>
-                          <td className="border border-gray-300 px-2 py-1">
+                          <td className="border border-gray-300 w-52 px-2 py-1">
+                            Rs
                             <input
-                              className="w-full"
+                              className="w-32 p-2"
                               type="number"
                               name="gst"
                               value={row.gst}
                               onChange={(e) => handleTableChange(index, e)}
                             />
                           </td>
-                          <td className="border border-gray-300 px-2 py-1">
+                          <td className="border w-52 border-gray-300 px-2 py-1">
+                            Rs
                             <input
-                              className="w-full"
+                              className="w-32 p-1"
                               type="number"
                               name="total"
                               value={row.total}
                               onChange={(e) => handleTableChange(index, e)}
                             />
                           </td>
-                          <td className="border border-gray-300 px-2 py-1">
+                          <td className="border w-52 border-gray-300 px-2 py-1">
+                            Rs
                             <input
-                              className="w-full"
+                              className="w-36 p-2"
                               type="number"
                               name="totalAmount"
                               value={row.totalAmount}
                               onChange={(e) => handleTableChange(index, e)}
                             />
                           </td>
-                          <td className="border border-gray-300 px-2 py-1">
-                            <input
-                              className="w-full"
+                          <td className="border border-gray-300 w-48 px-2 py-1">
+                            <textarea
+                              className="w-36 p-2"
                               type="text"
                               name="remarks"
                               value={row.remarks}
                               onChange={(e) => handleTableChange(index, e)}
                             />
+                          </td>
+                          <td className="border border-gray-300 px-2 py-1">
+                            <button
+                              type="button"
+                              className="bg-red-500 text-white px-2 py-1 rounded"
+                              onClick={() => deleteTableRow(index)}
+                            >
+                              Delete
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -409,7 +432,7 @@ const BudgetaryEstimate = () => {
                 />
               </div>
 
-              <div className="flex gap-5">
+              <div className="flex items-center justify-center gap-5">
                 <button
                   type="button"
                   className="bg-blue-500 text-white p-2 rounded"
@@ -425,13 +448,11 @@ const BudgetaryEstimate = () => {
                   type="submit"
                   className="bg-green-500 text-white p-2 rounded"
                 >
-                  Save
-                </button>
+                {loading ? <ClipLoader size={20} color="000" /> : "Save"}                </button>
               </div>
             </form>
           </div>
         </div>
-        {loading && <ClipLoader color="#00BFFF" />}
       </div>
     </div>
   );
