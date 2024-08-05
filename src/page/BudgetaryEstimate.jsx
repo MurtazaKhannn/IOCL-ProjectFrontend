@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import IOL from "../assets/logo.webp";
 import { jsPDF } from "jspdf";
@@ -22,11 +23,12 @@ const BudgetaryEstimate = () => {
   const [loading, setLoading] = useState(false);
   const [tableRows, setTableRows] = useState([
     {
-      id: 1,
+      id: "1",
       productCategory: "",
       unitPrice: "",
       gst: "",
       total: "",
+      quantity: "",
       totalAmount: "",
       remarks: "",
       avgTotalAmount: "",
@@ -73,8 +75,28 @@ const BudgetaryEstimate = () => {
     const { name, value } = e.target;
     const updatedRows = [...tableRows];
     updatedRows[index][name] = value;
+  
+    if (name === "unitPrice" || name === "gst" || name === "quantity") {
+      const unitPriceNum = parseFloat(updatedRows[index].unitPrice) || 0;
+      const quantityNum = parseFloat(updatedRows[index].quantity) || 0;
+  
+      // Calculate percentage18 as unitPrice * 0.18
+      const percentage18 = (unitPriceNum * 0.18).toFixed(2);
+      updatedRows[index].percentage18 = percentage18;
+  
+      // Calculate total as unitPrice + percentage18
+      const total = unitPriceNum + parseFloat(percentage18);
+      updatedRows[index].total = total.toFixed(2);
+  
+      // Calculate totalAmount as total * quantity
+      const totalAmount = total * quantityNum;
+      updatedRows[index].totalAmount = totalAmount.toFixed(2);
+    }
+  
     setTableRows(updatedRows);
   };
+  
+  
 
   const addTableRow = () => {
     const newRow = {
@@ -83,9 +105,10 @@ const BudgetaryEstimate = () => {
       unitPrice: "",
       gst: "",
       total: "",
+      quantity: "",
       totalAmount: "",
       remarks: "",
-      averageTotalAmount: "",
+      avgTotalAmount: "",
     };
     setTableRows([...tableRows, newRow]);
   };
@@ -96,6 +119,7 @@ const BudgetaryEstimate = () => {
     } else {
       const updatedRows = [...tableRows];
       updatedRows.splice(index, 1);
+      updatedRows.forEach((row, i) => (row.id = i + 1)); // Reassign serial numbers
       setTableRows(updatedRows);
     }
   };
@@ -129,6 +153,7 @@ const BudgetaryEstimate = () => {
           unitPrice: "",
           gst: "",
           total: "",
+          quantity: "",
           totalAmount: "",
           remarks: "",
         },
@@ -237,8 +262,8 @@ const BudgetaryEstimate = () => {
                 <label htmlFor="date">Date:</label>
                 <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
-                  type="date"
                   id="date"
+                  type="date"
                   name="date"
                   value={inputs.date}
                   onChange={handleChange}
@@ -253,150 +278,127 @@ const BudgetaryEstimate = () => {
                   name="subject"
                   value={inputs.subject}
                   onChange={handleChange}
-                />
+                ></textarea>
               </div>
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="background">Background:</label>
-                <div className="rounded-md p-2 w-full overflow-auto">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr>
-                        <th className="border border-gray-300 px-2 py-1">
-                          S. No.
-                        </th>
-                        <th className="border border-gray-300 px-2 py-1">
-                          Product Category
-                        </th>
-                        <th className="border border-gray-300 px-2 py-1">
-                          Unit Price (Rs)
-                        </th>
-                        <th className="border border-gray-300 px-2 py-1">
-                          GST (%) (Rs)
-                        </th>
-                        <th className="border border-gray-300 px-2 py-1">
-                          Total (Rs)
-                        </th>
-                        <th className="border border-gray-300 px-2 py-1">
-                          Total Amount (Rs)
-                        </th>
-                        <th className="border border-gray-300 px-2 py-1">
-                          Remarks
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tableRows.map((row, index) => (
-                        <tr key={row.id}>
-                          <td className="border border-gray-300 px-2 py-1">
-                            {row.id}
-                          </td>
-                          <td className="border border-gray-300 px-2 py-1">
-                            <textarea
-                              className="w-full"
-                              type="text"
-                              name="productCategory"
-                              value={row.productCategory}
-                              onChange={(e) => handleTableChange(index, e)}
-                            />
-                          </td>
-                          <td className="border items-center justify-center w-52 p-2 gap-4 border-gray-300 px-2 py-1">
-                            Rs
-                            <input
-                              className="w-32 p-2"
-                              type="number"
-                              name="unitPrice"
-                              value={row.unitPrice}
-                              onChange={(e) => handleTableChange(index, e)}
-                            />
-                          </td>
-                          <td className="border border-gray-300 w-52 px-2 py-1">
-                            Rs
-                            <input
-                              className="w-32 p-2"
-                              type="number"
-                              name="gst"
-                              value={row.gst}
-                              onChange={(e) => handleTableChange(index, e)}
-                            />
-                          </td>
-                          <td className="border w-52 border-gray-300 px-2 py-1">
-                            Rs
-                            <input
-                              className="w-32 p-1"
-                              type="number"
-                              name="total"
-                              value={row.total}
-                              onChange={(e) => handleTableChange(index, e)}
-                            />
-                          </td>
-                          <td className="border w-52 border-gray-300 px-2 py-1">
-                            Rs
-                            <input
-                              className="w-36 p-2"
-                              type="number"
-                              name="totalAmount"
-                              value={row.totalAmount}
-                              onChange={(e) => handleTableChange(index, e)}
-                            />
-                          </td>
-                          <td className="border border-gray-300 w-48 px-2 py-1">
-                            <textarea
-                              className="w-36 p-2"
-                              type="text"
-                              name="remarks"
-                              value={row.remarks}
-                              onChange={(e) => handleTableChange(index, e)}
-                            />
-                          </td>
-                          <td className="border border-gray-300 px-2 py-1">
-                            <button
-                              type="button"
-                              className="bg-red-500 text-white px-2 py-1 rounded"
-                              onClick={() => deleteTableRow(index)}
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                      <tr>
-                        <td
-                          colSpan="2"
-                          className="border border-gray-300 px-2 py-1"
-                        >
-                          <button
-                            type="button"
-                            onClick={addTableRow}
-                            className="bg-blue-500 text-white p-2 rounded"
-                          >
-                            Add Row
-                          </button>
-                        </td>
-                        {/* <td colSpan="4" className="border border-gray-300 px-2 py-1">
-                          <strong>Total Amount:</strong>
-                        </td>
-                        
-                        <td className="border border-gray-300 px-2 py-1"> */}
-                        <td
-                          colSpan="3"
-                          className="border border-gray-300 px-2 py-1"
-                        >
-                          <strong>Average:</strong>
-                        </td>
-                        <td className="border border-gray-300 px-2 py-1">
-                          {averages.avgTotalAmount}
-                        </td>
-                        {/* Calculation for total amount */}
-                        {/* {tableRows.reduce((acc, row) => acc + parseFloat(row.totalAmount || 0), 0).toFixed(2)}
-                        </td>
-                        <td></td> */}
-                      </tr>
-                      {/* Row for averages */}
-                    </tbody>
-                  </table>
-                </div>
+                <textarea
+                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  id="background"
+                  name="background"
+                  value={inputs.background}
+                  onChange={handleChange}
+                ></textarea>
               </div>
+
+              <table className="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-300 p-2">S.No</th>
+                    <th className="border border-gray-300 p-2">Product Category</th>
+                    <th className="border border-gray-300 p-2">Unit Price</th>
+                    <th className="border border-gray-300 p-2">GST (%)</th>
+                    <th className="border border-gray-300 p-2">Total</th>
+                    <th className="border border-gray-300 p-2">Quantity</th>
+                    <th className="border border-gray-300 p-2">Total Amount</th>
+                    <th className="border border-gray-300 p-2">Remarks</th>
+                    <th className="border border-gray-300 p-2">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableRows.map((row, index) => (
+                    <tr key={index}>
+                      <td className="border border-gray-300 p-2">{row.id}</td>
+                      <td className="border border-gray-300 p-2">
+                        <textarea
+                          className="w-full"
+                          type="text"
+                          name="productCategory"
+                          value={row.productCategory}
+                          onChange={(e) => handleTableChange(index, e)}
+                        />
+                      </td>
+                      <td className="border  border-gray-300 p-2">
+                        <input
+                          className="w-28"
+                          type="number"
+                          name="unitPrice"
+                          value={row.unitPrice}
+                          onChange={(e) => handleTableChange(index, e)}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <div>
+                        <input
+                          className="w-28"
+                          type="number"
+                          name="gst"
+                          value={row.percentage18}
+                          onChange={(e) => handleTableChange(index, e)}
+                        />
+                        </div>
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                      <input
+                          className="w-28"
+                          type="number"
+                          name="total"
+                          value={row.total}
+                          onChange={(e) => handleTableChange(index, e)}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <input
+                          className="w-full"
+                          type="number"
+                          name="quantity"
+                          value={row.quantity}
+                          onChange={(e) => handleTableChange(index, e)}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        {row.totalAmount}
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <input
+                          className="w-full"
+                          type="text"
+                          name="remarks"
+                          value={row.remarks}
+                          onChange={(e) => handleTableChange(index, e)}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <button
+                          type="button"
+                          className="bg-red-500 text-white p-1 rounded"
+                          onClick={() => deleteTableRow(index)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="6" className="border border-gray-300 p-2 text-right font-bold">
+                      Average Total Amount
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                      {averages.avgTotalAmount}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <button
+                  type="button"
+                  className="bg-green-500 w-32 text-white p-2 rounded"
+                  onClick={addTableRow}
+                >
+                  Add Row
+              </button>
+
 
               <div className="flex flex-col gap-4">
                 <label htmlFor="proposal">Proposal:</label>
@@ -406,7 +408,7 @@ const BudgetaryEstimate = () => {
                   name="proposal"
                   value={inputs.proposal}
                   onChange={handleChange}
-                />
+                ></textarea>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -417,7 +419,7 @@ const BudgetaryEstimate = () => {
                   name="conclusion"
                   value={inputs.conclusion}
                   onChange={handleChange}
-                />
+                ></textarea>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -432,26 +434,38 @@ const BudgetaryEstimate = () => {
                 />
               </div>
 
-              <div className="flex items-center justify-center gap-5">
+              
+              
+
+              <div className="flex gap-5 mt-5">
+                
                 <button
                   type="button"
-                  className="bg-blue-500 text-white p-2 rounded"
-                  // onClick={generatePDF}
-                  onClick={() => {
-                    navigate("/createnew");
-                  }}
                   id="saveBtn"
+                  className="bg-blue-500 text-white p-2 rounded"
+                  onClick={handleSave}
                 >
-                  Back to Dropdown
+                  Save
                 </button>
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white p-2 rounded"
+                {/* <button
+                  type="button"
+                  className="bg-yellow-500 text-white p-2 rounded"
+                  onClick={generatePDF}
                 >
-                {loading ? <ClipLoader size={20} color="000" /> : "Save"}                </button>
+                  Generate PDF
+                </button> */}
+                <button
+                  type="button"
+                  id="dropbtn"
+                  className="bg-gray-500 text-white p-2 rounded"
+                  onClick={() => navigate("/")}
+                >
+                  Back
+                </button>
               </div>
             </form>
           </div>
+          {loading && <ClipLoader color="#000000" />}
         </div>
       </div>
     </div>
@@ -459,3 +473,15 @@ const BudgetaryEstimate = () => {
 };
 
 export default BudgetaryEstimate;
+
+
+
+
+
+
+
+
+
+
+
+

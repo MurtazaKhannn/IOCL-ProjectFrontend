@@ -40,6 +40,44 @@ const SAD = () => {
     fetchDraft();
   }, [draftId]);
 
+
+  const addTableRow = () => {
+    const newRow = {
+      id: formData.tableRows.length + 1,
+      component: "",
+      technicalspec: "",
+
+    };
+    setFormData({
+      ...formData ,
+      tableRows: [...formData.tableRows, newRow],
+    });
+  };
+
+  const deleteTableRow = (index) => {
+    if (formData.tableRows.length === 1) {
+      return;
+    } else {
+      const updatedRows = [...formData.tableRows];
+      updatedRows.splice(index, 1);
+      setFormData({...formData , tableRows: updatedRows})
+    }
+  };
+
+
+  const handleTableChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedRows = formData.tableRows.map((row, i) =>
+      i === index ? { ...row, [name]: value } : row
+    );
+    setFormData({
+      ...formData,
+      tableRows: updatedRows,
+    });
+  };
+
+
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -206,13 +244,13 @@ const SAD = () => {
       <div className="flex w-full h-full items-center justify-center">
         <div
           id="formContainer"
-          className="flex flex-col items-center w-[794px] h-[900px] rounded-md justify-center gap-5 p-2 bg-white border"
+          className="flex flex-col items-center w-[1094px] max-w-7xl min-h-[900px] rounded-md justify-center gap-5 p-2 bg-white border"
         >
           <h1 className="text-4xl font-semibold">Technical Specification</h1>
 
           <img src={IOL} className="w-64" alt="" />
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="referenceNumber">Ref&nbsp;&nbsp;No</label>
             <input
               type="text"
@@ -224,7 +262,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="section">Section</label>
             <input
               type="text"
@@ -236,7 +274,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="department">Department</label>
             <input
               type="text"
@@ -248,7 +286,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="location">Location</label>
             <input
               type="text"
@@ -260,7 +298,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -272,7 +310,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="subject">Subject</label>
             <input
               type="text"
@@ -284,18 +322,113 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
-            <label htmlFor="background">Background</label>
-            <input
-              name="background"
-              value={formData.background}
-              onChange={handleChange}
-              disabled={!isEditing}
-              className="rounded-md p-2 w-full"
-            />
-          </div>
+          <div className="flex w-5/6 flex-col gap-4">
+              <label className='text-xl' htmlFor="background">Background:</label>
+              <textarea
+                className="bg-zinc-100 rounded-md p-2 w-full"
+                id="background"
+                name="background"
+                value={formData.background}
+                onChange={handleChange}
+                disabled={!isEditing}
+              />
+              <div className="rounded-md p-2 w-full overflow-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-300 px-2 py-1">
+                        S. No.
+                      </th>
+                      <th className="border border-gray-300 px-2 py-1">
+                        Component
+                      </th>
+                      <th className="border border-gray-300 px-2 py-1">
+                      Technical Specification: All-In-One PCs
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {formData.tableRows.map((row, index) => (
+                      <tr key={row.id}>
+                        <td className="border border-gray-300 px-2 py-1">
+                          <input
+                            type="text"
+                            className="w-[2.2vw]"
+                            name="id"
+                            value={row.id}
+                            onChange={(e) => handleTableChange(index, e)}
+                            disabled={!isEditing}
+                          />
+                        </td>
+                        <td className="border w-[30vw] border-gray-300 px-2 py-1">
+                          <textarea
+                            className="w-full p-2"
+                            type="text"
+                            name="component"
+                            value={row.component}
+                            onChange={(e) => handleTableChange(index, e)}
+                            disabled={!isEditing}
+                          />
+                        </td>
+                        <td className="border w-[30vw] items-center justify-center w-52 p-2 gap-4 border-gray-300 px-2 py-1">
+                          
+                          <textarea
+                            className="w-full p-2"
+                            type="text"
+                            name="technicalspec"
+                            value={row.technicalspec}
+                            onChange={(e) => handleTableChange(index, e)}
+                            disabled={!isEditing}
+                          />
+                        </td>
+                        
+                        
+                        
+                        
+                        <td className=" px-2 py-1">
+                          <button
+                            type="button"
+                            className="bg-red-500 text-white px-2 py-1 rounded"
+                            onClick={() => deleteTableRow(index)}
+                            disabled={!isEditing}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                    <tr>
+                      <td
+                        colSpan="2"
+                        className="px-2 py-1"
+                      >
+                        <button
+                          type="button"
+                          onClick={addTableRow}
+                          className="bg-blue-500 mt-2 text-white p-2 rounded"
+                          disabled={!isEditing}
+                        >
+                          Add Row
+                        </button>
+                      </td>
+                      {/* <td colSpan="4" className="border border-gray-300 px-2 py-1">
+                          <strong>Total Amount:</strong>
+                        </td>
+                        
+                        <td className="border border-gray-300 px-2 py-1"> */}
+                      
+                      {/* Calculation for total amount */}
+                      {/* {tableRows.reduce((acc, row) => acc + parseFloat(row.totalAmount || 0), 0).toFixed(2)}
+                        </td>
+                        <td></td> */}
+                    </tr>
+                    {/* Row for averages */}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="proposal">Proposal</label>
             <input
               name="proposal"
@@ -306,7 +439,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="conclusion">Conclusion</label>
             <input
               name="conclusion"
@@ -317,7 +450,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="confidential">Confidential</label>
             <input
               name="confidential"

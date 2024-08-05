@@ -23,6 +23,13 @@ const TechnicalSpecificationPage = () => {
 
   const [inputs, setInputs] = useState(predefinedValues);
   const [loading, setLoading] = useState(false);
+  const [tableRows, setTableRows] = useState([
+    {
+      id: "1",
+      component: "",
+      technicalspec: "",
+    },
+  ]);
 
   useEffect(() => {
     const storedInputs = JSON.parse(localStorage.getItem("ap-form"));
@@ -30,6 +37,35 @@ const TechnicalSpecificationPage = () => {
       setInputs(storedInputs);
     }
   }, [setInputs]);
+
+
+
+
+  const handleTableChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedRows = [...tableRows];
+    updatedRows[index][name] = value;
+    setTableRows(updatedRows);
+  };
+
+  const addTableRow = () => {
+    const newRow = {
+      id: tableRows.length + 1,
+      component: "",
+      technicalspec: "",
+    };
+    setTableRows([...tableRows, newRow]);
+  };
+
+  const deleteTableRow = (index) => {
+    if (tableRows.length === 1) {
+      return;
+    } else {
+      const updatedRows = [...tableRows];
+      updatedRows.splice(index, 1);
+      setTableRows(updatedRows);
+    }
+  };
 
   const handleChange = (e) => {
     if (e.target.name === "date") {
@@ -56,7 +92,7 @@ const TechnicalSpecificationPage = () => {
       });
 
       const data = await res.json();
-      
+
       console.log("Response data:", data); // Debugging line
 
       if (data.error) {
@@ -100,12 +136,12 @@ const TechnicalSpecificationPage = () => {
           </h1>
           <form
             id="formContainer"
-            className="flex flex-col gap-5 w-full max-w-3xl"
+            className="flex flex-col gap-5 w-full max-w-6xl"
             onSubmit={handleSubmit}
           >
             {/* <div className="flex flex-col gap-4">
               <label htmlFor="section">Ref No :</label> */}
-              {/* <input
+            {/* <input
                 className="bg-zinc-100 rounded-md p-2 w-full"
                 id="section"
                 name="section"
@@ -173,26 +209,104 @@ const TechnicalSpecificationPage = () => {
               />
             </div>
 
+
             <div className="flex flex-col gap-4">
               <label htmlFor="background">Background:</label>
               <textarea
-                id="background"
                 className="bg-zinc-100 rounded-md p-2 w-full"
+                id="background"
                 name="background"
                 value={inputs.background}
                 onChange={handleChange}
               />
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <label htmlFor="technicalSpecification">Technical Specification:</label>
-              <textarea
-                id="technicalSpecification"
-                className="bg-zinc-100 rounded-md p-2 w-full"
-                name="technicalSpecification"
-                value={inputs.technicalSpecification}
-                onChange={handleChange}
-              />
+              <div className="rounded-md p-2 w-full overflow-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-300 px-2 py-1">
+                        S. No.
+                      </th>
+                      <th className="border border-gray-300 px-2 py-1">
+                        Component
+                      </th>
+                      <th className="border border-gray-300 px-2 py-1">
+                      Technical Specification: All-In-One PCs
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableRows.map((row, index) => (
+                      <tr key={row.id}>
+                        <td className="border border-gray-300 px-2 py-1">
+                          <input
+                            type="text"
+                            className="w-[2.2vw]"
+                            name="id"
+                            value={row.id}
+                          />
+                        </td>
+                        <td className="border w-[30vw] border-gray-300 px-2 py-1">
+                          <textarea
+                            className="w-full p-2"
+                            type="text"
+                            name="component"
+                            value={row.component}
+                            onChange={(e) => handleTableChange(index, e)}
+                          />
+                        </td>
+                        <td className="border w-[30vw] items-center justify-center w-52 p-2 gap-4 border-gray-300 px-2 py-1">
+                          
+                          <textarea
+                            className="w-full p-2"
+                            type="text"
+                            name="technicalspec"
+                            value={row.technicalspec}
+                            onChange={(e) => handleTableChange(index, e)}
+                          />
+                        </td>
+                        
+                        
+                        
+                        
+                        <td className=" px-2 py-1">
+                          <button
+                            type="button"
+                            className="bg-red-500 text-white px-2 py-1 rounded"
+                            onClick={() => deleteTableRow(index)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                    <tr>
+                      <td
+                        colSpan="2"
+                        className="px-2 py-1"
+                      >
+                        <button
+                          type="button"
+                          onClick={addTableRow}
+                          className="bg-blue-500 mt-2 text-white p-2 rounded"
+                        >
+                          Add Row
+                        </button>
+                      </td>
+                      {/* <td colSpan="4" className="border border-gray-300 px-2 py-1">
+                          <strong>Total Amount:</strong>
+                        </td>
+                        
+                        <td className="border border-gray-300 px-2 py-1"> */}
+                      
+                      {/* Calculation for total amount */}
+                      {/* {tableRows.reduce((acc, row) => acc + parseFloat(row.totalAmount || 0), 0).toFixed(2)}
+                        </td>
+                        <td></td> */}
+                    </tr>
+                    {/* Row for averages */}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div className="flex flex-col gap-4">

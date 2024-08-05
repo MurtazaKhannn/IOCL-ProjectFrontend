@@ -80,6 +80,92 @@ const SAD = () => {
     }
   };
 
+
+  // const calculateAverages = () => {
+  //   const sum = tableRows.reduce(
+  //     (acc, row) => {
+  //       acc.totalAmount += parseFloat(row.totalAmount || 0);
+  //       return acc;
+  //     },
+  //     { totalAmount: 0 }
+  //   );
+
+  //   const count = tableRows.length;
+  //   return {
+  //     avgTotalAmount: count > 0 ? (sum.totalAmount / count).toFixed(2) : "0.00",
+  //   };
+  // };
+
+  // const averages = calculateAverages();
+
+  const addTableRow = () => {
+    const newRow = {
+      id: formData.tableRows.length + 1,
+      productCategory: "",
+      unitPrice: "",
+      gst: "",
+      total: "",
+      quantity: "",
+      totalAmount: "",
+      remarks: "",
+      averageTotalAmount: "",
+    };
+    setFormData({
+      ...formData ,
+      tableRows: [...formData.tableRows, newRow],
+    });
+  };
+
+  const deleteTableRow = (index) => {
+    if (formData.tableRows.length === 1) {
+      return;
+    } else {
+      const updatedRows = [...formData.tableRows];
+      updatedRows.splice(index, 1);
+      updatedRows.forEach((row, i) => (row.id = i + 1)); 
+      setFormData({...formData , tableRows: updatedRows})
+    }
+  };
+
+
+
+  const handleTableChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedRows = [...formData.tableRows];
+    updatedRows[index][name] = value;
+  
+    if (name === "unitPrice" || name === "gst" || name === "quantity") {
+      const unitPriceNum = parseFloat(updatedRows[index].unitPrice) || 0;
+      const quantityNum = parseFloat(updatedRows[index].quantity) || 0;
+  
+      // Calculate percentage18 as unitPrice * 0.18
+      const percentage18 = (unitPriceNum * 0.18).toFixed(2);
+      updatedRows[index].percentage18 = percentage18;
+  
+      // Calculate total as unitPrice + percentage18
+      const total = unitPriceNum + parseFloat(percentage18);
+      updatedRows[index].total = total.toFixed(2);
+  
+      // Calculate totalAmount as total * quantity
+      const totalAmount = total * quantityNum;
+      updatedRows[index].totalAmount = totalAmount.toFixed(2);
+    }
+  
+    setFormData({
+      ...formData,
+      tableRows: updatedRows,
+    });
+  };
+
+
+  const calculateAverage = () => {
+    const total = formData.tableRows.reduce((acc, row) => acc + (parseFloat(row.totalAmount) || 0), 0);
+    return total / formData.tableRows.length || 0;
+  };
+
+
+  
+
   const generatePDF = async () => {
     const saveButton = document.getElementById("saveasPdfBtn");
     const dropbtn = document.getElementById("editBtn");
@@ -206,13 +292,13 @@ const SAD = () => {
       <div className="flex w-full h-full items-center justify-center">
         <div
           id="formContainer"
-          className="flex flex-col items-center w-[794px] h-[900px] rounded-md justify-center gap-5 p-2 bg-white border"
+          className="flex flex-col items-center max-w-[1394px] min-h-[900px] rounded-md justify-center gap-5 p-2 bg-white border"
         >
           <h1 className="text-4xl font-semibold">Budgetary Estimate</h1>
 
           <img src={IOL} className="w-64" alt="" />
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="referenceNumber">Ref&nbsp;&nbsp;No</label>
             <input
               type="text"
@@ -224,7 +310,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="section">Section</label>
             <input
               type="text"
@@ -236,7 +322,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="department">Department</label>
             <input
               type="text"
@@ -248,7 +334,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="location">Location</label>
             <input
               type="text"
@@ -260,7 +346,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -272,9 +358,9 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="subject">Subject</label>
-            <input
+            <textarea
               type="text"
               name="subject"
               value={formData.subject}
@@ -284,20 +370,136 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
-            <label htmlFor="background">Background</label>
-            <input
-              name="background"
-              value={formData.background}
-              onChange={handleChange}
-              disabled={!isEditing}
-              className="rounded-md p-2 w-full"
-            />
-          </div>
+          <div className="flex w-5/6 flex-col gap-4">
+                <label className='text-xl' htmlFor="background">Background:</label>
+                <textarea
+                  className="rounded-md p-2 w-full"
+                  id="background"
+                  name="background"
+                  value={formData.background}
+                  onChange={handleChange}
+                  disabled={!isEditing}
+                ></textarea>
+              </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+              <table className="w-full border-collapse border border-gray-300">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-300 p-2">S.No</th>
+                    <th className="border border-gray-300 p-2">Product Category</th>
+                    <th className="border border-gray-300 p-2">Unit Price</th>
+                    <th className="border border-gray-300 p-2">GST (%)</th>
+                    <th className="border border-gray-300 p-2">Total</th>
+                    <th className="border border-gray-300 p-2">Quantity</th>
+                    <th className="border border-gray-300 p-2">Total Amount</th>
+                    <th className="border border-gray-300 p-2">Remarks</th>
+                    <th className="border border-gray-300 p-2">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {formData.tableRows.map((row, index) => (
+                    <tr key={index}>
+                      <td className="border border-gray-300 p-2">{row.id}</td>
+                      <td className="border border-gray-300 p-2">
+                        <input
+                          className="w-full"
+                          type="text"
+                          name="productCategory"
+                          value={row.productCategory}
+                          onChange={(e) => handleTableChange(index, e)}
+                          disabled={!isEditing}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <input
+                          className="w-full"
+                          type="number"
+                          name="unitPrice"
+                          value={row.unitPrice}
+                          onChange={(e) => handleTableChange(index, e)}
+                          disabled={!isEditing}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <div>
+                        <input
+                          className="w-28"
+                          type="number"
+                          name="gst"
+                          value={row.percentage18}
+                          onChange={(e) => handleTableChange(index, e)}
+                          disabled={!isEditing}
+                        />
+                        </div>
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                      <div>
+                        <input
+                          className="w-28"
+                          type="number"
+                          name="total"
+                          value={row.total}
+                          onChange={(e) => handleTableChange(index, e)}
+                          disabled={!isEditing}
+                        />
+                        </div>
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <input
+                          className="w-full"
+                          type="number"
+                          name="quantity"
+                          value={row.quantity}
+                          onChange={(e) => handleTableChange(index, e)}
+                          disabled={!isEditing}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        {row.totalAmount}
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <input
+                          className="w-full"
+                          type="text"
+                          name="remarks"
+                          value={row.remarks}
+                          onChange={(e) => handleTableChange(index, e)}
+                          disabled={!isEditing}
+                        />
+                      </td>
+                      <td className="border border-gray-300 p-2">
+                        <button
+                          type="button"
+                          className="bg-red-500 text-white p-1 rounded"
+                          onClick={() => deleteTableRow(index)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="6" className="border border-gray-300 p-2 text-right font-bold">
+                      Average Total Amount
+                    </td>
+                    <td className="border border-gray-300 p-2">
+                    {calculateAverage().toFixed(2)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <button
+                  type="button"
+                  className="bg-green-500 w-32 text-white p-2 rounded"
+                  onClick={addTableRow}
+                >
+                  Add Row
+              </button>
+
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="proposal">Proposal</label>
-            <input
+            <textarea
               name="proposal"
               value={formData.proposal}
               onChange={handleChange}
@@ -306,9 +508,9 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="conclusion">Conclusion</label>
-            <input
+            <textarea
               name="conclusion"
               value={formData.conclusion}
               onChange={handleChange}
@@ -317,7 +519,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-2/3 items-center justify-center gap-3 text-xl">
+          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
             <label htmlFor="confidential">Confidential</label>
             <input
               name="confidential"
