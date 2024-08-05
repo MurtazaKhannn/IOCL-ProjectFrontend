@@ -63,6 +63,7 @@ const TechnicalSpecificationPage = () => {
     } else {
       const updatedRows = [...tableRows];
       updatedRows.splice(index, 1);
+      updatedRows.forEach((row, i) => (row.id = i + 1)); // Reassign serial numbers
       setTableRows(updatedRows);
     }
   };

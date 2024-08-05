@@ -170,13 +170,13 @@ const SAD = () => {
     const saveButton = document.getElementById("saveasPdfBtn");
     const dropbtn = document.getElementById("editBtn");
     const savebtn = document.getElementById("saveBtn");
-
+  
     if (saveButton) saveButton.style.display = "none";
     if (dropbtn) dropbtn.style.display = "none";
     if (savebtn) savebtn.style.display = "none";
-
+  
     const input = document.getElementById("formContainer");
-
+  
     if (!input) {
       console.error("Element with ID 'formContainer' not found");
       if (saveButton) saveButton.style.display = "block";
@@ -184,32 +184,37 @@ const SAD = () => {
       if (savebtn) savebtn.style.display = "block";
       return;
     }
-
+  
     try {
-      const canvas = await html2canvas(input, { scale: 2 });
+      const canvas = await html2canvas(input, {
+        scale: 2,
+        useCORS: true,
+        scrollX: 0,
+        scrollY: -window.scrollY,
+        backgroundColor: null
+      });
+  
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-
+  
       const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
+      const pageHeight = 297; // A4 height in mm
       let position = 0;
-      const margin = 10; // Margin around the content
-
-      // Scale the image to fit within one page
-      const scale = Math.min((pageHeight - 2 * margin) / imgHeight, 1);
-      const scaledImgWidth = imgWidth * scale;
-      const scaledImgHeight = imgHeight * scale;
-
-      pdf.addImage(imgData, "PNG", margin, position + margin, scaledImgWidth, scaledImgHeight);
-
-      // Ensure that the content fits within a single page
-      if (scaledImgHeight > pageHeight - 2 * margin) {
+      let remainingHeight = imgHeight;
+  
+      // Add first page
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      remainingHeight -= pageHeight;
+  
+      // Add subsequent pages if needed
+      while (remainingHeight > 0) {
         pdf.addPage();
-        pdf.addImage(imgData, "PNG", margin, position + margin, scaledImgWidth, scaledImgHeight);
+        position = remainingHeight;
+        pdf.addImage(imgData, "PNG", 0, -position, imgWidth, imgHeight);
+        remainingHeight -= pageHeight;
       }
-
+  
       pdf.save("budgetary_estimate.pdf");
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -219,6 +224,9 @@ const SAD = () => {
       if (savebtn) savebtn.style.display = "block";
     }
   };
+  
+  
+  
 
   const generateDOCX = async () => {
     const imageBuffer = await fetch(IOL).then((res) => res.arrayBuffer());
@@ -472,6 +480,7 @@ const SAD = () => {
                           type="button"
                           className="bg-red-500 text-white p-1 rounded"
                           onClick={() => deleteTableRow(index)}
+                          disabled={!isEditing}
                         >
                           Delete
                         </button>
@@ -484,6 +493,7 @@ const SAD = () => {
                     </td>
                     <td className="border border-gray-300 p-2">
                     {calculateAverage().toFixed(2)}
+                    
                     </td>
                   </tr>
                 </tbody>
@@ -493,6 +503,7 @@ const SAD = () => {
                   type="button"
                   className="bg-green-500 w-32 text-white p-2 rounded"
                   onClick={addTableRow}
+                  disabled={!isEditing}
                 >
                   Add Row
               </button>

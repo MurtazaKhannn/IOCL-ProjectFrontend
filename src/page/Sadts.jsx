@@ -60,6 +60,7 @@ const SAD = () => {
     } else {
       const updatedRows = [...formData.tableRows];
       updatedRows.splice(index, 1);
+      updatedRows.forEach((row, i) => (row.id = i + 1)); // Reassign serial numbers
       setFormData({...formData , tableRows: updatedRows})
     }
   };
