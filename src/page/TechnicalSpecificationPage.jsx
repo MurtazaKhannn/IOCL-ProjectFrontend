@@ -132,6 +132,8 @@ const TechnicalSpecificationPage = () => {
     handleSave();
   };
 
+
+
   const navigate = useNavigate();
 
   return (
