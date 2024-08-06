@@ -483,13 +483,13 @@ const SAD = () => {
                           disabled={!isEditing}
                         />
                       </td>
-                      <td className="border border-gray-300 p-2">
+                      <td id='deleteBtn' className="border border-gray-300 p-2">
                         <button
                           type="button"
                           className="bg-red-500 text-white p-1 rounded"
                           onClick={() => deleteTableRow(index)}
                           disabled={!isEditing}
-                          id=''
+                          
                         >
                           Delete
                         </button>

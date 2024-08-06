@@ -209,7 +209,7 @@ const TCCIntermediate = () => {
           </h1>
           <div className="w-full flex items-center justify-center gap-10">
             <form
-              className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-3xl"
+              className="flex flex-col text-lg sm:text-xl lg:text-2xl gap-10 w-full max-w-7xl"
               action=""
               onSubmit={handleSubmit}
             >
@@ -224,7 +224,7 @@ const TCCIntermediate = () => {
                 />
               </div> */}
 
-              <div className="flex flex-col gap-4">
+              <div className="flex  flex-col gap-4">
                 <label htmlFor="section">Section:</label>
                 <input
                   className="bg-zinc-100 rounded-md p-2 w-full"
@@ -290,7 +290,7 @@ const TCCIntermediate = () => {
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-[760px] divide-y divide-gray-200 text-xl">
+                <table className="w-7xl divide-y divide-gray-200 text-xl">
                   <thead>
                     <tr>
                       <th className="px-6 py-3 font-bold border-b border-gray-300">
@@ -324,6 +324,7 @@ const TCCIntermediate = () => {
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
+                          rows={1}
                         />{" "}
                         dated{" "}
                         <input
@@ -332,15 +333,17 @@ const TCCIntermediate = () => {
                           value={inputs.date1}
                           onChange={handleChange}
                           type="date"
+                          
                         />
                         , approval is granted by{" "}
                         <input
                           name="grantedBy1"
                           value={inputs.grantedBy1}
                           onChange={handleChange}
-                          className="border-b-2 focus:border-blue-500 outline-none"
+                          className="border-b-2 w-[25vw] focus:border-blue-500 outline-none"
                           type="text"
                           placeholder=""
+
                         />{" "}
                         <p className="font-bold">
                           <input
@@ -360,6 +363,7 @@ const TCCIntermediate = () => {
                           onChange={handleChange}
                           className="border-b-2 focus:border-blue-500 outline-none"
                           type="text"
+                          rows={1}
                         />{" "}
                         dated{" "}
                         <input
