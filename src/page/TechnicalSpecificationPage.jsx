@@ -89,7 +89,7 @@ const TechnicalSpecificationPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs),
+        body: JSON.stringify({ ...inputs, tableRows }),
       });
 
       const data = await res.json();
@@ -109,6 +109,13 @@ const TechnicalSpecificationPage = () => {
       }));
 
       setInputs(predefinedValues);
+      setTableRows([
+        {
+          id: 1,
+          component: "" ,
+          technicalspec: "",
+        },
+      ]);
       localStorage.removeItem("ap-form");
     } catch (error) {
       alert("Error: " + error);
