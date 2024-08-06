@@ -145,7 +145,7 @@ const InprincipleApproval = () => {
               <div className="flex flex-col gap-4">
                 <label htmlFor="section">Section:</label>
                 <input
-                  className="bg-zinc-100 rounded-md p-2 w-full"
+                  className="bg-zinc-100  rounded-md p-2 w-full"
                   id="section"
                   name="section"
                   value={inputs.section}

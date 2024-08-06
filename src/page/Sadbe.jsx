@@ -138,12 +138,12 @@ const SAD = () => {
       const unitPriceNum = parseFloat(updatedRows[index].unitPrice) || 0;
       const quantityNum = parseFloat(updatedRows[index].quantity) || 0;
   
-      // Calculate percentage18 as unitPrice * 0.18
-      const percentage18 = (unitPriceNum * 0.18).toFixed(2);
-      updatedRows[index].percentage18 = percentage18;
+      // Calculate gst as unitPrice * 0.18
+      const gst = (unitPriceNum * 0.18).toFixed(2);
+      updatedRows[index].gst = gst;
   
-      // Calculate total as unitPrice + percentage18
-      const total = unitPriceNum + parseFloat(percentage18);
+      // Calculate total as unitPrice + gst
+      const total = unitPriceNum + parseFloat(gst);
       updatedRows[index].total = total.toFixed(2);
   
       // Calculate totalAmount as total * quantity
@@ -170,10 +170,14 @@ const SAD = () => {
     const saveButton = document.getElementById("saveasPdfBtn");
     const dropbtn = document.getElementById("editBtn");
     const savebtn = document.getElementById("saveBtn");
+    const addBtn = document.getElementById("addBtn");
+    const deleteBtn = document.getElementById("deleteBtn");
   
     if (saveButton) saveButton.style.display = "none";
     if (dropbtn) dropbtn.style.display = "none";
     if (savebtn) savebtn.style.display = "none";
+    if (addBtn) addBtn.style.display = "none";
+    if (deleteBtn) deleteBtn.style.display = "none";
   
     const input = document.getElementById("formContainer");
   
@@ -182,6 +186,8 @@ const SAD = () => {
       if (saveButton) saveButton.style.display = "block";
       if (dropbtn) dropbtn.style.display = "block";
       if (savebtn) savebtn.style.display = "block";
+      if (addBtn) addBtn.style.display = "block";
+      if (deleteBtn) deleteBtn.style.display = "block";
       return;
     }
   
@@ -222,6 +228,8 @@ const SAD = () => {
       if (saveButton) saveButton.style.display = "block";
       if (dropbtn) dropbtn.style.display = "block";
       if (savebtn) savebtn.style.display = "block";
+      if (addBtn) addBtn.style.display = "block";
+      if (deleteBtn) deleteBtn.style.display = "block";
     }
   };
   
@@ -306,8 +314,8 @@ const SAD = () => {
 
           <img src={IOL} className="w-64" alt="" />
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
-            <label htmlFor="referenceNumber">Ref&nbsp;&nbsp;No</label>
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
+            <label htmlFor="referenceNumber">Ref&nbsp;&nbsp;No : </label>
             <input
               type="text"
               name="referenceNumber"
@@ -318,8 +326,8 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
-            <label htmlFor="section">Section</label>
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
+            <label htmlFor="section">Section : </label>
             <input
               type="text"
               name="section"
@@ -330,8 +338,8 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
-            <label htmlFor="department">Department</label>
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
+            <label htmlFor="department">Department : </label>
             <input
               type="text"
               name="department"
@@ -342,8 +350,8 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
-            <label htmlFor="location">Location</label>
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
+            <label htmlFor="location">Location : </label>
             <input
               type="text"
               name="location"
@@ -354,8 +362,8 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
-            <label htmlFor="date">Date</label>
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
+            <label htmlFor="date">Date : </label>
             <input
               type="date"
               name="date"
@@ -366,8 +374,8 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
-            <label htmlFor="subject">Subject</label>
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
+            <label htmlFor="subject">Subject : </label>
             <textarea
               type="text"
               name="subject"
@@ -378,7 +386,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 flex-col gap-4">
+          <div className="flex w-5/6 text-xl flex-col gap-4">
                 <label className='text-xl' htmlFor="background">Background:</label>
                 <textarea
                   className="rounded-md p-2 w-full"
@@ -409,7 +417,7 @@ const SAD = () => {
                     <tr key={index}>
                       <td className="border border-gray-300 p-2">{row.id}</td>
                       <td className="border border-gray-300 p-2">
-                        <input
+                        <textarea
                           className="w-full"
                           type="text"
                           name="productCategory"
@@ -419,7 +427,7 @@ const SAD = () => {
                         />
                       </td>
                       <td className="border border-gray-300 p-2">
-                        <input
+                        <textarea
                           className="w-full"
                           type="number"
                           name="unitPrice"
@@ -430,11 +438,11 @@ const SAD = () => {
                       </td>
                       <td className="border border-gray-300 p-2">
                         <div>
-                        <input
+                        <textarea
                           className="w-28"
                           type="number"
                           name="gst"
-                          value={row.percentage18}
+                          value={row.gst}
                           onChange={(e) => handleTableChange(index, e)}
                           disabled={!isEditing}
                         />
@@ -442,7 +450,7 @@ const SAD = () => {
                       </td>
                       <td className="border border-gray-300 p-2">
                       <div>
-                        <input
+                        <textarea
                           className="w-28"
                           type="number"
                           name="total"
@@ -453,7 +461,7 @@ const SAD = () => {
                         </div>
                       </td>
                       <td className="border border-gray-300 p-2">
-                        <input
+                        <textarea
                           className="w-full"
                           type="number"
                           name="quantity"
@@ -466,7 +474,7 @@ const SAD = () => {
                         {row.totalAmount}
                       </td>
                       <td className="border border-gray-300 p-2">
-                        <input
+                        <textarea
                           className="w-full"
                           type="text"
                           name="remarks"
@@ -481,6 +489,7 @@ const SAD = () => {
                           className="bg-red-500 text-white p-1 rounded"
                           onClick={() => deleteTableRow(index)}
                           disabled={!isEditing}
+                          id=''
                         >
                           Delete
                         </button>
@@ -504,11 +513,12 @@ const SAD = () => {
                   className="bg-green-500 w-32 text-white p-2 rounded"
                   onClick={addTableRow}
                   disabled={!isEditing}
+                  id='addBtn'
                 >
                   Add Row
               </button>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
             <label htmlFor="proposal">Proposal</label>
             <textarea
               name="proposal"
@@ -519,7 +529,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
+          <div className="flex flex-col w-5/6  justify-center gap-3 text-xl">
             <label htmlFor="conclusion">Conclusion</label>
             <textarea
               name="conclusion"
@@ -530,7 +540,7 @@ const SAD = () => {
             />
           </div>
 
-          <div className="flex w-5/6 items-center justify-center gap-3 text-xl">
+          <div className="flex flex-col w-5/6 justify-center gap-3 text-xl">
             <label htmlFor="confidential">Confidential</label>
             <input
               name="confidential"

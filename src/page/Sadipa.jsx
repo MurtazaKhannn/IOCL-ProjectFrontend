@@ -234,22 +234,22 @@ const SAD = () => {
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
             <label htmlFor="subject">Subject</label>
-            <input type="text" name='subject' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.subject || ''} disabled={!isEditing} />
+            <textarea type="text" name='subject' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.subject || ''} disabled={!isEditing} />
           </div>
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
             <label htmlFor="perspective">Perspective</label>
-            <input type="text" name='perspective' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.perspective || ''} disabled={!isEditing} />
+            <textarea type="text" name='perspective' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.perspective || ''} disabled={!isEditing} />
           </div>
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
             <label htmlFor="proposal">Proposal</label>
-            <input type="text" name='proposal' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.proposal || ''} disabled={!isEditing} />
+            <textarea type="text" name='proposal' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.proposal || ''} disabled={!isEditing} />
           </div>
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
             <label htmlFor="conclusion">Conclusion</label>
-            <input type="text" name='conclusion' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.conclusion || ''} disabled={!isEditing} />
+            <textarea type="text" name='conclusion' className='rounded-md p-2 w-full' onChange={handleChange} value={formData.conclusion || ''} disabled={!isEditing} />
           </div>
 
           <div className='flex w-2/3 items-center justify-center gap-3 text-xl'>
